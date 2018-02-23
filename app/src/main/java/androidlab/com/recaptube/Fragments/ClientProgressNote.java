@@ -59,7 +59,7 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
     String indi="an individual rehabilitation session with ";
     String allStaff="an All Staff CFT with ";
     String CFT="a CFT meeting with ";
-    String ITC="an ITC meeting with";
+    String ITC="an ITC meeting with ";
     int teamMember=1;
     int otherProfessional=0;
     int familyMembers=0;
@@ -73,7 +73,7 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
 
         sharedPreferences = getActivity().getSharedPreferences("recap", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
-//
+
         editor.putString("aaa","").commit();
         editor.putString("bbb","").commit();
         spinnerAddress1=(Spinner)view.findViewById(R.id.spinnerAddress1);
@@ -202,6 +202,12 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                         if (teamMember==4 && otherProfessional+friends+familyMembers>0)
                         {
                             texteffectbutton=textPreviewIntroduction.getText().toString();
+                            if(texteffectbutton.contains(ITC))
+                            {
+                                texteffectbutton=texteffectbutton.replace(ITC,allStaff);
+                                textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButtonClient.getText()+", ");
+                            }
+                            else
                             if (texteffectbutton.contains(allStaff))
                             {
                                 textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButtonClient.getText()+", ");
@@ -247,6 +253,19 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                     String returnedText=textPreviewIntroduction.getText().toString();
                     String temp=returnedText.replace(oldText,newText);
                     textPreviewIntroduction.setText(temp);
+                    if(teamMember==4  && friends+otherProfessional+familyMembers >0)
+                    {
+                        textPreviewIntroduction.setText(temp);
+                    }
+                    else
+                    {
+                     texteffectbutton=textPreviewIntroduction.getText().toString();
+                     if(texteffectbutton.contains(allStaff))
+                     {
+                         texteffectbutton=texteffectbutton.replace(allStaff,ITC);
+                         textPreviewIntroduction.setText(texteffectbutton);
+                     }
+                    }
                 }
             }
         });
@@ -256,30 +275,40 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                 if (isChecked)
                 {
                     test++;
-                    friends++;
-                    otherProfessional++;
-                    familyMembers++;
                     button.setVisibility(View.VISIBLE);
                     texteffectbutton=textPreviewIntroduction.getText().toString();
+                    if(buttonAddPerson.getText().toString().contains("teacher")||buttonAddPerson.getText().toString().contains("social worker"))
+                    {
+                       otherProfessional++;
+                    }
+                    else
+                        if(buttonAddPerson.getText().toString().contains("friend")||buttonAddPerson.getText().toString().contains("neighbor"))
+                        {
+                            friends++;
+                        }
+                        else
+                        {
+                            familyMembers++;
+                        }
                     if (teamMember==4 && otherProfessional+friends+familyMembers>0)
                     {
                         texteffectbutton=textPreviewIntroduction.getText().toString();
                         if (texteffectbutton.contains(indi))
                         {
                             texteffectbutton=texteffectbutton.replace(indi,allStaff);
-                            textPreviewIntroduction.setText(texteffectbutton+"the "+buttonAddPerson.getText()+",");
+                            textPreviewIntroduction.setText(texteffectbutton+"the "+buttonAddPerson.getText()+", ");
                         }
                         else
                         if (texteffectbutton.contains(ITC))
                         {
                             texteffectbutton=texteffectbutton.replace(ITC,allStaff);
-                            textPreviewIntroduction.setText(texteffectbutton+"the "+buttonAddPerson.getText()+",");
+                            textPreviewIntroduction.setText(texteffectbutton+"the "+buttonAddPerson.getText()+", ");
                         }
                         else
                             if (texteffectbutton.contains(CFT))
                             {
                                 texteffectbutton=texteffectbutton.replace(CFT,allStaff);
-                                textPreviewIntroduction.setText(texteffectbutton+"the "+buttonAddPerson.getText()+",");
+                                textPreviewIntroduction.setText(texteffectbutton+"the "+buttonAddPerson.getText()+", ");
                             }
                             else {
                                 if (texteffectbutton.contains(allStaff)) {
@@ -291,7 +320,7 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
 
                     }
                     else
-                    if (teamMember> 1 && otherProfessional>=1)
+                    if (teamMember> 1 || otherProfessional>0)
                     {
                         texteffectbutton=textPreviewIntroduction.getText().toString();
                         if (buttonAddPerson.getText().toString().contains("social worker"))
@@ -317,7 +346,7 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                                 if (texteffectbutton.contains(indi))
                                 {
                                     texteffectbutton=texteffectbutton.replace(indi,CFT);
-                                    textPreviewIntroduction.setText(texteffectbutton+"the "+buttonAddPerson.getText()+",");
+                                    textPreviewIntroduction.setText(texteffectbutton+"the "+buttonAddPerson.getText()+", ");
                                 }
                                 else
                             {
@@ -356,7 +385,7 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                                 if (texteffectbutton.contains(indi))
                                 {
                                     texteffectbutton=texteffectbutton.replace(indi,CFT);
-                                    textPreviewIntroduction.setText(texteffectbutton+"the "+buttonAddPerson.getText()+",");
+                                    textPreviewIntroduction.setText(texteffectbutton+"the "+buttonAddPerson.getText()+", ");
                                 }
                                 else
                                 {
@@ -370,10 +399,35 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                                     }
                                 }
                             }
+                            else
+                            {
+                                if (texteffectbutton.contains(ITC))
+                                {
+                                    //texteffectbutton=texteffectbutton.replace(ITC,CFT);
+                                    textPreviewIntroduction.setText(texteffectbutton+"the "+buttonAddPerson.getText()+", ");
+                                }
+                                else
+                                {
+                                    textPreviewIntroduction.setText(texteffectbutton+ITC+"the "+buttonAddPerson.getText()+", ");
+                                }
+                            }
                     }
                     else
                     {
                         texteffectbutton=textPreviewIntroduction.getText().toString();
+                        if(teamMember==1 || otherProfessional==0)
+                        {
+                            if (texteffectbutton.contains(ITC))
+                            {
+                                texteffectbutton=texteffectbutton.replace(ITC,indi);
+                                textPreviewIntroduction.setText(texteffectbutton+"the "+buttonAddPerson.getText()+", ");
+                            }
+                            else
+                            {
+                                textPreviewIntroduction.setText(texteffectbutton+indi+"the "+buttonAddPerson.getText()+", ");
+                            }
+                        }
+                        else
                         if (texteffectbutton.contains(indi))
                         {
                             textPreviewIntroduction.setText(texteffectbutton+"the "+buttonAddPerson.getText()+", ");
@@ -387,14 +441,45 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                 }
                     else
                     {
-                        friends--;
-                        otherProfessional--;
-                        familyMembers--;
+                        if(buttonAddPerson.getText().toString().contains("teacher")||buttonAddPerson.getText().toString().contains("social worker"))
+                        {
+                            otherProfessional--;
+                        }
+                        else
+                        if(buttonAddPerson.getText().toString().contains("friend")||buttonAddPerson.getText().toString().contains("neighbor"))
+                        {
+                            friends--;
+                        }
+                        else
+                        {
+                            familyMembers--;
+                        }
                         String oldText="the "+buttonAddPerson.getText().toString()+", ";
                         String newText="";
                         String returnedText=textPreviewIntroduction.getText().toString();
                         String temp=returnedText.replace(oldText,newText);
                         textPreviewIntroduction.setText(temp);
+                        if(teamMember==4  && friends+otherProfessional+familyMembers >0)
+                        {
+                            textPreviewIntroduction.setText(temp);
+                        }
+                        else
+                            if(teamMember>1 && familyMembers+friends+otherProfessional==0)
+                            {
+                                if (texteffectbutton.contains(CFT))
+                                {
+                                    texteffectbutton=texteffectbutton.replace(CFT,ITC);
+                                    textPreviewIntroduction.setText(texteffectbutton);
+                                }
+                            }
+                        {
+                            texteffectbutton=textPreviewIntroduction.getText().toString();
+                            if(texteffectbutton.contains(allStaff))
+                            {
+                                texteffectbutton=texteffectbutton.replace(allStaff,ITC);
+                                textPreviewIntroduction.setText(texteffectbutton);
+                            }
+                        }
 
                     }
 
@@ -408,30 +493,41 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                 if (isChecked)
                 {
                     test++;
-                    friends++;
-                    otherProfessional++;
-                    familyMembers++;
                     button.setVisibility(View.VISIBLE);
                     texteffectbutton=textPreviewIntroduction.getText().toString();
+                    if(buttonAddPerson.getText().toString().contains("teacher")||buttonAddPerson.getText().toString().contains("social worker"))
+                    {
+
+                        otherProfessional++;
+                    }
+                    else
+                    if(buttonAddPerson.getText().toString().contains("friend")||buttonAddPerson.getText().toString().contains("neighbor"))
+                    {
+                        friends++;
+                    }
+                    else
+                    {
+                        familyMembers++;
+                    }
                     if (teamMember==4 && otherProfessional+friends+familyMembers>0)
                     {
                         texteffectbutton=textPreviewIntroduction.getText().toString();
                         if (texteffectbutton.contains(indi))
                         {
                             texteffectbutton=texteffectbutton.replace(indi,allStaff);
-                            textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButton12.getText()+",");
+                            textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButton12.getText()+", ");
                         }
                         else
                         if (texteffectbutton.contains(ITC))
                         {
                             texteffectbutton=texteffectbutton.replace(ITC,allStaff);
-                            textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButton12.getText()+",");
+                            textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButton12.getText()+", ");
                         }
                         else
                         if (texteffectbutton.contains(CFT))
                         {
                             texteffectbutton=texteffectbutton.replace(CFT,allStaff);
-                            textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButton12.getText()+",");
+                            textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButton12.getText()+", ");
                         }
                         else {
                             if (texteffectbutton.contains(allStaff)) {
@@ -443,7 +539,7 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
 
                     }
                     else
-                    if (teamMember> 1 && otherProfessional>=1)
+                    if (teamMember> 1 || otherProfessional>0)
                     {
                         texteffectbutton=textPreviewIntroduction.getText().toString();
                         if (toggleButton12.getText().toString().contains("social worker"))
@@ -469,7 +565,7 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                             if (texteffectbutton.contains(indi))
                             {
                                 texteffectbutton=texteffectbutton.replace(indi,CFT);
-                                textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButton12.getText()+",");
+                                textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButton12.getText()+", ");
                             }
                             else
                             {
@@ -508,7 +604,7 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                             if (texteffectbutton.contains(indi))
                             {
                                 texteffectbutton=texteffectbutton.replace(indi,CFT);
-                                textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButton12.getText()+",");
+                                textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButton12.getText()+", ");
                             }
                             else
                             {
@@ -526,27 +622,76 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                     else
                     {
                         texteffectbutton=textPreviewIntroduction.getText().toString();
-                        if (texteffectbutton.contains(indi))
+                        if(texteffectbutton.contains(ITC))
                         {
-                            textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButton12.getText()+", ");
+                            if (texteffectbutton.contains(ITC))
+                            {
+                                texteffectbutton=texteffectbutton.replace(ITC,indi);
+                                textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButton12.getText()+", ");
+                            }
+                            else
+                            {
+                                textPreviewIntroduction.setText(texteffectbutton+indi+"the "+toggleButton12.getText()+", ");
+                            }
                         }
                         else
-                        {
-                            textPreviewIntroduction.setText(texteffectbutton+indi+"the "+toggleButton12.getText()+", ");
-                        }
+                            if(texteffectbutton.contains(indi))
+                            {
+                                texteffectbutton=textPreviewIntroduction.getText().toString();
+                                if (texteffectbutton.contains(indi))
+                                {
+                                    textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButton12.getText()+", ");
+                                }
+                                else
+                                {
+                                    textPreviewIntroduction.setText(texteffectbutton+indi+"the "+toggleButton12.getText()+", ");
+                                }
+
+                            }
+                            else
+                            {
+                                textPreviewIntroduction.setText(texteffectbutton+indi+"the "+toggleButton12.getText()+", ");
+                            }
                     }
 
                 }
                 else
                 {
-                    friends--;
-                    otherProfessional--;
-                    familyMembers--;
+                    if(buttonAddPerson.getText().toString().contains("teacher")||buttonAddPerson.getText().toString().contains("social worker"))
+                    {
+                        otherProfessional--;
+                    }
+                    else
+                    if(buttonAddPerson.getText().toString().contains("friend")||buttonAddPerson.getText().toString().contains("neighbor"))
+                    {
+                        friends--;
+                    }
+                    else
+                    {
+                        familyMembers--;
+                    }
                     String oldText="the "+toggleButton12.getText().toString()+", ";
                     String newText="";
                     String returnedText=textPreviewIntroduction.getText().toString();
                     String temp=returnedText.replace(oldText,newText);
                     textPreviewIntroduction.setText(temp);
+                    if(teamMember==4  && friends+otherProfessional+familyMembers >0)
+                    {
+                        textPreviewIntroduction.setText(temp);
+                    }
+                    else
+                    {
+                        texteffectbutton=textPreviewIntroduction.getText().toString();
+                        if(texteffectbutton.contains(allStaff))
+                        {
+                            texteffectbutton=texteffectbutton.replace(allStaff,ITC);
+                            textPreviewIntroduction.setText(texteffectbutton);
+                        }
+                        else
+                        {
+                            textPreviewIntroduction.setText(temp);
+                        }
+                    }
                 }
             }
         });
@@ -557,30 +702,40 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                 if (isChecked)
                 {
                     test++;
-                    friends++;
-                    otherProfessional++;
-                    familyMembers++;
                     button.setVisibility(View.VISIBLE);
                     texteffectbutton=textPreviewIntroduction.getText().toString();
+                    if(buttonAddPerson.getText().toString().contains("teacher")||buttonAddPerson.getText().toString().contains("social worker"))
+                    {
+                        otherProfessional++;
+                    }
+                    else
+                    if(buttonAddPerson.getText().toString().contains("friend")||buttonAddPerson.getText().toString().contains("neighbor"))
+                    {
+                        friends++;
+                    }
+                    else
+                    {
+                        familyMembers++;
+                    }
                     if (teamMember==4 && otherProfessional+friends+familyMembers>0)
                     {
                         texteffectbutton=textPreviewIntroduction.getText().toString();
                         if (texteffectbutton.contains(indi))
                         {
                             texteffectbutton=texteffectbutton.replace(indi,allStaff);
-                            textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButton1122.getText()+",");
+                            textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButton1122.getText()+", ");
                         }
                         else
                         if (texteffectbutton.contains(ITC))
                         {
                             texteffectbutton=texteffectbutton.replace(ITC,allStaff);
-                            textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButton1122.getText()+",");
+                            textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButton1122.getText()+", ");
                         }
                         else
                         if (texteffectbutton.contains(CFT))
                         {
                             texteffectbutton=texteffectbutton.replace(CFT,allStaff);
-                            textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButton1122.getText()+",");
+                            textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButton1122.getText()+", ");
                         }
                         else {
                             if (texteffectbutton.contains(allStaff)) {
@@ -592,7 +747,7 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
 
                     }
                     else
-                    if (teamMember> 1 && otherProfessional>=1)
+                    if (teamMember> 1 || otherProfessional>0)
                     {
                         texteffectbutton=textPreviewIntroduction.getText().toString();
                         if (toggleButton1122.getText().toString().contains("social worker"))
@@ -618,7 +773,7 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                             if (texteffectbutton.contains(indi))
                             {
                                 texteffectbutton=texteffectbutton.replace(indi,CFT);
-                                textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButton1122.getText()+",");
+                                textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButton1122.getText()+", ");
                             }
                             else
                             {
@@ -657,7 +812,7 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                             if (texteffectbutton.contains(indi))
                             {
                                 texteffectbutton=texteffectbutton.replace(indi,CFT);
-                                textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButton1122.getText()+",");
+                                textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButton1122.getText()+", ");
                             }
                             else
                             {
@@ -674,10 +829,33 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                     }
                     else
                     {
+                        Toast.makeText(getActivity(), "else", Toast.LENGTH_SHORT).show();
                         texteffectbutton=textPreviewIntroduction.getText().toString();
-                        if (texteffectbutton.contains(indi))
+                        if(texteffectbutton.contains(ITC))
                         {
-                            textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButton1122.getText()+", ");
+                            if (texteffectbutton.contains(ITC))
+                            {
+                                texteffectbutton=texteffectbutton.replace(ITC,indi);
+                                textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButton1122.getText()+", ");
+                            }
+                            else
+                            {
+                                textPreviewIntroduction.setText(texteffectbutton+indi+"the "+toggleButton1122.getText()+", ");
+                            }
+                        }
+                        else
+                        if(texteffectbutton.contains(indi))
+                        {
+                            texteffectbutton=textPreviewIntroduction.getText().toString();
+                            if (texteffectbutton.contains(indi))
+                            {
+                                textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButton1122.getText()+", ");
+                            }
+                            else
+                            {
+                                textPreviewIntroduction.setText(texteffectbutton+indi+"the "+toggleButton1122.getText()+", ");
+                            }
+
                         }
                         else
                         {
@@ -687,14 +865,41 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                 }
                 else
                 {
-                    friends--;
-                    otherProfessional--;
-                    familyMembers--;
+                    if(buttonAddPerson.getText().toString().contains("teacher")||buttonAddPerson.getText().toString().contains("social worker"))
+                    {
+                        otherProfessional--;
+                    }
+                    else
+                    if(buttonAddPerson.getText().toString().contains("friend")||buttonAddPerson.getText().toString().contains("neighbor"))
+                    {
+                        friends--;
+                    }
+                    else
+                    {
+                        familyMembers--;
+                    }
                     String oldText="the "+toggleButton1122.getText().toString()+", ";
                     String newText="";
                     String returnedText=textPreviewIntroduction.getText().toString();
                     String temp=returnedText.replace(oldText,newText);
                     textPreviewIntroduction.setText(temp);
+                    if(teamMember==4  && friends+otherProfessional+familyMembers >0)
+                    {
+                        textPreviewIntroduction.setText(temp);
+                    }
+                    else
+                    {
+                        texteffectbutton=textPreviewIntroduction.getText().toString();
+                        if(texteffectbutton.contains(allStaff))
+                        {
+                            texteffectbutton=texteffectbutton.replace(allStaff,ITC);
+                            textPreviewIntroduction.setText(texteffectbutton);
+                        }
+                        else
+                        {
+                            textPreviewIntroduction.setText(temp);
+                        }
+                    }
                 }
             }
         });
@@ -704,30 +909,40 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                 if (isChecked)
                 {
                     test++;
-                    friends++;
-                    otherProfessional++;
-                    familyMembers++;
                     button.setVisibility(View.VISIBLE);
                     texteffectbutton=textPreviewIntroduction.getText().toString();
+                    if(buttonAddPerson.getText().toString().contains("teacher")||buttonAddPerson.getText().toString().contains("social worker"))
+                    {
+                        otherProfessional++;
+                    }
+                    else
+                    if(buttonAddPerson.getText().toString().contains("friend")||buttonAddPerson.getText().toString().contains("neighbor"))
+                    {
+                        friends++;
+                    }
+                    else
+                    {
+                        familyMembers++;
+                    }
                     if (teamMember==4 && otherProfessional+friends+familyMembers>0)
                     {
                         texteffectbutton=textPreviewIntroduction.getText().toString();
                         if (texteffectbutton.contains(indi))
                         {
                             texteffectbutton=texteffectbutton.replace(indi,allStaff);
-                            textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButton.getText()+",");
+                            textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButton.getText()+", ");
                         }
                         else
                         if (texteffectbutton.contains(ITC))
                         {
                             texteffectbutton=texteffectbutton.replace(ITC,allStaff);
-                            textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButton.getText()+",");
+                            textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButton.getText()+", ");
                         }
                         else
                         if (texteffectbutton.contains(CFT))
                         {
                             texteffectbutton=texteffectbutton.replace(CFT,allStaff);
-                            textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButton.getText()+",");
+                            textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButton.getText()+", ");
                         }
                         else {
                             if (texteffectbutton.contains(allStaff)) {
@@ -765,7 +980,7 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                             if (texteffectbutton.contains(indi))
                             {
                                 texteffectbutton=texteffectbutton.replace(indi,CFT);
-                                textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButton.getText()+",");
+                                textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButton.getText()+", ");
                             }
                             else
                             {
@@ -804,7 +1019,7 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                             if (texteffectbutton.contains(indi))
                             {
                                 texteffectbutton=texteffectbutton.replace(indi,CFT);
-                                textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButton.getText()+",");
+                                textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButton.getText()+", ");
                             }
                             else
                             {
@@ -822,6 +1037,19 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                     else
                     {
                         texteffectbutton=textPreviewIntroduction.getText().toString();
+                        if(teamMember==1 || otherProfessional==0)
+                        {
+                            if (texteffectbutton.contains(ITC))
+                            {
+                                texteffectbutton=texteffectbutton.replace(ITC,indi);
+                                textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButton.getText()+", ");
+                            }
+                            else
+                            {
+                                textPreviewIntroduction.setText(texteffectbutton+indi+"the "+toggleButton.getText()+", ");
+                            }
+                        }
+                        else
                         if (texteffectbutton.contains(indi))
                         {
                             textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButton.getText()+", ");
@@ -834,14 +1062,41 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                 }
                 else
                 {
-                    friends--;
-                    otherProfessional--;
-                    familyMembers--;
+                    if(buttonAddPerson.getText().toString().contains("teacher")||buttonAddPerson.getText().toString().contains("social worker"))
+                    {
+                        otherProfessional--;
+                    }
+                    else
+                    if(buttonAddPerson.getText().toString().contains("friend")||buttonAddPerson.getText().toString().contains("neighbor"))
+                    {
+                        friends--;
+                    }
+                    else
+                    {
+                        familyMembers--;
+                    }
                     String oldText="the "+toggleButton.getText().toString()+", ";
                     String newText="";
                     String returnedText=textPreviewIntroduction.getText().toString();
                     String temp=returnedText.replace(oldText,newText);
                     textPreviewIntroduction.setText(temp);
+                    if(teamMember==4  && friends+otherProfessional+familyMembers >0)
+                    {
+                        textPreviewIntroduction.setText(temp);
+                    }
+                    else
+                    {
+                        texteffectbutton=textPreviewIntroduction.getText().toString();
+                        if(texteffectbutton.contains(allStaff))
+                        {
+                            texteffectbutton=texteffectbutton.replace(allStaff,ITC);
+                            textPreviewIntroduction.setText(texteffectbutton);
+                        }
+                        else
+                        {
+                            textPreviewIntroduction.setText(temp);
+                        }
+                    }
                 }
             }
         });
@@ -851,30 +1106,40 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                 if (isChecked)
                 {
                     test++;
-                    friends++;
-                    otherProfessional++;
-                    familyMembers++;
                     button.setVisibility(View.VISIBLE);
                     texteffectbutton=textPreviewIntroduction.getText().toString();
+                    if(buttonAddPerson.getText().toString().contains("teacher")||buttonAddPerson.getText().toString().contains("social worker"))
+                    {
+                        otherProfessional++;
+                    }
+                    else
+                    if(buttonAddPerson.getText().toString().contains("friend")||buttonAddPerson.getText().toString().contains("neighbor"))
+                    {
+                        friends++;
+                    }
+                    else
+                    {
+                        familyMembers++;
+                    }
                     if (teamMember==4 && otherProfessional+friends+familyMembers>0)
                     {
                         texteffectbutton=textPreviewIntroduction.getText().toString();
                         if (texteffectbutton.contains(indi))
                         {
                             texteffectbutton=texteffectbutton.replace(indi,allStaff);
-                            textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButton2.getText()+",");
+                            textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButton2.getText()+", ");
                         }
                         else
                         if (texteffectbutton.contains(ITC))
                         {
                             texteffectbutton=texteffectbutton.replace(ITC,allStaff);
-                            textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButton2.getText()+",");
+                            textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButton2.getText()+", ");
                         }
                         else
                         if (texteffectbutton.contains(CFT))
                         {
                             texteffectbutton=texteffectbutton.replace(CFT,allStaff);
-                            textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButton2.getText()+",");
+                            textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButton2.getText()+", ");
                         }
                         else {
                             if (texteffectbutton.contains(allStaff)) {
@@ -912,7 +1177,7 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                             if (texteffectbutton.contains(indi))
                             {
                                 texteffectbutton=texteffectbutton.replace(indi,CFT);
-                                textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButton2.getText()+",");
+                                textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButton2.getText()+", ");
                             }
                             else
                             {
@@ -951,7 +1216,7 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                             if (texteffectbutton.contains(indi))
                             {
                                 texteffectbutton=texteffectbutton.replace(indi,CFT);
-                                textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButton2.getText()+",");
+                                textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButton2.getText()+", ");
                             }
                             else
                             {
@@ -969,6 +1234,19 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                     else
                     {
                         texteffectbutton=textPreviewIntroduction.getText().toString();
+                        if(teamMember==1 || otherProfessional==0)
+                        {
+                            if (texteffectbutton.contains(ITC))
+                            {
+                                texteffectbutton=texteffectbutton.replace(ITC,indi);
+                                textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButton2.getText()+", ");
+                            }
+                            else
+                            {
+                                textPreviewIntroduction.setText(texteffectbutton+indi+"the "+toggleButton2.getText()+", ");
+                            }
+                        }
+                        else
                         if (texteffectbutton.contains(indi))
                         {
                             textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButton2.getText()+", ");
@@ -980,14 +1258,41 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                     }
                 }
                 else {
-                    friends--;
-                    otherProfessional--;
-                    familyMembers--;
+                    if(buttonAddPerson.getText().toString().contains("teacher")||buttonAddPerson.getText().toString().contains("social worker"))
+                    {
+                        otherProfessional--;
+                    }
+                    else
+                    if(buttonAddPerson.getText().toString().contains("friend")||buttonAddPerson.getText().toString().contains("neighbor"))
+                    {
+                        friends--;
+                    }
+                    else
+                    {
+                        familyMembers--;
+                    }
                     String oldText="the "+toggleButton2.getText().toString()+", ";
                     String newText="";
                     String returnedText=textPreviewIntroduction.getText().toString();
                     String temp=returnedText.replace(oldText,newText);
                     textPreviewIntroduction.setText(temp);
+                    if(teamMember==4  && friends+otherProfessional+familyMembers >0)
+                    {
+                        textPreviewIntroduction.setText(temp);
+                    }
+                    else
+                    {
+                        texteffectbutton=textPreviewIntroduction.getText().toString();
+                        if(texteffectbutton.contains(allStaff))
+                        {
+                            texteffectbutton=texteffectbutton.replace(allStaff,ITC);
+                            textPreviewIntroduction.setText(texteffectbutton);
+                        }
+                        else
+                        {
+                            textPreviewIntroduction.setText(temp);
+                        }
+                    }
                 }
             }
         });
@@ -997,30 +1302,40 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                 if (isChecked)
                 {
                     test++;
-                    friends++;
-                    otherProfessional++;
-                    familyMembers++;
                     button.setVisibility(View.VISIBLE);
                     texteffectbutton=textPreviewIntroduction.getText().toString();
+                    if(buttonAddPerson.getText().toString().contains("teacher")||buttonAddPerson.getText().toString().contains("social worker"))
+                    {
+                        otherProfessional++;
+                    }
+                    else
+                    if(buttonAddPerson.getText().toString().contains("friend")||buttonAddPerson.getText().toString().contains("neighbor"))
+                    {
+                        friends++;
+                    }
+                    else
+                    {
+                        familyMembers++;
+                    }
                     if (teamMember==4 && otherProfessional+friends+familyMembers>0)
                     {
                         texteffectbutton=textPreviewIntroduction.getText().toString();
                         if (texteffectbutton.contains(indi))
                         {
                             texteffectbutton=texteffectbutton.replace(indi,allStaff);
-                            textPreviewIntroduction.setText(texteffectbutton+"the "+button4.getText()+",");
+                            textPreviewIntroduction.setText(texteffectbutton+"the "+button4.getText()+", ");
                         }
                         else
                         if (texteffectbutton.contains(ITC))
                         {
                             texteffectbutton=texteffectbutton.replace(ITC,allStaff);
-                            textPreviewIntroduction.setText(texteffectbutton+"the "+button4.getText()+",");
+                            textPreviewIntroduction.setText(texteffectbutton+"the "+button4.getText()+", ");
                         }
                         else
                         if (texteffectbutton.contains(CFT))
                         {
                             texteffectbutton=texteffectbutton.replace(CFT,allStaff);
-                            textPreviewIntroduction.setText(texteffectbutton+"the "+button4.getText()+",");
+                            textPreviewIntroduction.setText(texteffectbutton+"the "+button4.getText()+", ");
                         }
                         else {
                             if (texteffectbutton.contains(allStaff)) {
@@ -1058,7 +1373,7 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                             if (texteffectbutton.contains(indi))
                             {
                                 texteffectbutton=texteffectbutton.replace(indi,CFT);
-                                textPreviewIntroduction.setText(texteffectbutton+"the "+button4.getText()+",");
+                                textPreviewIntroduction.setText(texteffectbutton+"the "+button4.getText()+", ");
                             }
                             else
                             {
@@ -1097,7 +1412,7 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                             if (texteffectbutton.contains(indi))
                             {
                                 texteffectbutton=texteffectbutton.replace(indi,CFT);
-                                textPreviewIntroduction.setText(texteffectbutton+"the "+button4.getText()+",");
+                                textPreviewIntroduction.setText(texteffectbutton+"the "+button4.getText()+", ");
                             }
                             else
                             {
@@ -1115,6 +1430,19 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                     else
                     {
                         texteffectbutton=textPreviewIntroduction.getText().toString();
+                        if(teamMember==1 || otherProfessional==0)
+                        {
+                            if (texteffectbutton.contains(ITC))
+                            {
+                                texteffectbutton=texteffectbutton.replace(ITC,indi);
+                                textPreviewIntroduction.setText(texteffectbutton+"the "+button4.getText()+", ");
+                            }
+                            else
+                            {
+                                textPreviewIntroduction.setText(texteffectbutton+indi+"the "+button4.getText()+", ");
+                            }
+                        }
+                        else
                         if (texteffectbutton.contains(indi))
                         {
                             textPreviewIntroduction.setText(texteffectbutton+"the "+button4.getText()+", ");
@@ -1127,14 +1455,41 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                 }
                 else
                 {
-                    friends--;
-                    otherProfessional--;
-                    familyMembers--;
+                    if(buttonAddPerson.getText().toString().contains("teacher")||buttonAddPerson.getText().toString().contains("social worker"))
+                    {
+                        otherProfessional--;
+                    }
+                    else
+                    if(buttonAddPerson.getText().toString().contains("friend")||buttonAddPerson.getText().toString().contains("neighbor"))
+                    {
+                        friends--;
+                    }
+                    else
+                    {
+                        familyMembers--;
+                    }
                     String oldText="the "+button4.getText().toString()+", ";
                     String newText="";
                     String returnedText=textPreviewIntroduction.getText().toString();
                     String temp=returnedText.replace(oldText,newText);
                     textPreviewIntroduction.setText(temp);
+                    if(teamMember==4  && friends+otherProfessional+familyMembers >0)
+                    {
+                        textPreviewIntroduction.setText(temp);
+                    }
+                    else
+                    {
+                        texteffectbutton=textPreviewIntroduction.getText().toString();
+                        if(texteffectbutton.contains(allStaff))
+                        {
+                            texteffectbutton=texteffectbutton.replace(allStaff,ITC);
+                            textPreviewIntroduction.setText(texteffectbutton);
+                        }
+                        else
+                        {
+                            textPreviewIntroduction.setText(temp);
+                        }
+                    }
                 }
             }
         });
@@ -1144,30 +1499,40 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                 if (isChecked)
                 {
                     test++;
-                    friends++;
-                    otherProfessional++;
-                    familyMembers++;
                     button.setVisibility(View.VISIBLE);
                     texteffectbutton=textPreviewIntroduction.getText().toString();
+                    if(buttonAddPerson.getText().toString().contains("teacher")||buttonAddPerson.getText().toString().contains("social worker"))
+                    {
+                        otherProfessional++;
+                    }
+                    else
+                    if(buttonAddPerson.getText().toString().contains("friend")||buttonAddPerson.getText().toString().contains("neighbor"))
+                    {
+                        friends++;
+                    }
+                    else
+                    {
+                        familyMembers++;
+                    }
                     if (teamMember==4 && otherProfessional+friends+familyMembers>0)
                     {
                         texteffectbutton=textPreviewIntroduction.getText().toString();
                         if (texteffectbutton.contains(indi))
                         {
                             texteffectbutton=texteffectbutton.replace(indi,allStaff);
-                            textPreviewIntroduction.setText(texteffectbutton+"the "+button3.getText()+",");
+                            textPreviewIntroduction.setText(texteffectbutton+"the "+button3.getText()+", ");
                         }
                         else
                         if (texteffectbutton.contains(ITC))
                         {
                             texteffectbutton=texteffectbutton.replace(ITC,allStaff);
-                            textPreviewIntroduction.setText(texteffectbutton+"the "+button3.getText()+",");
+                            textPreviewIntroduction.setText(texteffectbutton+"the "+button3.getText()+", ");
                         }
                         else
                         if (texteffectbutton.contains(CFT))
                         {
                             texteffectbutton=texteffectbutton.replace(CFT,allStaff);
-                            textPreviewIntroduction.setText(texteffectbutton+"the "+button3.getText()+",");
+                            textPreviewIntroduction.setText(texteffectbutton+"the "+button3.getText()+", ");
                         }
                         else {
                             if (texteffectbutton.contains(allStaff)) {
@@ -1205,7 +1570,7 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                             if (texteffectbutton.contains(indi))
                             {
                                 texteffectbutton=texteffectbutton.replace(indi,CFT);
-                                textPreviewIntroduction.setText(texteffectbutton+"the "+button3.getText()+",");
+                                textPreviewIntroduction.setText(texteffectbutton+"the "+button3.getText()+", ");
                             }
                             else
                             {
@@ -1244,7 +1609,7 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                             if (texteffectbutton.contains(indi))
                             {
                                 texteffectbutton=texteffectbutton.replace(indi,CFT);
-                                textPreviewIntroduction.setText(texteffectbutton+"the "+button3.getText()+",");
+                                textPreviewIntroduction.setText(texteffectbutton+"the "+button3.getText()+", ");
                             }
                             else
                             {
@@ -1262,6 +1627,19 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                     else
                     {
                         texteffectbutton=textPreviewIntroduction.getText().toString();
+                        if(teamMember==1 || otherProfessional==0)
+                        {
+                            if (texteffectbutton.contains(ITC))
+                            {
+                                texteffectbutton=texteffectbutton.replace(ITC,indi);
+                                textPreviewIntroduction.setText(texteffectbutton+"the "+button3.getText()+", ");
+                            }
+                            else
+                            {
+                                textPreviewIntroduction.setText(texteffectbutton+indi+"the "+button3.getText()+", ");
+                            }
+                        }
+                        else
                         if (texteffectbutton.contains(indi))
                         {
                             textPreviewIntroduction.setText(texteffectbutton+"the "+button3.getText()+", ");
@@ -1274,14 +1652,41 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                 }
                 else
                 {
-                    friends--;
-                    otherProfessional--;
-                    familyMembers--;
+                    if(buttonAddPerson.getText().toString().contains("teacher")||buttonAddPerson.getText().toString().contains("social worker"))
+                    {
+                        otherProfessional--;
+                    }
+                    else
+                    if(buttonAddPerson.getText().toString().contains("friend")||buttonAddPerson.getText().toString().contains("neighbor"))
+                    {
+                        friends--;
+                    }
+                    else
+                    {
+                        familyMembers--;
+                    }
                     String oldText="the "+button3.getText().toString()+", ";
                     String newText="";
                     String returnedText=textPreviewIntroduction.getText().toString();
                     String temp=returnedText.replace(oldText,newText);
                     textPreviewIntroduction.setText(temp);
+                    if(teamMember==4  && friends+otherProfessional+familyMembers >0)
+                    {
+                        textPreviewIntroduction.setText(temp);
+                    }
+                    else
+                    {
+                        texteffectbutton=textPreviewIntroduction.getText().toString();
+                        if(texteffectbutton.contains(allStaff))
+                        {
+                            texteffectbutton=texteffectbutton.replace(allStaff,ITC);
+                            textPreviewIntroduction.setText(texteffectbutton);
+                        }
+                        else
+                        {
+                            textPreviewIntroduction.setText(temp);
+                        }
+                    }
                 }
 
             }
@@ -1296,6 +1701,7 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                     test++;
                     teamMember++;
                     button.setVisibility(View.VISIBLE);
+
                     if (teamMember>1 && otherProfessional + friends + familyMembers ==0)
                     {
                         texteffectbutton=textPreviewIntroduction.getText().toString();
@@ -1315,19 +1721,19 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                         if (texteffectbutton.contains(ITC))
                         {
                             texteffectbutton=texteffectbutton.replace(ITC,allStaff);
-                            textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButtonFacilitator.getText()+",");
+                            textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButtonFacilitator.getText()+", ");
                         }
                         else
                         if (texteffectbutton.contains(CFT))
                         {
                             texteffectbutton=texteffectbutton.replace(CFT,allStaff);
-                            textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButtonFacilitator.getText()+",");
+                            textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButtonFacilitator.getText()+", ");
                         }
                         else
                             if (texteffectbutton.contains(indi))
                             {
                                 texteffectbutton=texteffectbutton.replace(indi,allStaff);
-                                textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButtonFacilitator.getText()+",");
+                                textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButtonFacilitator.getText()+", ");
                             }
                             else
                             {
@@ -1344,7 +1750,7 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
 
                     }
                     else
-                    if (teamMember> 1 && otherProfessional> 1)
+                    if (teamMember> 1 || otherProfessional> 1)
                     {
                         texteffectbutton=textPreviewIntroduction.getText().toString();
                         if (toggleButtonFacilitator.getText().toString().contains("social worker"))
@@ -1371,6 +1777,26 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                                 textPreviewIntroduction.setText(texteffectbutton+CFT+"the "+toggleButtonFacilitator.getText()+", ");
                             }
                         }
+                        else
+                        {
+                            if (texteffectbutton.contains(indi))
+                            {
+                                texteffectbutton=texteffectbutton.replace(indi,CFT);
+                                textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButtonParentPartner.getText()+", ");
+                            }
+                            else
+                            {
+                                textPreviewIntroduction.setText(texteffectbutton+CFT+"the "+toggleButtonParentPartner.getText()+", ");
+                            }
+                            if (texteffectbutton.contains(CFT))
+                            {
+                                textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButtonParentPartner.getText()+", ");
+                            }
+                            else
+                            {
+                                textPreviewIntroduction.setText(texteffectbutton+CFT+"the "+toggleButtonParentPartner.getText()+", ");
+                            }
+                        }
 
                     }
                     else
@@ -1379,24 +1805,24 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                         if (texteffectbutton.contains(CFT))
                         {
                             texteffectbutton=texteffectbutton.replace(CFT,ITC);
-                            textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButtonFacilitator.getText()+",");
+                            textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButtonFacilitator.getText()+", ");
                         }
                         else
                             if (texteffectbutton.contains(allStaff))
                             {
                                 texteffectbutton=texteffectbutton.replace(allStaff,ITC);
-                                textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButtonFacilitator.getText()+",");
+                                textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButtonFacilitator.getText()+", ");
                             }
                             else
                             if (texteffectbutton.contains(indi))
                             {
-                                texteffectbutton=texteffectbutton.replace(indi,ITC);
+                                //texteffectbutton=texteffectbutton.replace(indi,ITC);
                                 textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButtonFacilitator.getText()+", ");
                             }
 
                         else
                             {
-                                textPreviewIntroduction.setText(texteffectbutton+ITC+"the "+toggleButtonFacilitator.getText()+",");
+                                textPreviewIntroduction.setText(texteffectbutton+ITC+"the "+toggleButtonFacilitator.getText()+", ");
                             }
 
                     }
@@ -1427,11 +1853,7 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                                 textPreviewIntroduction.setText(finalText);
                             }
                         }
-//                    String OLDTEXT=allStaff;
-//                    String NEWTEXT=CFT;
-//                    String combine=textPreviewIntroduction.getText().toString();
-//                    String tempPrint=combine.replace(OLDTEXT,NEWTEXT);
-//                    textPreviewIntroduction.setText(tempPrint);
+//
                 }
             }
         });
@@ -1463,19 +1885,19 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                         if (texteffectbutton.contains(ITC))
                         {
                             texteffectbutton=texteffectbutton.replace(ITC,allStaff);
-                            textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButtonTherapist.getText()+",");
+                            textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButtonTherapist.getText()+", ");
                         }
                         else
                         if (texteffectbutton.contains(CFT))
                         {
                             texteffectbutton=texteffectbutton.replace(CFT,allStaff);
-                            textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButtonTherapist.getText()+",");
+                            textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButtonTherapist.getText()+", ");
                         }
                         else
                         if (texteffectbutton.contains(indi))
                         {
                             texteffectbutton=texteffectbutton.replace(indi,allStaff);
-                            textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButtonTherapist.getText()+",");
+                            textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButtonTherapist.getText()+", ");
                         }
                         else
                         {
@@ -1492,7 +1914,7 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
 
                     }
                     else
-                    if (teamMember> 1 && otherProfessional> 1)
+                    if (teamMember> 1 || otherProfessional> 1)
                     {
                         texteffectbutton=textPreviewIntroduction.getText().toString();
                         if (toggleButtonTherapist.getText().toString().contains("social worker"))
@@ -1519,6 +1941,26 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                                 textPreviewIntroduction.setText(texteffectbutton+CFT+"the "+toggleButtonTherapist.getText()+", ");
                             }
                         }
+                        else
+                        {
+                            if (texteffectbutton.contains(indi))
+                            {
+                                texteffectbutton=texteffectbutton.replace(indi,CFT);
+                                textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButtonTherapist.getText()+", ");
+                            }
+                            else
+                            {
+                                textPreviewIntroduction.setText(texteffectbutton+CFT+"the "+toggleButtonTherapist.getText()+", ");
+                            }
+                            if (texteffectbutton.contains(CFT))
+                            {
+                                textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButtonTherapist.getText()+", ");
+                            }
+                            else
+                            {
+                                textPreviewIntroduction.setText(texteffectbutton+CFT+"the "+toggleButtonTherapist.getText()+", ");
+                            }
+                        }
 
                     }
                     else
@@ -1527,13 +1969,13 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                         if (texteffectbutton.contains(CFT))
                         {
                             texteffectbutton=texteffectbutton.replace(CFT,ITC);
-                            textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButtonTherapist.getText()+",");
+                            textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButtonTherapist.getText()+", ");
                         }
                         else
                         if (texteffectbutton.contains(allStaff))
                         {
                             texteffectbutton=texteffectbutton.replace(allStaff,ITC);
-                            textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButtonTherapist.getText()+",");
+                            textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButtonTherapist.getText()+", ");
                         }
                         else
                         if (texteffectbutton.contains(indi))
@@ -1544,7 +1986,7 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
 
                         else
                         {
-                            textPreviewIntroduction.setText(texteffectbutton+ITC+"the "+toggleButtonTherapist.getText()+",");
+                            textPreviewIntroduction.setText(texteffectbutton+ITC+"the "+toggleButtonTherapist.getText()+", ");
                         }
 
                     }
@@ -1574,11 +2016,6 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                             textPreviewIntroduction.setText(finalText);
                         }
                     }
-//                    String OLDTEXT=allStaff;
-//                    String NEWTEXT=CFT;
-//                    String combine=textPreviewIntroduction.getText().toString();
-//                    String tempPrint=combine.replace(OLDTEXT,NEWTEXT);
-//                    textPreviewIntroduction.setText(tempPrint);
                 }
             }
         });
@@ -1623,19 +2060,19 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                         if (texteffectbutton.contains(ITC))
                         {
                             texteffectbutton=texteffectbutton.replace(ITC,allStaff);
-                            textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButtonParentPartner.getText()+",");
+                            textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButtonParentPartner.getText()+", ");
                         }
                         else
                         if (texteffectbutton.contains(CFT))
                         {
                             texteffectbutton=texteffectbutton.replace(CFT,allStaff);
-                            textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButtonParentPartner.getText()+",");
+                            textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButtonParentPartner.getText()+", ");
                         }
                         else
                         if (texteffectbutton.contains(indi))
                         {
                             texteffectbutton=texteffectbutton.replace(indi,allStaff);
-                            textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButtonParentPartner.getText()+",");
+                            textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButtonParentPartner.getText()+", ");
                         }
                         else
                         {
@@ -1652,7 +2089,7 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
 
                     }
                     else
-                    if (teamMember> 1 && otherProfessional> 1)
+                    if (teamMember> 1 || otherProfessional> 1)
                     {
                         texteffectbutton=textPreviewIntroduction.getText().toString();
                         if (toggleButtonParentPartner.getText().toString().contains("social worker"))
@@ -1679,6 +2116,26 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                                 textPreviewIntroduction.setText(texteffectbutton+CFT+"the "+toggleButtonParentPartner.getText()+", ");
                             }
                         }
+                        else
+                        {
+                            if (texteffectbutton.contains(indi))
+                            {
+                                texteffectbutton=texteffectbutton.replace(indi,CFT);
+                                textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButtonParentPartner.getText()+", ");
+                            }
+                            else
+                            {
+                                textPreviewIntroduction.setText(texteffectbutton+CFT+"the "+toggleButtonParentPartner.getText()+", ");
+                            }
+                            if (texteffectbutton.contains(CFT))
+                            {
+                                textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButtonParentPartner.getText()+", ");
+                            }
+                            else
+                            {
+                                textPreviewIntroduction.setText(texteffectbutton+CFT+"the "+toggleButtonParentPartner.getText()+", ");
+                            }
+                        }
 
                     }
                     else
@@ -1687,13 +2144,13 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                         if (texteffectbutton.contains(CFT))
                         {
                             texteffectbutton=texteffectbutton.replace(CFT,ITC);
-                            textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButtonParentPartner.getText()+",");
+                            textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButtonParentPartner.getText()+", ");
                         }
                         else
                         if (texteffectbutton.contains(allStaff))
                         {
                             texteffectbutton=texteffectbutton.replace(allStaff,ITC);
-                            textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButtonParentPartner.getText()+",");
+                            textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButtonParentPartner.getText()+", ");
                         }
                         else
                         if (texteffectbutton.contains(indi))
@@ -1704,7 +2161,7 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
 
                         else
                         {
-                            textPreviewIntroduction.setText(texteffectbutton+ITC+"the "+toggleButtonParentPartner.getText()+",");
+                            textPreviewIntroduction.setText(texteffectbutton+ITC+"the "+toggleButtonParentPartner.getText()+", ");
                         }
 
                     }
@@ -1734,11 +2191,7 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                             textPreviewIntroduction.setText(finalText);
                         }
                     }
-//                    String OLDTEXT=allStaff;
-//                    String NEWTEXT=CFT;
-//                    String combine=textPreviewIntroduction.getText().toString();
-//                    String tempPrint=combine.replace(OLDTEXT,NEWTEXT);
-//                    textPreviewIntroduction.setText(tempPrint);
+//
                 }
             }
         });
@@ -1766,7 +2219,7 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                                             final String task = String.valueOf(taskEditText.getText());
                                             if (number==0)
                                             {
-                                                buttonText1="caregiver("+task+")";
+                                                buttonText1="caregiver ("+task+")";
                                                 buttonAddPerson.setVisibility(View.VISIBLE);
                                                 buttonAddPerson.setText("caregiver ("+task+")");
                                                 buttonAddPerson.setTextOff("caregiver ("+task+")");
@@ -1778,7 +2231,7 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                                             else
                                             if (number==1)
                                             {
-                                                buttonText2="caregiver("+task+")";
+                                                buttonText2="caregiver ("+task+")";
                                                 toggleButton12.setVisibility(View.VISIBLE);
                                                 toggleButton12.setText("caregiver ("+task+")");
                                                 toggleButton12.setTextOff("caregiver ("+task+")");
@@ -1788,7 +2241,7 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                                             }
                                             else if (number==2)
                                             {
-                                                buttonText3="caregiver("+task+")";
+                                                buttonText3="caregiver ("+task+")";
                                                 toggleButton1122.setVisibility(View.VISIBLE);
                                                 toggleButton1122.setText("caregiver ("+task+")");
                                                 toggleButton1122.setTextOff("caregiver ("+task+")");
@@ -1798,7 +2251,7 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                                             }
                                             else if (number==3)
                                             {
-                                                buttonText4="caregiver("+task+")";
+                                                buttonText4="caregiver ("+task+")";
                                                 linearLayoutPeoplePresentRow2.setVisibility(View.VISIBLE);
                                                 toggleButton.setVisibility(View.VISIBLE);
                                                 toggleButton.setText("caregiver ("+task+")");
@@ -1810,7 +2263,7 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                                             else
                                             if (number==4)
                                             {
-                                                buttonText5="caregiver("+task+")";
+                                                buttonText5="caregiver ("+task+")";
                                                 linearLayoutPeoplePresentRow2.setVisibility(View.VISIBLE);
                                                 toggleButton2.setVisibility(View.VISIBLE);
                                                 toggleButton2.setText("caregiver ("+task+")");
@@ -1822,7 +2275,7 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                                             else
                                             if (number==5)
                                             {
-                                                buttonText6="caregiver("+task+")";
+                                                buttonText6="caregiver ("+task+")";
                                                 linearLayoutPeoplePresentRow2.setVisibility(View.VISIBLE);
                                                 button4.setVisibility(View.VISIBLE);
                                                 button4.setText("caregiver ("+task+")");
@@ -1833,7 +2286,7 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                                             }
                                             else if (number==6)
                                             {
-                                                buttonText7="caregiver("+task+")";
+                                                buttonText7="caregiver ("+task+")";
                                                 linearLayoutPeoplePresentRow2.setVisibility(View.VISIBLE);
                                                 button3.setVisibility(View.VISIBLE);
                                                 button3.setText("caregiver ("+task+")");
@@ -1864,7 +2317,7 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                                             String task = String.valueOf(taskEditText.getText());
                                             if (number==0)
                                             {
-                                                buttonText1="social worker("+task+")";
+                                                buttonText1="social worker ("+task+")";
                                                 buttonAddPerson.setVisibility(View.VISIBLE);
                                                 buttonAddPerson.setText("social worker ("+task+")");
                                                 buttonAddPerson.setTextOff("social worker ("+task+")");
@@ -1875,7 +2328,7 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                                             else
                                             if (number==1)
                                             {
-                                                buttonText2="social worker("+task+")";
+                                                buttonText2="social worker ("+task+")";
                                                 toggleButton12.setVisibility(View.VISIBLE);
                                                 toggleButton12.setText("social worker ("+task+")");
                                                 toggleButton12.setTextOff("social worker ("+task+")");
@@ -1885,7 +2338,7 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                                             }else
                                             if (number==2)
                                             {
-                                                buttonText3="social worker("+task+")";
+                                                buttonText3="social worker ("+task+")";
                                                 toggleButton1122.setVisibility(View.VISIBLE);
                                                 toggleButton1122.setText("social worker ("+task+")");
                                                 toggleButton1122.setTextOff("social worker ("+task+")");
@@ -1895,7 +2348,7 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                                             }
                                             else if (number==3)
                                             {
-                                                buttonText4="social worker("+task+")";
+                                                buttonText4="social worker ("+task+")";
                                                 linearLayoutPeoplePresentRow2.setVisibility(View.VISIBLE);
                                                 toggleButton.setVisibility(View.VISIBLE);
                                                 toggleButton.setText("social worker ("+task+")");
@@ -1907,7 +2360,7 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                                             else
                                             if (number==4)
                                             {
-                                                buttonText5="social worker("+task+")";
+                                                buttonText5="social worker ("+task+")";
                                                 linearLayoutPeoplePresentRow2.setVisibility(View.VISIBLE);
                                                 toggleButton2.setVisibility(View.VISIBLE);
                                                 toggleButton2.setText("social worker ("+task+")");
@@ -1919,7 +2372,7 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                                             else
                                             if (number==5)
                                             {
-                                                buttonText6="social worker("+task+")";
+                                                buttonText6="social worker ("+task+")";
                                                 linearLayoutPeoplePresentRow2.setVisibility(View.VISIBLE);
                                                 button4.setVisibility(View.VISIBLE);
                                                 button4.setText("social worker ("+task+")");
@@ -1930,7 +2383,7 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                                             }
                                             else if (number==6)
                                             {
-                                                buttonText7="social worker("+task+")";
+                                                buttonText7="social worker ("+task+")";
                                                 linearLayoutPeoplePresentRow2.setVisibility(View.VISIBLE);
                                                 button3.setVisibility(View.VISIBLE);
                                                 button3.setText("social worker ("+task+")");

@@ -3,9 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/RecapTube.iml" filepath="$PROJECT_DIR$/RecapTube.iml" />
-      <module fileurl="file://E:\Androidproject\RecapTube\RecapTube.iml" filepath="E:\Androidproject\RecapTube\RecapTube.iml" />
       <module fileurl="file://C:\Users\Abdulllah khan\Documents\GitHub\RecapTube\RecapTube.iml" filepath="C:\Users\Abdulllah khan\Documents\GitHub\RecapTube\RecapTube.iml" />
-      <module fileurl="file://$PROJECT_DIR$/RecapTube-master.iml" filepath="$PROJECT_DIR$/RecapTube-master.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://C:\Users\Abdulllah khan\Documents\GitHub\RecapTube\app\app.iml" filepath="C:\Users\Abdulllah khan\Documents\GitHub\RecapTube\app\app.iml" />
     </modules>
