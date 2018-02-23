@@ -1,0 +1,15 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="androidlab.com.recaptube.Fragments.EngagementTabs.EngagementCustomFragment">
+
+    <Button
+        android:id="@+id/btnEngCustom"
+        android:layout_width="300sp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10sp"
+        android:textAllCaps="false"
+        android:text="+Add ending phrase"/>
+
+</FrameLayout>

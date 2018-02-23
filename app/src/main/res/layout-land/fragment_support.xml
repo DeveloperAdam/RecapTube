@@ -1,0 +1,141 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#eee"
+    tools:context="androidlab.com.recaptube.Fragments.MainTabs.SupportFragment">
+
+
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_marginTop="10sp"
+       android:layout_marginLeft="10sp"
+       android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/advocated"
+            android:layout_width="315dp"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:text="advocated"/>
+
+        <Button
+            android:id="@+id/assisted"
+            android:layout_width="315dp"
+            android:layout_height="wrap_content"
+            android:text="assisted"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/emathized"
+            android:layout_width="315dp"
+            android:layout_height="wrap_content"
+            android:text="empathized"
+            android:textAllCaps="false" />
+   </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10sp"
+        android:layout_marginLeft="10sp"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/encouraged"
+            android:layout_width="315dp"
+            android:layout_height="wrap_content"
+            android:text="encouraged"
+            android:textAllCaps="false"/>
+
+        <Button
+            android:id="@+id/helped"
+            android:layout_width="315dp"
+            android:layout_height="wrap_content"
+            android:text="helped"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/motivated"
+            android:layout_width="315dp"
+            android:layout_height="wrap_content"
+            android:text="motivated"
+            android:textAllCaps="false" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10sp"
+        android:layout_marginLeft="10sp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/offered"
+            android:layout_width="315dp"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:text="offered" />
+
+        <Button
+            android:id="@+id/problem_solved"
+            android:layout_width="315dp"
+            android:layout_height="wrap_content"
+            android:text="problem solved"
+            android:textAllCaps="false" />
+
+
+        <Button
+            android:id="@+id/promoted"
+            android:layout_width="315dp"
+            android:layout_height="wrap_content"
+            android:text="promoted"
+            android:textAllCaps="false" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10sp"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/provided_supportive_presence"
+            android:layout_width="315dp"
+            android:layout_height="wrap_content"
+            android:text="provided supportive presence"
+            android:textAllCaps="false"
+            />
+        <Button
+            android:id="@+id/reminded"
+            android:layout_width="315dp"
+            android:layout_height="wrap_content"
+            android:text="reminded"
+            android:textAllCaps="false" />
+        <Button
+            android:id="@+id/supported"
+            android:layout_width="315dp"
+            android:layout_height="wrap_content"
+            android:text="supported"
+            android:textAllCaps="false" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10sp"
+        android:layout_marginLeft="10sp"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/offered_support"
+            android:layout_width="315dp"
+            android:layout_height="wrap_content"
+            android:text="offered support"
+            android:textAllCaps="false" />
+        <Button
+            android:id="@+id/validated"
+            android:layout_width="315dp"
+            android:layout_height="wrap_content"
+            android:text="validated"
+            android:textAllCaps="false" />
+    </LinearLayout>
+
+</LinearLayout>

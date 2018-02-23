@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <TextView
+        android:layout_width="560sp"
+        android:layout_height="wrap_content"
+        android:text="Intervention"
+        android:layout_marginTop="5sp"
+        style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+        android:id="@+id/tvIntervention2k3b"
+        android:textColor="#fff"/>
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_toRightOf="@id/tvIntervention2k3b"
+    android:orientation="horizontal">
+    <Button
+        android:id="@+id/btnInterventioncustom"
+        style="@style/AppTheme.RoundedCornerMaterialButton"
+        android:layout_width="wrap_content"
+        android:layout_height="34sp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginRight="25dp"
+        android:drawablePadding="5sp"
+        android:drawableTint="#fff"
+        android:paddingLeft="7sp"
+        android:paddingRight="7sp"
+        android:drawableLeft="@drawable/leftback"
+        android:text="Intervention"
+        android:textAllCaps="false"
+        android:textColor="#fff"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/btnBehavior"
+        style="@style/AppTheme.RoundedCornerMaterialButton"
+        android:layout_width="wrap_content"
+        android:layout_height="34sp"
+        android:drawablePadding="5sp"
+        android:drawableRight="@drawable/ic_arrow_forward_black_24dp"
+        android:drawableTint="#fff"
+        android:paddingLeft="15sp"
+        android:paddingRight="7dp"
+        android:text="Behavior"
+        android:textAllCaps="false"
+        android:textColor="#fff"
+        android:textSize="18sp" />
+</LinearLayout>
+</RelativeLayout>

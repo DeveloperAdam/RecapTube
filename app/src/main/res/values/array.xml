@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+   <string-array name="genderSpinner">
+       <item>Gender (HINT)</item>
+       <item>Male</item>
+       <item>Female</item>
+   </string-array>
+    <string-array name="address1">
+        <item>Starting Location</item>
+        <item>Phone</item>
+        <item>Custom</item>
+        <item>My Home</item>
+        <item>Office 1: Long Beach</item>
+        <item>Office 2: Los Angeles</item>
+        <item>Office 3: Downey</item>
+        <item>Client 1: Home</item>
+        <item>Client 2: Home</item>
+        <item>Office 3: School</item>
+    </string-array>
+    <string-array name="address2">
+        <item>Starting Location</item>
+        <item>Phone</item>
+        <item>My Home</item>
+        <item>Client Address</item>
+        <item>Offices</item>
+        <item>Custom</item>
+        <item>My Home</item>
+    </string-array>
+    <string-array name="moodSpinner">
+        <item>Mood</item>
+        <item>Positive</item>
+        <item>Neutral</item>
+        <item>Negative</item>
+    </string-array>
+</resources>

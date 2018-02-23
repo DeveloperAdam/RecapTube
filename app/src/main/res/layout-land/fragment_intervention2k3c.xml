@@ -1,0 +1,117 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="#eee"
+    tools:context="androidlab.com.recaptube.Fragments.Intervention2k3c">
+
+    <TextView
+        android:id="@+id/tvTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10sp"
+        android:text="The CFS brainstormed with who?"/>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="20sp"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/client"
+            android:layout_width="310dp"
+            android:text="client"
+            android:textAllCaps="false"
+            android:layout_marginLeft="13dp"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/family"
+            android:layout_width="310dp"
+            android:text="family"
+            android:textAllCaps="false"
+            android:layout_height="wrap_content"/>
+
+
+        <Button
+            android:id="@+id/btn1"
+            android:layout_width="310dp"
+            android:textAllCaps="false"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="13dp">
+
+        <Button
+            android:id="@+id/btn2"
+            android:layout_width="310dp"
+            android:textAllCaps="false"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+
+
+        <Button
+            android:id="@+id/btn3"
+            android:layout_width="310dp"
+            android:textAllCaps="false"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+
+
+        <Button
+            android:id="@+id/btn4"
+            android:layout_width="310dp"
+            android:textAllCaps="false"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="13dp"
+        >
+        <Button
+            android:id="@+id/btn5"
+            android:layout_width="310dp"
+            android:textAllCaps="false"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+
+
+        <Button
+            android:id="@+id/btn6"
+            android:layout_width="310dp"
+            android:textAllCaps="false"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+
+
+        <Button
+            android:id="@+id/btn7"
+            android:layout_width="310dp"
+            android:textAllCaps="false"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+
+
+    </LinearLayout>
+</LinearLayout>
+</LinearLayout>

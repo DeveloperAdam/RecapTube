@@ -1,0 +1,42 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#eee"
+    tools:context="androidlab.com.recaptube.Fragments.PraiseTabs.PraiseGoalStatusFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10sp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/achievingagoal"
+            android:layout_width="315dp"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:text="achieving a goal"/>
+
+        <Button
+            android:id="@+id/makingprogressonagoal"
+            android:layout_width="315dp"
+            android:layout_height="wrap_content"
+            android:text="making progress on a goal"
+            android:textAllCaps="false"
+            android:layout_toRightOf="@+id/achievingagoal"/>
+
+        <Button
+            android:id="@+id/puttingeffortonagoal"
+            android:layout_width="315dp"
+            android:layout_height="wrap_content"
+            android:text="putting effort on a goal"
+            android:textAllCaps="false"
+            android:layout_toRightOf="@+id/makingprogressonagoal"/>
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

@@ -1,0 +1,34 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#eee"
+    tools:context="androidlab.com.recaptube.Fragments.SupportTabs.supportResourcesFragment">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10sp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/aflyerwithinformation"
+            android:layout_width="315dp"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:text="a flyer with information"/>
+
+        <Button
+            android:id="@+id/apamphletwithinformation"
+            android:layout_width="315dp"
+            android:layout_height="wrap_content"
+            android:text="a pamphlet with information"
+            android:textAllCaps="false"
+            />
+
+
+    </LinearLayout>
+
+</LinearLayout>
