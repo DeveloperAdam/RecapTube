@@ -547,9 +547,14 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                             else
                         {
                             texteffectbutton=textPreviewIntroduction.getText().toString();
-                            if(texteffectbutton.contains(allStaff))
+                            if(texteffectbutton.contains(CFT))
                             {
-                                texteffectbutton=texteffectbutton.replace(allStaff,ITC);
+                                texteffectbutton=texteffectbutton.replace(CFT,indi);
+                                textPreviewIntroduction.setText(texteffectbutton);
+                            }
+                            if(texteffectbutton.contains(ITC))
+                            {
+                                texteffectbutton=texteffectbutton.replace(ITC,indi);
                                 textPreviewIntroduction.setText(texteffectbutton);
                             }
                         }
@@ -801,9 +806,14 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                     else
                     {
                         texteffectbutton=textPreviewIntroduction.getText().toString();
-                        if(texteffectbutton.contains(allStaff))
+                        if(texteffectbutton.contains(CFT))
                         {
-                            texteffectbutton=texteffectbutton.replace(allStaff,ITC);
+                            texteffectbutton=texteffectbutton.replace(CFT,indi);
+                            textPreviewIntroduction.setText(texteffectbutton);
+                        }
+                        if(texteffectbutton.contains(ITC))
+                        {
+                            texteffectbutton=texteffectbutton.replace(ITC,indi);
                             textPreviewIntroduction.setText(texteffectbutton);
                         }
                     }
@@ -1053,9 +1063,14 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                     else
                     {
                         texteffectbutton=textPreviewIntroduction.getText().toString();
-                        if(texteffectbutton.contains(allStaff))
+                        if(texteffectbutton.contains(CFT))
                         {
-                            texteffectbutton=texteffectbutton.replace(allStaff,ITC);
+                            texteffectbutton=texteffectbutton.replace(CFT,indi);
+                            textPreviewIntroduction.setText(texteffectbutton);
+                        }
+                        if(texteffectbutton.contains(ITC))
+                        {
+                            texteffectbutton=texteffectbutton.replace(ITC,indi);
                             textPreviewIntroduction.setText(texteffectbutton);
                         }
                     }
@@ -1295,9 +1310,14 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                     else
                     {
                         texteffectbutton=textPreviewIntroduction.getText().toString();
-                        if(texteffectbutton.contains(allStaff))
+                        if(texteffectbutton.contains(CFT))
                         {
-                            texteffectbutton=texteffectbutton.replace(allStaff,ITC);
+                            texteffectbutton=texteffectbutton.replace(CFT,indi);
+                            textPreviewIntroduction.setText(texteffectbutton);
+                        }
+                        if(texteffectbutton.contains(ITC))
+                        {
+                            texteffectbutton=texteffectbutton.replace(ITC,indi);
                             textPreviewIntroduction.setText(texteffectbutton);
                         }
                     }
@@ -1547,9 +1567,14 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                     else
                     {
                         texteffectbutton=textPreviewIntroduction.getText().toString();
-                        if(texteffectbutton.contains(allStaff))
+                        if(texteffectbutton.contains(CFT))
                         {
-                            texteffectbutton=texteffectbutton.replace(allStaff,ITC);
+                            texteffectbutton=texteffectbutton.replace(CFT,indi);
+                            textPreviewIntroduction.setText(texteffectbutton);
+                        }
+                        if(texteffectbutton.contains(ITC))
+                        {
+                            texteffectbutton=texteffectbutton.replace(ITC,indi);
                             textPreviewIntroduction.setText(texteffectbutton);
                         }
                     }
@@ -1799,9 +1824,14 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                     else
                     {
                         texteffectbutton=textPreviewIntroduction.getText().toString();
-                        if(texteffectbutton.contains(allStaff))
+                        if(texteffectbutton.contains(CFT))
                         {
-                            texteffectbutton=texteffectbutton.replace(allStaff,ITC);
+                            texteffectbutton=texteffectbutton.replace(CFT,indi);
+                            textPreviewIntroduction.setText(texteffectbutton);
+                        }
+                        if(texteffectbutton.contains(ITC))
+                        {
+                            texteffectbutton=texteffectbutton.replace(ITC,indi);
                             textPreviewIntroduction.setText(texteffectbutton);
                         }
                     }
@@ -2062,9 +2092,14 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                     else
                     {
                         texteffectbutton=textPreviewIntroduction.getText().toString();
-                        if(texteffectbutton.contains(allStaff))
+                        if(texteffectbutton.contains(CFT))
                         {
-                            texteffectbutton=texteffectbutton.replace(allStaff,ITC);
+                            texteffectbutton=texteffectbutton.replace(CFT,indi);
+                            textPreviewIntroduction.setText(texteffectbutton);
+                        }
+                        if(texteffectbutton.contains(ITC))
+                        {
+                            texteffectbutton=texteffectbutton.replace(ITC,indi);
                             textPreviewIntroduction.setText(texteffectbutton);
                         }
                     }
@@ -2089,6 +2124,12 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                         if(texteffectbutton.contains(indi))
                         {
                             texteffectbutton=texteffectbutton.replace(indi,ITC);
+                            textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButtonFacilitator.getText()+", ");
+                        }
+                        else
+                        if(texteffectbutton.contains(CFT))
+                        {
+                            texteffectbutton=texteffectbutton.replace(CFT,ITC);
                             textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButtonFacilitator.getText()+", ");
                         }
                         else
@@ -2203,7 +2244,7 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                             else
                             if (texteffectbutton.contains(indi))
                             {
-                                //texteffectbutton=texteffectbutton.replace(indi,ITC);
+                                texteffectbutton=texteffectbutton.replace(indi,ITC);
                                 textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButtonFacilitator.getText()+", ");
                             }
 
@@ -2224,11 +2265,17 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                     textPreviewIntroduction.setText(temp);
                     if (temp.contains(CFT))
                     {
-                        if (!toggleButtonFacilitator.isChecked()|| !toggleButtonTherapist.isChecked()||!toggleButtonParentPartner.isChecked())
+                        if (otherProfessional>0)
+                        {
+                            textPreviewIntroduction.setText(temp);
+                        }
+                        else
+                        if (teamMember==1)
                         {
                             String finalText=temp.replace(CFT,indi);
                             textPreviewIntroduction.setText(finalText);
                         }
+
                     }
                     else
                         if (temp.contains(allStaff))
@@ -2240,7 +2287,7 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                                 textPreviewIntroduction.setText(finalText);
                             }
                         }
-//
+
                 }
             }
         });
@@ -2256,6 +2303,18 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                     if (teamMember>1 && otherProfessional + friends + familyMembers ==0)
                     {
                         texteffectbutton=textPreviewIntroduction.getText().toString();
+                        if(texteffectbutton.contains(indi))
+                        {
+                            texteffectbutton=texteffectbutton.replace(indi,ITC);
+                            textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButtonTherapist.getText()+", ");
+                        }
+                        else
+                        if(texteffectbutton.contains(CFT))
+                        {
+                            texteffectbutton=texteffectbutton.replace(CFT,ITC);
+                            textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButtonTherapist.getText()+", ");
+                        }
+                        else
                         if (texteffectbutton.contains(ITC))
                         {
                             textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButtonTherapist.getText()+", ");
@@ -2387,7 +2446,12 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                     textPreviewIntroduction.setText(temp);
                     if (temp.contains(CFT))
                     {
-                        if (!toggleButtonFacilitator.isChecked()&&!toggleButtonTherapist.isChecked()&&!toggleButtonParentPartner.isChecked())
+                        if (otherProfessional>0)
+                        {
+                            textPreviewIntroduction.setText(temp);
+                        }
+                        else
+                        if (teamMember==1)
                         {
                             String finalText=temp.replace(CFT,indi);
                             textPreviewIntroduction.setText(finalText);
@@ -2431,6 +2495,18 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                     if (teamMember>1 && otherProfessional + friends + familyMembers ==0)
                     {
                         texteffectbutton=textPreviewIntroduction.getText().toString();
+                        if(texteffectbutton.contains(indi))
+                        {
+                            texteffectbutton=texteffectbutton.replace(indi,ITC);
+                            textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButtonParentPartner.getText()+", ");
+                        }
+                        else
+                        if(texteffectbutton.contains(CFT))
+                        {
+                            texteffectbutton=texteffectbutton.replace(CFT,ITC);
+                            textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButtonParentPartner.getText()+", ");
+                        }
+                        else
                         if (texteffectbutton.contains(ITC))
                         {
                             textPreviewIntroduction.setText(texteffectbutton+"the "+toggleButtonParentPartner.getText()+", ");
@@ -2582,7 +2658,12 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                     textPreviewIntroduction.setText(temp);
                     if (temp.contains(CFT))
                     {
-                        if (!toggleButtonFacilitator.isChecked()&&!toggleButtonTherapist.isChecked()&&!toggleButtonParentPartner.isChecked())
+                        if (otherProfessional>0)
+                        {
+                            textPreviewIntroduction.setText(temp);
+                        }
+                        else
+                        if (teamMember==1)
                         {
                             String finalText=temp.replace(CFT,indi);
                             textPreviewIntroduction.setText(finalText);
@@ -4127,8 +4208,8 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (test>0)
-                {
+
+
                     if(test==1)
                     {
                         texteffectbutton=textPreviewIntroduction.getText().toString();
@@ -4136,7 +4217,7 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                         int lastindex = texteffectbutton.lastIndexOf(",");
                         builder.replace(lastindex, lastindex+1, "." );
                         button.setVisibility(View.VISIBLE);
-                        Toast.makeText(getActivity(),"abc"+ builder.toString(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(),builder.toString(), Toast.LENGTH_LONG).show();
                         editor.putString("back",builder.toString()).commit();
                         Fragment fragment=new GoalsFragment();
                         Bundle bundle=new Bundle();
@@ -4146,7 +4227,7 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                         getFragmentManager().beginTransaction().replace(R.id.mainContainer,fragment).commit();
                     }
                     else
-                    if (test>1)
+                    if (test==2)
                     {
                         texteffectbutton=textPreviewIntroduction.getText().toString();
                         StringBuilder builder2 = new StringBuilder(texteffectbutton);
@@ -4164,9 +4245,27 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                         fragment.setArguments(bundle);
                         getFragmentManager().beginTransaction().replace(R.id.mainContainer,fragment).commit();
                     }
-
+                    else
+                if (test>2)
+                {
+                    texteffectbutton=textPreviewIntroduction.getText().toString();
+                    StringBuilder builder2 = new StringBuilder(texteffectbutton);
+                    int lastindex = texteffectbutton.lastIndexOf(",");
+                    builder2.replace(lastindex, lastindex+1, "." );
+                    button.setVisibility(View.VISIBLE);
+                    int last=texteffectbutton.lastIndexOf(", the");
+                    builder2.replace(last, last+1,", and");
+                    Toast.makeText(getActivity(), builder2.toString(), Toast.LENGTH_LONG).show();
+                    editor.putString("back",builder2.toString()).commit();
+                    Fragment fragment=new GoalsFragment();
+                    Bundle bundle=new Bundle();
+                    bundle.putString("back",builder2.toString());
+                    bundle.putString("clientName",clientName);
+                    fragment.setArguments(bundle);
+                    getFragmentManager().beginTransaction().replace(R.id.mainContainer,fragment).commit();
                 }
-                else {
+                else
+                    {
                     Toast.makeText(getActivity(), "Please select on of the toggle button", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -4184,51 +4283,47 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
         switch (id)
         {
             case R.id.toggleButton:
-                test++;
                 customActionBar();
                 break;
             case R.id.toggleButton2:
-                test++;
+
                 customActionBar();
                 break;
             case R.id.toggleButtonTherapist:
-                test++;
+
                 customActionBar();
                 break;
             case R.id.toggleButtonParentPartner:
-                test++;
+
                 customActionBar();
                 break;
             case R.id.toggleButtonCFS:
-                test++;
                 customActionBar();
                 break;
             case R.id.toggleButtonFacilitator:
-                test++;
+
                 customActionBar();
                 break;
             case R.id.toggleButtonClient:
-                test++;
+
                 customActionBar();
                 break;
             case R.id.button3:
-                test++;
+
                 customActionBar();
                 break;
             case R.id.button4:
-                test++;
+
                 customActionBar();
                 break;
             case R.id.buttonAddPerson:
-                test++;
+
                 customActionBar();
                 break;
             case R.id.toggleButton1122:
-                test++;
                 customActionBar();
                 break;
             case R.id.toggleButton12:
-                test++;
                 customActionBar();
                 break;
 
