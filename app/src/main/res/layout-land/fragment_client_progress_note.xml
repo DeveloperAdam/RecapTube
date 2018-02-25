@@ -9,7 +9,7 @@
 
     <TextView
         android:id="@+id/textPreviewIntroduction"
-        android:layout_width="945dp"
+        android:layout_width="945sp"
         android:layout_height="46dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
@@ -20,8 +20,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginLeft="8dp" />
-
-
     <LinearLayout
         android:id="@+id/linearLayoutAddress1"
         android:layout_width="match_parent"
@@ -97,7 +95,6 @@
             android:hint="Zip Code"
             android:inputType="textPersonName" />
     </LinearLayout>
-
 
     <LinearLayout
         android:id="@+id/linearLayoutAddress2"
@@ -229,7 +226,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="10dp"
-
+        android:visibility="gone"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -269,7 +266,6 @@
             />
 
     </LinearLayout>
-
     <LinearLayout
         android:id="@+id/linearLayoutPeoplePresentRow2"
         android:layout_width="match_parent"
@@ -314,8 +310,6 @@
             android:visibility="invisible" />
     </LinearLayout>
 
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -335,3 +329,4 @@
         app:elevation="6dp" />
     </LinearLayout>
 </LinearLayout>
+
