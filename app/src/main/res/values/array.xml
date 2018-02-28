@@ -32,4 +32,11 @@
         <item>Neutral</item>
         <item>Negative</item>
     </string-array>
+    <string-array name="sessionType">
+        <item>Meeting Type</item>
+        <item>an individual rehabilitation session.</item>
+        <item>an All Staff CFT.</item>
+        <item>a CFS meeting.</item>
+        <item>an ITC meeting.</item>
+    </string-array>
 </resources>

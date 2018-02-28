@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -294,7 +295,6 @@ public class Behavior2k extends Fragment {
         adapter2.notifyDataSetChanged();
         goalSpinner.setAdapter(adapter2);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
         goalSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -1045,7 +1045,8 @@ public class Behavior2k extends Fragment {
         btnPlan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.mainContainer, new PlanFragment()).commit();
             }
         });
         mActionBar.setCustomView(mCustomView);

@@ -337,7 +337,7 @@ public class AddClientFragment extends Fragment {
    // http://trendingfashionable.ipage.com/Recaptube/clients_detail.php
     //http://squaresdevelopers.com/RecapTube/clients_detail.php
     private void apicall() {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://squaresdevelopers.com/RecapTube/clients_detail.php"
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://trendingfashionable.ipage.com/Recaptube/clients_detail.php"
                 , new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

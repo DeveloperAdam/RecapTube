@@ -117,11 +117,12 @@ public class ClientsFragment extends Fragment {
 
         } catch (Exception e) {}
 
-        // try stops clearing cache
+        // http://trendingfashionable.ipage.com/Recaptube/client_info.php
+        //http://squaresdevelopers.com/RecapTube/client_info.php
         return false;
     }
     private void apicall() {
-        JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.GET, "http://squaresdevelopers.com/RecapTube/client_info.php"
+        JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.GET, "http://trendingfashionable.ipage.com/Recaptube/client_info.php"
                 , new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {

@@ -240,7 +240,7 @@ public class ClientAdapter extends BaseAdapter {
 
     }
     private void DeleteRecipe(){
-        StringRequest stringRequest = new StringRequest(Request.Method.POST,"http://squaresdevelopers.com/RecapTube/delete_client.php?id="+clientId
+        StringRequest stringRequest = new StringRequest(Request.Method.POST,"http://trendingfashionable.ipage.com/Recaptube/delete_client.php"+clientId
                 , new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
