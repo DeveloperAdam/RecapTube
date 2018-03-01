@@ -755,7 +755,8 @@ public class PlanFragment extends Fragment {
         btnPlan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.mainContainer, new FinalSummaryFragment()).commit();
             }
         });
         mActionBar.setCustomView(mCustomView);
