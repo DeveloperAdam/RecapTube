@@ -113,6 +113,7 @@ public class PlanFragment extends Fragment {
                                         .append(min ).append(" ").append(timeSet).toString();
                                 text=textPreviewDate.getText().toString();
                                 textPreviewDate.setText(text+" at "+aTime+" for what type of meeting?");
+                                sessionTypeSpinner.setVisibility(View.VISIBLE);
                               //  text=textPreviewDate.getText().toString();
                                // tvDate.setText(text);
 
@@ -135,7 +136,7 @@ public class PlanFragment extends Fragment {
                                 // set day of month , month and year value in the edit text
                                 strDate= (monthOfYear + 1) + "/" + dayOfMonth + "/" + year;
                                 textPreviewDate.setText(CFS+strDate);
-
+                                sessionTypeSpinner.setVisibility(View.VISIBLE);
                             }
                         }, mYear, mMonth, mDay);
                 datePickerDialog.show();
@@ -152,9 +153,9 @@ public class PlanFragment extends Fragment {
                     goalSpinner.setVisibility(View.VISIBLE);
                     tvPreviewGoals.setVisibility(View.VISIBLE);
                     text=textPreviewDate.getText().toString();
-                    if (text.contains("what?"))
+                    if (text.contains("?"))
                     {
-                        text=text.replace("what?",type1);
+                        text=text.replace("?"," "+type1);
                         textPreviewDate.setText(text);
                     }
                     else
@@ -187,9 +188,9 @@ public class PlanFragment extends Fragment {
                         goalSpinner.setVisibility(View.VISIBLE);
                         tvPreviewGoals.setVisibility(View.VISIBLE);
                         text=textPreviewDate.getText().toString();
-                        if (text.contains("what?"))
+                        if (text.contains("?"))
                         {
-                            text=text.replace("what?",type2);
+                            text=text.replace("?"," "+type2);
                             textPreviewDate.setText(text);
                         }
                         else
@@ -222,9 +223,9 @@ public class PlanFragment extends Fragment {
                         goalSpinner.setVisibility(View.VISIBLE);
                         tvPreviewGoals.setVisibility(View.VISIBLE);
                         text=textPreviewDate.getText().toString();
-                        if (text.contains("what?"))
+                        if (text.contains("?"))
                         {
-                            text=text.replace("what?",type3);
+                            text=text.replace("?"," "+type3);
                             textPreviewDate.setText(text);
                         }
                         else
@@ -257,9 +258,9 @@ public class PlanFragment extends Fragment {
                         goalSpinner.setVisibility(View.VISIBLE);
                         tvPreviewGoals.setVisibility(View.VISIBLE);
                         text=textPreviewDate.getText().toString();
-                        if (text.contains("what?"))
+                        if (text.contains("?"))
                         {
-                            text=text.replace("what?",type4);
+                            text=text.replace("?"," "+type4);
                             textPreviewDate.setText(text);
                         }
                         else
@@ -315,7 +316,7 @@ public class PlanFragment extends Fragment {
                     textGoal = tvPreviewGoals.getText().toString();
                     if(textGoal.contains("?"))
                     {
-                        textGoal=textGoal.replace("?"," "+items[0]);
+                        textGoal=textGoal.replace("?"," "+items[0]+".");
                         tvPreviewGoals.setText(textGoal);
                     }
                     else
@@ -362,7 +363,7 @@ public class PlanFragment extends Fragment {
                     textGoal = tvPreviewGoals.getText().toString();
                     if(textGoal.contains("?"))
                     {
-                        textGoal=textGoal.replace("?"," "+items[1]);
+                        textGoal=textGoal.replace("?"," "+items[1]+".");
                         tvPreviewGoals.setText(textGoal);
                     }
                     else
@@ -403,7 +404,7 @@ public class PlanFragment extends Fragment {
                     textGoal = tvPreviewGoals.getText().toString();
                     if(textGoal.contains("?"))
                     {
-                        textGoal=textGoal.replace("?"," "+items[2]);
+                        textGoal=textGoal.replace("?"," "+items[2]+".");
                         tvPreviewGoals.setText(textGoal);
                     }
                     else
@@ -444,7 +445,7 @@ public class PlanFragment extends Fragment {
                     textGoal = tvPreviewGoals.getText().toString();
                     if(textGoal.contains("?"))
                     {
-                        textGoal=textGoal.replace("?"," "+items[3]);
+                        textGoal=textGoal.replace("?"," "+items[3]+".");
                         tvPreviewGoals.setText(textGoal);
                     }
                     else
@@ -503,7 +504,7 @@ public class PlanFragment extends Fragment {
                     strUserGoal = textPreviewForUserGoal.getText().toString();
                     if(strUserGoal.contains("?"))
                     {
-                        strUserGoal=strUserGoal.replace("?"," "+items[0]);
+                        strUserGoal=strUserGoal.replace("?"," "+items[0]+".");
                         textPreviewForUserGoal.setText(strUserGoal);
                     }
                     else
@@ -547,7 +548,7 @@ public class PlanFragment extends Fragment {
                     strUserGoal = textPreviewForUserGoal.getText().toString();
                     if(strUserGoal.contains("?"))
                     {
-                        strUserGoal=strUserGoal.replace("?"," "+items[1]);
+                        strUserGoal=strUserGoal.replace("?"," "+items[1]+".");
                         textPreviewForUserGoal.setText(strUserGoal);
                     }
                     else
@@ -590,7 +591,7 @@ public class PlanFragment extends Fragment {
                     strUserGoal = textPreviewForUserGoal.getText().toString();
                     if(strUserGoal.contains("?"))
                     {
-                        strUserGoal=strUserGoal.replace("?"," "+items[2]);
+                        strUserGoal=strUserGoal.replace("?"," "+items[2]+".");
                         textPreviewForUserGoal.setText(strUserGoal);
                     }
                     else
@@ -633,7 +634,7 @@ public class PlanFragment extends Fragment {
                     strUserGoal = textPreviewForUserGoal.getText().toString();
                     if(strUserGoal.contains("?"))
                     {
-                        strUserGoal=strUserGoal.replace("?"," "+items[3]);
+                        strUserGoal=strUserGoal.replace("?"," "+items[3]+".");
                         textPreviewForUserGoal.setText(strUserGoal);
                     }
                     else
