@@ -27,7 +27,7 @@ public class Behavior2k extends Fragment {
     Switch clientStatedSwitch,GoalSuccessSwitch;
     TextView tvTopBehavior;
     Spinner moodSpinner,goalSpinner,reporterSpinner;
-    String goals,clientId,before2ndrow;
+    String goals,clientId,before2ndrow,str2ndRow;
     String afterRowFirst=" Who observed the client's goal progress?";
     String btn1,btn2,btn3,btn4,btn5,btn6,btn7,btnTherapist,btnClient,btnParentPartner,btnFacilitator;
     String[] countryNames={"Mood","positive","neutral","negative"};
@@ -41,6 +41,7 @@ public class Behavior2k extends Fragment {
     ArrayAdapter<String> adapter2;
     CharSequence[] items;
     Button btnPlan;
+    TextView tv2ndRow;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -57,6 +58,7 @@ public class Behavior2k extends Fragment {
         reporterSpinner=(Spinner)view.findViewById(R.id.spinnerReporter);
         clientStatedSwitch=(Switch)view.findViewById(R.id.switchClientStated);
         GoalSuccessSwitch=(Switch)view.findViewById(R.id.switchGoalSuccess);
+        tv2ndRow=(TextView)view.findViewById(R.id.tv2ndRow);
         adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, list);
         adapter2 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, list2);
 
@@ -76,10 +78,11 @@ public class Behavior2k extends Fragment {
                 {
                  clientStatedSwitch.setVisibility(View.VISIBLE);
                  reporterSpinner.setVisibility(View.VISIBLE);
+                 tv2ndRow.setVisibility(View.VISIBLE);
                  if (!clientStatedSwitch.isChecked())
                  {
                      firstText="The client appeared to be in a positive mood.";
-                     tvTopBehavior.setText("The client appeared to be in a positive mood."+afterRowFirst);
+                     tvTopBehavior.setText("The client appeared to be in a positive mood.");
                  }
                  clientStatedSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                      @Override
@@ -87,13 +90,13 @@ public class Behavior2k extends Fragment {
                          if (clientStatedSwitch.isChecked())
                          {
                              firstText="The client stated that they were in a positive mood.";
-                             tvTopBehavior.setText("The client stated that they were in a positive mood."+afterRowFirst);
+                             tvTopBehavior.setText("The client stated that they were in a positive mood.");
 
                          }
                          else
                          {
                              firstText="The client appeared to be in a positive mood.";
-                             tvTopBehavior.setText("The client appeared to be in a positive mood."+afterRowFirst);
+                             tvTopBehavior.setText("The client appeared to be in a positive mood.");
                          }
                      }
                  });
@@ -104,10 +107,11 @@ public class Behavior2k extends Fragment {
                     {
                         clientStatedSwitch.setVisibility(View.VISIBLE);
                         reporterSpinner.setVisibility(View.VISIBLE);
+                        tv2ndRow.setVisibility(View.VISIBLE);
                         if (!clientStatedSwitch.isChecked())
                         {
                             firstText="The client appeared to be in a neutral mood.";
-                            tvTopBehavior.setText("The client appeared to be in a neutral mood."+afterRowFirst);
+                            tvTopBehavior.setText("The client appeared to be in a neutral mood.");
                         }
                         clientStatedSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                             @Override
@@ -115,13 +119,13 @@ public class Behavior2k extends Fragment {
                                 if (clientStatedSwitch.isChecked())
                                 {
                                     firstText="The client stated that they were in a neutral mood.";
-                                    tvTopBehavior.setText("The client stated that they were in a neutral mood."+afterRowFirst);
+                                    tvTopBehavior.setText("The client stated that they were in a neutral mood.");
 
                                 }
                                 else
                                 {
                                     firstText="The client appeared to be in a neutral mood.";
-                                    tvTopBehavior.setText("The client appeared to be in a neutral mood."+afterRowFirst);
+                                    tvTopBehavior.setText("The client appeared to be in a neutral mood.");
                                 }
                             }
                         });
@@ -131,10 +135,11 @@ public class Behavior2k extends Fragment {
                     {
                         clientStatedSwitch.setVisibility(View.VISIBLE);
                         reporterSpinner.setVisibility(View.VISIBLE);
+                        tv2ndRow.setVisibility(View.VISIBLE);
                         if (!clientStatedSwitch.isChecked())
                         {
                             firstText="The client appeared to be in a negative mood.";
-                            tvTopBehavior.setText("The client appeared to be in a negative mood."+afterRowFirst);
+                            tvTopBehavior.setText("The client appeared to be in a negative mood.");
                         }
                         clientStatedSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                             @Override
@@ -142,13 +147,13 @@ public class Behavior2k extends Fragment {
                                 if (clientStatedSwitch.isChecked())
                                 {
                                     firstText="The client stated that they were in a negative mood.";
-                                    tvTopBehavior.setText("The client stated that they were in a negative mood."+afterRowFirst);
+                                    tvTopBehavior.setText("The client stated that they were in a negative mood.");
 
                                 }
                                 else
                                 {
                                     firstText="The client appeared to be in a negative mood.";
-                                    tvTopBehavior.setText("The client appeared to be in a negative mood."+afterRowFirst);
+                                    tvTopBehavior.setText("The client appeared to be in a negative mood.");
                                 }
                             }
                         });
@@ -218,13 +223,13 @@ public class Behavior2k extends Fragment {
                 Object item=parent.getItemAtPosition(position);
                 if (item.equals("Goal Reporter"))
                 {
-                    tvTopBehavior.setText(firstText+afterRowFirst);
+                    tv2ndRow.setText(afterRowFirst);
                 }
                 else
                     if (item.equals("client"))
                     {
                         before2ndrow=" The client reported on which goal?";
-                        tvTopBehavior.setText(firstText+before2ndrow);
+                        tv2ndRow.setText(before2ndrow);
                         goalSpinner.setVisibility(View.VISIBLE);
 
                     }
@@ -232,7 +237,7 @@ public class Behavior2k extends Fragment {
                         if (item.equals(btn1))
                         {
                             before2ndrow=" The "+btn1 +" reported on which goal?";
-                            tvTopBehavior.setText(firstText+before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                             goalSpinner.setVisibility(View.VISIBLE);
 
                         }
@@ -240,42 +245,42 @@ public class Behavior2k extends Fragment {
                         if (item.equals(btn2))
                         {
                             before2ndrow=" The "+btn2 +" reported on which goal?";
-                            tvTopBehavior.setText(firstText+before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                             goalSpinner.setVisibility(View.VISIBLE);
                         }
                         else
                         if (item.equals(btn3))
                         {
                             before2ndrow=" The "+btn3 +" reported on which goal?";
-                            tvTopBehavior.setText(firstText+before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                             goalSpinner.setVisibility(View.VISIBLE);
                         }
                         else
                         if (item.equals(btn4))
                         {
                             before2ndrow=" The "+btn4 +" reported on which goal?";
-                            tvTopBehavior.setText(firstText+before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                             goalSpinner.setVisibility(View.VISIBLE);
                         }
                         else
                         if (item.equals(btn5))
                         {
                             before2ndrow=" The "+btn5 +" reported on which goal?";
-                            tvTopBehavior.setText(firstText+before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                             goalSpinner.setVisibility(View.VISIBLE);
                         }
                         else
                         if (item.equals(btn6))
                         {
                             before2ndrow=" The "+btn6 +" reported on which goal?";
-                            tvTopBehavior.setText(firstText+before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                             goalSpinner.setVisibility(View.VISIBLE);
                         }
                         else
                         if (item.equals(btn7))
                         {
                             before2ndrow=" The "+btn7 +" reported on which goal?";
-                            tvTopBehavior.setText(firstText+before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                             goalSpinner.setVisibility(View.VISIBLE);
                         }
             }
@@ -304,85 +309,86 @@ public class Behavior2k extends Fragment {
                         btnPlan.setVisibility(View.VISIBLE);
                         if(GoalSuccessSwitch.isChecked())
                         {
+                            before2ndrow=tv2ndRow.getText().toString();
                             if (before2ndrow.contains("on which goal?"))
                             {
                                // String text=before2ndrow.replace("on which goal?", "that the client was successful in meeting the goal to "+items[0]);
                                 before2ndrow=before2ndrow.replace("on which goal?", "that the client was successful in meeting the goal to "+items[0]+".");
-                                tvTopBehavior.setText(firstText +before2ndrow);
+                                tv2ndRow.setText(before2ndrow);
                             }
                             else
                                 if (before2ndrow.contains(items[0]))
                                 {
-                                    tvTopBehavior.setText(before2ndrow);
+                                    tv2ndRow.setText(before2ndrow);
                                 }
                                 else
                                     if (before2ndrow.contains(items[1]))
                                     {
                                         before2ndrow=before2ndrow.replace(items[1],items[0]);
-                                        tvTopBehavior.setText(before2ndrow);
+                                        tv2ndRow.setText(before2ndrow);
                                     }
                                     else if (before2ndrow.contains(items[2]))
                                     {
                                         before2ndrow=before2ndrow.replace(items[2],items[0]);
-                                        tvTopBehavior.setText(before2ndrow);
+                                        tv2ndRow.setText(before2ndrow);
                                     }
                                     else if (before2ndrow.contains(items[3]))
                                     {
                                         before2ndrow=before2ndrow.replace(items[3],items[0]);
-                                        tvTopBehavior.setText(before2ndrow);
+                                        tv2ndRow.setText(before2ndrow);
                                     }
                                     else if (before2ndrow.contains(items[4]))
                                     {
                                         before2ndrow=before2ndrow.replace(items[4],items[0]);
-                                        tvTopBehavior.setText(before2ndrow);
+                                        tv2ndRow.setText(before2ndrow);
                                     }
                                     else if (before2ndrow.contains(items[5]))
                                     {
                                         before2ndrow=before2ndrow.replace(items[5],items[0]);
-                                        tvTopBehavior.setText(before2ndrow);
+                                        tv2ndRow.setText(before2ndrow);
                                     }
                                     else if (before2ndrow.contains(items[6]))
                                     {
                                         before2ndrow=before2ndrow.replace(items[6],items[0]);
-                                        tvTopBehavior.setText(before2ndrow);
+                                        tv2ndRow.setText(before2ndrow);
                                     }
                         }
                         else
                         {
                             if (before2ndrow.contains(items[0]))
                             {
-                                tvTopBehavior.setText(before2ndrow);
+                                tv2ndRow.setText(before2ndrow);
                             }
                             else
                             if (before2ndrow.contains(items[1]))
                             {
                                 before2ndrow=before2ndrow.replace(items[1],items[0]);
-                                tvTopBehavior.setText(before2ndrow);
+                                tv2ndRow.setText(before2ndrow);
                             }
                             else if (before2ndrow.contains(items[2]))
                             {
                                 before2ndrow=before2ndrow.replace(items[2],items[0]);
-                                tvTopBehavior.setText(before2ndrow);
+                                tv2ndRow.setText(before2ndrow);
                             }
                             else if (before2ndrow.contains(items[3]))
                             {
                                 before2ndrow=before2ndrow.replace(items[3],items[0]);
-                                tvTopBehavior.setText(before2ndrow);
+                                tv2ndRow.setText(before2ndrow);
                             }
                             else if (before2ndrow.contains(items[4]))
                             {
                                 before2ndrow=before2ndrow.replace(items[4],items[0]);
-                                tvTopBehavior.setText(before2ndrow);
+                                tv2ndRow.setText(before2ndrow);
                             }
                             else if (before2ndrow.contains(items[5]))
                             {
                                 before2ndrow=before2ndrow.replace(items[5],items[0]);
-                                tvTopBehavior.setText(before2ndrow);
+                                tv2ndRow.setText(before2ndrow);
                             }
                             else if (before2ndrow.contains(items[6]))
                             {
                                 before2ndrow=before2ndrow.replace(items[6],items[0]);
-                                tvTopBehavior.setText(before2ndrow);
+                                tv2ndRow.setText(before2ndrow);
                             }
                         }
                         GoalSuccessSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -390,28 +396,28 @@ public class Behavior2k extends Fragment {
                             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                                 if(!GoalSuccessSwitch.isChecked())
                                 {
-                                    before2ndrow=tvTopBehavior.getText().toString();
-                                    if (before2ndrow.contains(". The"))
+                                    before2ndrow=tv2ndRow.getText().toString();
+                                    if (before2ndrow.contains("The"))
                                     {
-                                        before2ndrow=before2ndrow.replaceFirst(". The",". Unfortunately, the");
+                                        before2ndrow=before2ndrow.replaceFirst("The","Unfortunately, the");
                                         if (before2ndrow.contains("was "))
                                         {
                                             before2ndrow=before2ndrow.replace("was ","was not ");
-                                            tvTopBehavior.setText(before2ndrow);
+                                            tv2ndRow.setText(before2ndrow);
                                         }
                                     }
                                 }
                                 else
                               if (GoalSuccessSwitch.isChecked())
                                 {
-                                    before2ndrow=tvTopBehavior.getText().toString();
-                                    if(before2ndrow.contains(". Unfortunately, the"))
+                                    before2ndrow=tv2ndRow.getText().toString();
+                                    if(before2ndrow.contains("Unfortunately, the"))
                                     {
-                                        before2ndrow=before2ndrow.replace(". Unfortunately, the",". The");
+                                        before2ndrow=before2ndrow.replace("Unfortunately, the","The");
                                         if (before2ndrow.contains("was not"))
                                         {
                                             before2ndrow=before2ndrow.replace("was not ","was ");
-                                            tvTopBehavior.setText(before2ndrow);
+                                            tv2ndRow.setText(before2ndrow);
                                         }
                                     }
                                 }
@@ -428,45 +434,45 @@ public class Behavior2k extends Fragment {
                         if (before2ndrow.contains("on which goal?"))
                         {
                             String text=before2ndrow.replace("on which goal?", "that the client was successful in meeting the goal to "+items[1]+".");
-                            tvTopBehavior.setText(firstText +text);
+                            tv2ndRow.setText(text);
                         }
                         else
                         if (before2ndrow.contains(items[0]))
                         {
                            // Toast.makeText(getActivity(), before2ndrow, Toast.LENGTH_LONG).show();
-                            before2ndrow=tvTopBehavior.getText().toString();
+                            before2ndrow=tv2ndRow.getText().toString();
                             before2ndrow=before2ndrow.replace(items[0],items[1]);
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                         else
                         if (before2ndrow.contains(items[1]))
                         {
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                         else if (before2ndrow.contains(items[2]))
                         {
                             before2ndrow=before2ndrow.replace(items[2],items[1]);
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                         else if (before2ndrow.contains(items[3]))
                         {
                             before2ndrow=before2ndrow.replace(items[3],items[1]);
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                         else if (before2ndrow.contains(items[4]))
                         {
                             before2ndrow=before2ndrow.replace(items[4],items[1]);
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                         else if (before2ndrow.contains(items[5]))
                         {
                             before2ndrow=before2ndrow.replace(items[5],items[1]);
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                         else if (before2ndrow.contains(items[6]))
                         {
                             before2ndrow=before2ndrow.replace(items[6],items[1]);
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                     }
                     else
@@ -474,38 +480,38 @@ public class Behavior2k extends Fragment {
                         if (before2ndrow.contains(items[0]))
                         {
                             before2ndrow=before2ndrow.replace(items[0],items[1]);
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                         else
                         if (before2ndrow.contains(items[1]))
                         {
 
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                         else if (before2ndrow.contains(items[2]))
                         {
                             before2ndrow=before2ndrow.replace(items[2],items[1]);
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                         else if (before2ndrow.contains(items[3]))
                         {
                             before2ndrow=before2ndrow.replace(items[3],items[1]);
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                         else if (before2ndrow.contains(items[4]))
                         {
                             before2ndrow=before2ndrow.replace(items[4],items[1]);
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                         else if (before2ndrow.contains(items[5]))
                         {
                             before2ndrow=before2ndrow.replace(items[5],items[1]);
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                         else if (before2ndrow.contains(items[6]))
                         {
                             before2ndrow=before2ndrow.replace(items[6],items[1]);
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                     }
                     GoalSuccessSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -513,28 +519,28 @@ public class Behavior2k extends Fragment {
                         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                             if(!GoalSuccessSwitch.isChecked())
                             {
-                                before2ndrow=tvTopBehavior.getText().toString();
-                                if (before2ndrow.contains(". The"))
+                                before2ndrow=tv2ndRow.getText().toString();
+                                if (before2ndrow.contains("The"))
                                 {
-                                    before2ndrow=before2ndrow.replaceFirst(". The",". Unfortunately, the");
+                                    before2ndrow=before2ndrow.replaceFirst("The","Unfortunately, the");
                                     if (before2ndrow.contains("was "))
                                     {
                                         before2ndrow=before2ndrow.replace("was ","was not ");
-                                        tvTopBehavior.setText(before2ndrow);
+                                        tv2ndRow.setText(before2ndrow);
                                     }
                                 }
                             }
                             else
                                 if (GoalSuccessSwitch.isChecked())
                             {
-                                before2ndrow=tvTopBehavior.getText().toString();
-                                if(before2ndrow.contains(". Unfortunately, the"))
+                                before2ndrow=tv2ndRow.getText().toString();
+                                if(before2ndrow.contains("Unfortunately, the"))
                                 {
-                                    before2ndrow=before2ndrow.replace(". Unfortunately, the",". The");
+                                    before2ndrow=before2ndrow.replace("Unfortunately, the","The");
                                     if (before2ndrow.contains("was not"))
                                     {
                                         before2ndrow=before2ndrow.replace("was not ","was ");
-                                        tvTopBehavior.setText(before2ndrow);
+                                        tv2ndRow.setText(before2ndrow);
                                     }
                                 }
                             }
@@ -552,44 +558,44 @@ public class Behavior2k extends Fragment {
                         if (before2ndrow.contains("on which goal?"))
                         {
                             String text=before2ndrow.replace("on which goal?", "that the client was successful in meeting the goal to "+items[2]+".");
-                            tvTopBehavior.setText(firstText +text);
+                            tv2ndRow.setText(firstText +text);
                         }
                         else
                         if (before2ndrow.contains(items[0]))
                         {
-                            before2ndrow=tvTopBehavior.getText().toString();
+                            before2ndrow=tv2ndRow.getText().toString();
                             before2ndrow=before2ndrow.replace(items[0],items[2]);
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                         else
                         if (before2ndrow.contains(items[1]))
                         {
                             before2ndrow=before2ndrow.replace(items[1],items[2]);
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                         else if (before2ndrow.contains(items[2]))
                         {
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                         else if (before2ndrow.contains(items[3]))
                         {
                             before2ndrow=before2ndrow.replace(items[3],items[2]);
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                         else if (before2ndrow.contains(items[4]))
                         {
                             before2ndrow=before2ndrow.replace(items[4],items[2]);
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                         else if (before2ndrow.contains(items[5]))
                         {
                             before2ndrow=before2ndrow.replace(items[5],items[2]);
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                         else if (before2ndrow.contains(items[6]))
                         {
                             before2ndrow=before2ndrow.replace(items[6],items[2]);
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                     }
                     else
@@ -597,37 +603,37 @@ public class Behavior2k extends Fragment {
                         if (before2ndrow.contains(items[0]))
                         {
                             before2ndrow=before2ndrow.replace(items[0],items[2]);
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                         else
                         if (before2ndrow.contains(items[1]))
                         {
                             before2ndrow=before2ndrow.replace(items[1],items[2]);
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                         else if (before2ndrow.contains(items[2]))
                         {
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                         else if (before2ndrow.contains(items[3]))
                         {
                             before2ndrow=before2ndrow.replace(items[3],items[2]);
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                         else if (before2ndrow.contains(items[4]))
                         {
                             before2ndrow=before2ndrow.replace(items[4],items[2]);
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                         else if (before2ndrow.contains(items[5]))
                         {
                             before2ndrow=before2ndrow.replace(items[5],items[2]);
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                         else if (before2ndrow.contains(items[6]))
                         {
                             before2ndrow=before2ndrow.replace(items[6],items[2]);
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                     }
                     GoalSuccessSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -635,28 +641,28 @@ public class Behavior2k extends Fragment {
                         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                             if(!GoalSuccessSwitch.isChecked())
                             {
-                                before2ndrow=tvTopBehavior.getText().toString();
-                                if (before2ndrow.contains(". The"))
+                                before2ndrow=tv2ndRow.getText().toString();
+                                if (before2ndrow.contains("The"))
                                 {
-                                    before2ndrow=before2ndrow.replaceFirst(". The",". Unfortunately, the");
+                                    before2ndrow=before2ndrow.replaceFirst("The","Unfortunately, the");
                                     if (before2ndrow.contains("was "))
                                     {
                                         before2ndrow=before2ndrow.replace("was ","was not ");
-                                        tvTopBehavior.setText(before2ndrow);
+                                        tv2ndRow.setText(before2ndrow);
                                     }
                                 }
                             }
                             else
                                 if (GoalSuccessSwitch.isChecked())
                             {
-                                before2ndrow=tvTopBehavior.getText().toString();
-                                if(before2ndrow.contains(". Unfortunately, the"))
+                                before2ndrow=tv2ndRow.getText().toString();
+                                if(before2ndrow.contains("Unfortunately, the"))
                                 {
-                                    before2ndrow=before2ndrow.replace(". Unfortunately, the",". The");
+                                    before2ndrow=before2ndrow.replace("Unfortunately, the","The");
                                     if (before2ndrow.contains("was not"))
                                     {
                                         before2ndrow=before2ndrow.replace("was not","was ");
-                                        tvTopBehavior.setText(before2ndrow);
+                                        tv2ndRow.setText(before2ndrow);
                                     }
                                 }
                             }
@@ -672,43 +678,43 @@ public class Behavior2k extends Fragment {
                         if (before2ndrow.contains("on which goal?"))
                         {
                             String text=before2ndrow.replace("on which goal?", "that the client was successful in meeting the goal to "+items[3]+".");
-                            tvTopBehavior.setText(firstText +text);
+                            tv2ndRow.setText(firstText +text);
                         }
                         else
                         if (before2ndrow.contains(items[0]))
                         {
                             before2ndrow=before2ndrow.replace(items[0],items[3]);
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                         else
                         if (before2ndrow.contains(items[1]))
                         {
                             before2ndrow=before2ndrow.replace(items[1],items[3]);
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                         else if (before2ndrow.contains(items[2]))
                         {
                             before2ndrow=before2ndrow.replace(items[2],items[3]);
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                         else if (before2ndrow.contains(items[3]))
                         {
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                         else if (before2ndrow.contains(items[4]))
                         {
                             before2ndrow=before2ndrow.replace(items[4],items[3]);
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                         else if (before2ndrow.contains(items[5]))
                         {
                             before2ndrow=before2ndrow.replace(items[5],items[3]);
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                         else if (before2ndrow.contains(items[6]))
                         {
                             before2ndrow=before2ndrow.replace(items[6],items[3]);
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                     }
                     else
@@ -716,38 +722,38 @@ public class Behavior2k extends Fragment {
                         if (before2ndrow.contains(items[0]))
                         {
                             before2ndrow=before2ndrow.replace(items[0],items[3]);
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                         else
                         if (before2ndrow.contains(items[1]))
                         {
                             before2ndrow=before2ndrow.replace(items[1],items[3]);
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                         else if (before2ndrow.contains(items[2]))
                         {
                             before2ndrow=before2ndrow.replace(items[2],items[3]);
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                         else if (before2ndrow.contains(items[3]))
                         {
 
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                         else if (before2ndrow.contains(items[4]))
                         {
                             before2ndrow=before2ndrow.replace(items[4],items[3]);
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                         else if (before2ndrow.contains(items[5]))
                         {
                             before2ndrow=before2ndrow.replace(items[5],items[3]);
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                         else if (before2ndrow.contains(items[6]))
                         {
                             before2ndrow=before2ndrow.replace(items[6],items[3]);
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                     }
                     GoalSuccessSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -757,12 +763,12 @@ public class Behavior2k extends Fragment {
                             {
                                 if (before2ndrow.contains(". The"))
                                 {
-                                    before2ndrow=tvTopBehavior.getText().toString();
-                                    before2ndrow=before2ndrow.replaceFirst(". The",". Unfortunately, the");
+                                    before2ndrow=tv2ndRow.getText().toString();
+                                    before2ndrow=before2ndrow.replaceFirst("The","Unfortunately, the");
                                     if (before2ndrow.contains("was "))
                                     {
                                         before2ndrow=before2ndrow.replace("was ","was not ");
-                                        tvTopBehavior.setText(before2ndrow);
+                                        tv2ndRow.setText(before2ndrow);
                                     }
                                 }
                             }
@@ -770,13 +776,13 @@ public class Behavior2k extends Fragment {
                                 if (GoalSuccessSwitch.isChecked())
                             {
                                 before2ndrow=tvTopBehavior.getText().toString();
-                                if(before2ndrow.contains(". Unfortunately, the"))
+                                if(before2ndrow.contains("Unfortunately, the"))
                                 {
-                                    before2ndrow=before2ndrow.replace(". Unfortunately, the",". The");
+                                    before2ndrow=before2ndrow.replace("Unfortunately, the","The");
                                     if (before2ndrow.contains("was not"))
                                     {
                                         before2ndrow=before2ndrow.replace("was not","was ");
-                                        tvTopBehavior.setText(before2ndrow);
+                                        tv2ndRow.setText(before2ndrow);
                                     }
                                 }
                             }
@@ -793,43 +799,43 @@ public class Behavior2k extends Fragment {
                         if (before2ndrow.contains("on which goal?"))
                         {
                             String text=before2ndrow.replace("on which goal?", "that the client was successful in meeting the goal to "+items[4]+".");
-                            tvTopBehavior.setText(firstText +text);
+                            tv2ndRow.setText(firstText +text);
                         }
                         else
                         if (before2ndrow.contains(items[0]))
                         {
                             before2ndrow=before2ndrow.replace(items[0],items[4]);
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                         else
                         if (before2ndrow.contains(items[1]))
                         {
                             before2ndrow=before2ndrow.replace(items[1],items[4]);
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                         else if (before2ndrow.contains(items[2]))
                         {
                             before2ndrow=before2ndrow.replace(items[2],items[4]);
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                         else if (before2ndrow.contains(items[3]))
                         {
                             before2ndrow=before2ndrow.replace(items[3],items[4]);
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                         else if (before2ndrow.contains(items[4]))
                         {
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                         else if (before2ndrow.contains(items[5]))
                         {
                             before2ndrow=before2ndrow.replace(items[5],items[4]);
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                         else if (before2ndrow.contains(items[6]))
                         {
                             before2ndrow=before2ndrow.replace(items[6],items[4]);
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                     }
                     else
@@ -837,32 +843,32 @@ public class Behavior2k extends Fragment {
                         if (before2ndrow.contains(items[0]))
                         {
                             before2ndrow=before2ndrow.replace(items[0],items[4]);
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                         else
                         if (before2ndrow.contains(items[1]))
                         {
                             before2ndrow=before2ndrow.replace(items[1],items[4]);
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                         else if (before2ndrow.contains(items[2]))
                         {
                             before2ndrow=before2ndrow.replace(items[2],items[4]);
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                         else if (before2ndrow.contains(items[3]))
                         {
                             before2ndrow=before2ndrow.replace(items[3],items[4]);
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                         else if (before2ndrow.contains(items[4]))
                         {
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                         else if (before2ndrow.contains(items[5]))
                         {
                             before2ndrow=before2ndrow.replace(items[5],items[4]);
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                         else if (before2ndrow.contains(items[6]))
                         {
@@ -876,13 +882,13 @@ public class Behavior2k extends Fragment {
                             if(!GoalSuccessSwitch.isChecked())
                             {
                                 before2ndrow=tvTopBehavior.getText().toString();
-                                if (before2ndrow.contains(". The"))
+                                if (before2ndrow.contains("The"))
                                 {
-                                    before2ndrow=before2ndrow.replaceFirst(". The",". Unfortunately, the");
+                                    before2ndrow=before2ndrow.replaceFirst("The","Unfortunately, the");
                                     if (before2ndrow.contains("was "))
                                     {
                                         before2ndrow=before2ndrow.replace("was ","was not ");
-                                        tvTopBehavior.setText(before2ndrow);
+                                        tv2ndRow.setText(before2ndrow);
                                     }
                                 }
                             }
@@ -890,13 +896,13 @@ public class Behavior2k extends Fragment {
                                 if (GoalSuccessSwitch.isChecked())
                             {
                                 before2ndrow=tvTopBehavior.getText().toString();
-                                if(before2ndrow.contains(". Unfortunately, the"))
+                                if(before2ndrow.contains("Unfortunately, the"))
                                 {
-                                    before2ndrow=before2ndrow.replace(". Unfortunately, the",". The");
+                                    before2ndrow=before2ndrow.replace("Unfortunately, the","The");
                                     if (before2ndrow.contains("was not"))
                                     {
                                         before2ndrow=before2ndrow.replace("was not","was ");
-                                        tvTopBehavior.setText(before2ndrow);
+                                        tv2ndRow.setText(before2ndrow);
                                     }
                                 }
                             }
@@ -912,43 +918,43 @@ public class Behavior2k extends Fragment {
                         if (before2ndrow.contains("on which goal?"))
                         {
                             String text=before2ndrow.replace("on which goal?", "that the client was successful in meeting the goal to "+items[5]+".");
-                            tvTopBehavior.setText(firstText +text);
+                            tv2ndRow.setText(firstText +text);
                         }
                         else
                         if (before2ndrow.contains(items[0]))
                         {
                             before2ndrow=before2ndrow.replace(items[0],items[5]);
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                         else
                         if (before2ndrow.contains(items[1]))
                         {
                             before2ndrow=before2ndrow.replace(items[1],items[5]);
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                         else if (before2ndrow.contains(items[2]))
                         {
                             before2ndrow=before2ndrow.replace(items[2],items[5]);
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                         else if (before2ndrow.contains(items[3]))
                         {
                             before2ndrow=before2ndrow.replace(items[3],items[5]);
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                         else if (before2ndrow.contains(items[4]))
                         {
                             before2ndrow=before2ndrow.replace(items[4],items[5]);
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                         else if (before2ndrow.contains(items[5]))
                         {
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                         else if (before2ndrow.contains(items[6]))
                         {
                             before2ndrow=before2ndrow.replace(items[6],items[5]);
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                     }
                     else
@@ -956,37 +962,37 @@ public class Behavior2k extends Fragment {
                         if (before2ndrow.contains(items[0]))
                         {
                             before2ndrow=before2ndrow.replace(items[0],items[5]);
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                         else
                         if (before2ndrow.contains(items[1]))
                         {
                             before2ndrow=before2ndrow.replace(items[1],items[5]);
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                         else if (before2ndrow.contains(items[2]))
                         {
                             before2ndrow=before2ndrow.replace(items[2],items[5]);
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                         else if (before2ndrow.contains(items[3]))
                         {
                             before2ndrow=before2ndrow.replace(items[3],items[5]);
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                         else if (before2ndrow.contains(items[4]))
                         {
                             before2ndrow=before2ndrow.replace(items[4],items[5]);
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                         else if (before2ndrow.contains(items[5]))
                         {
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                         else if (before2ndrow.contains(items[6]))
                         {
                             before2ndrow=before2ndrow.replace(items[6],items[5]);
-                            tvTopBehavior.setText(before2ndrow);
+                            tv2ndRow.setText(before2ndrow);
                         }
                     }
                     GoalSuccessSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -994,13 +1000,13 @@ public class Behavior2k extends Fragment {
                         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                             if(!GoalSuccessSwitch.isChecked())
                             {
-                                if (before2ndrow.contains(". The"))
+                                if (before2ndrow.contains("The"))
                                 {
-                                    before2ndrow=before2ndrow.replaceFirst(". The",". Unfortunately, the");
+                                    before2ndrow=before2ndrow.replaceFirst("The","Unfortunately, the");
                                     if (before2ndrow.contains("was "))
                                     {
                                         before2ndrow=before2ndrow.replace("was ","was not ");
-                                        tvTopBehavior.setText(before2ndrow);
+                                        tv2ndRow.setText(before2ndrow);
                                     }
                                 }
                             }
@@ -1008,13 +1014,13 @@ public class Behavior2k extends Fragment {
                                 if (GoalSuccessSwitch.isChecked())
                             {
                                 before2ndrow=tvTopBehavior.getText().toString();
-                                if(before2ndrow.contains(". Unfortunately, the"))
+                                if(before2ndrow.contains("Unfortunately, the"))
                                 {
-                                    before2ndrow=before2ndrow.replace(". Unfortunately, the",". The");
+                                    before2ndrow=before2ndrow.replace("Unfortunately, the","The");
                                     if (before2ndrow.contains("was not"))
                                     {
                                         before2ndrow=before2ndrow.replace("was not","was ");
-                                        tvTopBehavior.setText(before2ndrow);
+                                        tv2ndRow.setText(before2ndrow);
                                     }
                                 }
                             }
