@@ -142,7 +142,7 @@ public class ClientAdapter extends BaseAdapter {
     }
 
     private void apicall() {
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, "http://squaresdevelopers.com/RecapTube/singleClient_detail.php?id="+clientId
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, "http://trendingfashionable.ipage.com/Recaptube/singleClient_detail.php?id="+clientId
                 , new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -240,7 +240,7 @@ public class ClientAdapter extends BaseAdapter {
 
     }
     private void DeleteRecipe(){
-        StringRequest stringRequest = new StringRequest(Request.Method.POST,"http://trendingfashionable.ipage.com/Recaptube/delete_client.php"+clientId
+        StringRequest stringRequest = new StringRequest(Request.Method.POST,"http://trendingfashionable.ipage.com/Recaptube/delete_client.php?id="+clientId
                 , new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

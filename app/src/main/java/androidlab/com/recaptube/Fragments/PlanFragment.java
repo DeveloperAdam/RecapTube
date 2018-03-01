@@ -7,15 +7,19 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -53,6 +57,7 @@ public class PlanFragment extends Fragment {
         // Inflate the layout for this fragment
         final View view= inflater.inflate(R.layout.fragment_plan, container, false);
 
+        customActionBar();
         sharedPreferences = getActivity().getSharedPreferences("recap", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         goals=sharedPreferences.getString("goals","");
@@ -63,7 +68,7 @@ public class PlanFragment extends Fragment {
         goalSpinner=(Spinner)view.findViewById(R.id.spinnerGoals);
         userGoalSPinner=(Spinner)view.findViewById(R.id.spinnerUserGoal);
         adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, list);
-        adapter2 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, list);
+        adapter2 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, list2);
         textPreviewForUserGoal=(TextView)view.findViewById(R.id.tvUserGoal);
 
 
@@ -290,7 +295,7 @@ public class PlanFragment extends Fragment {
             }
         });
 
-        list.add("Goals");
+        list.add("Goal");
         String[] GoalsArray = goals.split(",");
         items = new CharSequence[GoalsArray.length];
         for (int j = 0; j < GoalsArray.length; j++) {
@@ -308,16 +313,21 @@ public class PlanFragment extends Fragment {
                     textPreviewForUserGoal.setVisibility(View.VISIBLE);
                     userGoalSPinner.setVisibility(View.VISIBLE);
                     textGoal = tvPreviewGoals.getText().toString();
+                    if(textGoal.contains("?"))
+                    {
+                        textGoal=textGoal.replace("?"," "+items[0]);
+                        tvPreviewGoals.setText(textGoal);
+                    }
+                    else
+                    if (textGoal.contains(items[0]))
+                    {
+                            tvPreviewGoals.setText(textGoal);
+                    }
+                    else
                     if (textGoal.contains(items[1]))
                     {
-                        if (textGoal.contains(items[1]))
-                        {
-                            tvPreviewGoals.setText(textGoal);
-                        }
-                        else
-                        {
-                            tvPreviewGoals.setText(textGoal + items[1]+".");
-                        }
+                       textGoal=textGoal.replace(items[1],items[0]);
+                       tvPreviewGoals.setText(textGoal);
                     }
                   else
                     if (textGoal.contains(items[2]))
@@ -350,6 +360,12 @@ public class PlanFragment extends Fragment {
                     textPreviewForUserGoal.setVisibility(View.VISIBLE);
                     userGoalSPinner.setVisibility(View.VISIBLE);
                     textGoal = tvPreviewGoals.getText().toString();
+                    if(textGoal.contains("?"))
+                    {
+                        textGoal=textGoal.replace("?"," "+items[1]);
+                        tvPreviewGoals.setText(textGoal);
+                    }
+                    else
                     if (textGoal.contains(items[0]))
                     {
                         textGoal=textGoal.replace(items[0],items[1]);
@@ -358,14 +374,7 @@ public class PlanFragment extends Fragment {
                     else
                     if (textGoal.contains(items[1]))
                     {
-                        if (textGoal.contains(items[1]))
-                        {
                             tvPreviewGoals.setText(textGoal);
-                        }
-                        else
-                        {
-                            tvPreviewGoals.setText(textGoal + items[1]+".");
-                        }
                     }
                     else
                     if (textGoal.contains(items[2]))
@@ -392,6 +401,12 @@ public class PlanFragment extends Fragment {
                     textPreviewForUserGoal.setVisibility(View.VISIBLE);
                     userGoalSPinner.setVisibility(View.VISIBLE);
                     textGoal = tvPreviewGoals.getText().toString();
+                    if(textGoal.contains("?"))
+                    {
+                        textGoal=textGoal.replace("?"," "+items[2]);
+                        tvPreviewGoals.setText(textGoal);
+                    }
+                    else
                     if (textGoal.contains(items[0]))
                     {
                         textGoal=textGoal.replace(items[0],items[2]);
@@ -406,14 +421,7 @@ public class PlanFragment extends Fragment {
                     else
                     if (textGoal.contains(items[2]))
                     {
-                        if (textGoal.contains(items[2]))
-                        {
                             tvPreviewGoals.setText(textGoal);
-                        }
-                        else
-                        {
-                            tvPreviewGoals.setText(textGoal + items[2]+".");
-                        }
                     }
                     else
                     if (textGoal.contains(items[3]))
@@ -434,6 +442,12 @@ public class PlanFragment extends Fragment {
                     textPreviewForUserGoal.setVisibility(View.VISIBLE);
                     userGoalSPinner.setVisibility(View.VISIBLE);
                     textGoal = tvPreviewGoals.getText().toString();
+                    if(textGoal.contains("?"))
+                    {
+                        textGoal=textGoal.replace("?"," "+items[3]);
+                        tvPreviewGoals.setText(textGoal);
+                    }
+                    else
                     if (textGoal.contains(items[0]))
                     {
                         textGoal=textGoal.replace(items[0],items[3]);
@@ -454,14 +468,8 @@ public class PlanFragment extends Fragment {
                       else
                     if (textGoal.contains(items[3]))
                     {
-                        if (textGoal.contains(items[3]))
-                        {
+
                             tvPreviewGoals.setText(textGoal);
-                        }
-                        else
-                        {
-                            tvPreviewGoals.setText(textGoal + items[3]+".");
-                        }
                     }
                     else
                     if (textGoal.contains(items[4]))
@@ -470,93 +478,7 @@ public class PlanFragment extends Fragment {
                         tvPreviewGoals.setText(textGoal);
                     }
                 }
-                else if (i == 5)
-                {
-                    textPreviewForUserGoal.setVisibility(View.VISIBLE);
-                    userGoalSPinner.setVisibility(View.VISIBLE);
-                    textGoal = tvPreviewGoals.getText().toString();
-                    if (textGoal.contains(items[0]))
-                    {
-                        textGoal=textGoal.replace(items[0],items[4]);
-                        tvPreviewGoals.setText(textGoal);
-                    }
-                    else
-                    if (textGoal.contains(items[1]))
-                    {
-                        textGoal=textGoal.replace(items[1],items[4]);
-                        tvPreviewGoals.setText(textGoal);
-                    }
-                    else
-                    if (textGoal.contains(items[2]))
-                    {
-                        textGoal=textGoal.replace(items[2],items[4]);
-                        tvPreviewGoals.setText(textGoal);
-                    }
-                    else
-                    if (textGoal.contains(items[3]))
-                    {
-                        textGoal=textGoal.replace(items[3],items[4]);
-                        tvPreviewGoals.setText(textGoal);
-                    }
-                    else
-                        if (textGoal.contains(items[4]))
-                    {
-                        if (textGoal.contains(items[4]))
-                        {
-                            tvPreviewGoals.setText(textGoal);
-                        }
-                        else
-                        {
-                            tvPreviewGoals.setText(textGoal + items[4]+".");
-                        }
-                    }
-                }
-                else if (i == 6)
-                {
-                    textPreviewForUserGoal.setVisibility(View.VISIBLE);
-                    userGoalSPinner.setVisibility(View.VISIBLE);
-                    textGoal = tvPreviewGoals.getText().toString();
-                    if (textGoal.contains(items[0]))
-                    {
-                        textGoal=textGoal.replace(items[0],items[5]);
-                        tvPreviewGoals.setText(textGoal);
-                    }
-                    else
-                    if (textGoal.contains(items[1]))
-                    {
-                        textGoal=textGoal.replace(items[1],items[5]);
-                        tvPreviewGoals.setText(textGoal);
-                    }
-                    else
-                    if (textGoal.contains(items[2]))
-                    {
-                        textGoal=textGoal.replace(items[2],items[5]);
-                        tvPreviewGoals.setText(textGoal);
-                    }
-                    else
-                    if (textGoal.contains(items[3]))
-                    {
-                        textGoal=textGoal.replace(items[3],items[5]);
-                        tvPreviewGoals.setText(textGoal);
-                    }
-                    else
-                    if (textGoal.contains(items[4]))
-                    {
-                        textGoal=textGoal.replace(items[4],items[5]);
-                        tvPreviewGoals.setText(textGoal);
-                    }
-                    else
-                    {
-                        if (textGoal.contains(items[5]))
-                        {
-                            tvPreviewGoals.setText(textGoal);
-                        }
-                        else
-                        {
-                            tvPreviewGoals.setText(textGoal + items[5]+".");
-                        }
-                    }
-                }
+
             }
 
             @Override
@@ -564,12 +486,12 @@ public class PlanFragment extends Fragment {
 
             }
         });
-        list.add("Goals");
+        list2.add("Goals");
         String[] GoalsArray2 = goals.split(",");
         items = new CharSequence[GoalsArray2.length];
         for (int j = 0; j < GoalsArray2.length; j++) {
             items[j] =GoalsArray2[j];
-            list.add(GoalsArray2[j]);
+            list2.add(GoalsArray2[j]);
         }
         adapter2.notifyDataSetChanged();
         userGoalSPinner.setAdapter(adapter2);
@@ -579,16 +501,15 @@ public class PlanFragment extends Fragment {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if (i == 1) {
                     strUserGoal = textPreviewForUserGoal.getText().toString();
+                    if(strUserGoal.contains("?"))
+                    {
+                        strUserGoal=strUserGoal.replace("?"," "+items[0]);
+                        textPreviewForUserGoal.setText(strUserGoal);
+                    }
+                    else
                       if (strUserGoal.contains(items[0]))
                     {
-                        if (strUserGoal.contains(items[0]))
-                        {
                             textPreviewForUserGoal.setText(strUserGoal);
-                        }
-                        else
-                        {
-                            textPreviewForUserGoal.setText(strUserGoal + items[0]+".");
-                        }
                     }
                     else
                     if (strUserGoal.contains(items[1]))
@@ -614,28 +535,31 @@ public class PlanFragment extends Fragment {
                         strUserGoal=strUserGoal.replace(items[4],items[0]);
                         textPreviewForUserGoal.setText(strUserGoal);
                     }
+                    else
+                    {
+                        textPreviewForUserGoal.setText(strUserGoal + items[0]+".");
+                    }
 
 
                 }
                 else if (i == 2)
                 {
                     strUserGoal = textPreviewForUserGoal.getText().toString();
+                    if(strUserGoal.contains("?"))
+                    {
+                        strUserGoal=strUserGoal.replace("?"," "+items[1]);
+                        textPreviewForUserGoal.setText(strUserGoal);
+                    }
+                    else
                     if (strUserGoal.contains(items[0]))
                     {
                         strUserGoal=strUserGoal.replace(items[0],items[1]);
                         textPreviewForUserGoal.setText(strUserGoal);
                     }
                     else
-                        if (strUserGoal.contains(items[1]))
+                    if (strUserGoal.contains(items[1]))
                     {
-                        if (strUserGoal.contains(items[1]))
-                        {
-                            textPreviewForUserGoal.setText(strUserGoal);
-                        }
-                        else
-                        {
-                            textPreviewForUserGoal.setText(strUserGoal + items[1]+".");
-                        }
+                       textPreviewForUserGoal.setText(strUserGoal);
                     }
                     else
                     if (strUserGoal.contains(items[2]))
@@ -655,11 +579,21 @@ public class PlanFragment extends Fragment {
                         strUserGoal=strUserGoal.replace(items[4],items[1]);
                         textPreviewForUserGoal.setText(strUserGoal);
                     }
+                    else
+                    {
+                        textPreviewForUserGoal.setText(strUserGoal + items[1]+".");
+                    }
 
                 }
                 else if (i == 3)
                 {
                     strUserGoal = textPreviewForUserGoal.getText().toString();
+                    if(strUserGoal.contains("?"))
+                    {
+                        strUserGoal=strUserGoal.replace("?"," "+items[2]);
+                        textPreviewForUserGoal.setText(strUserGoal);
+                    }
+                    else
                     if (strUserGoal.contains(items[0]))
                     {
                         strUserGoal=strUserGoal.replace(items[0],items[2]);
@@ -674,14 +608,8 @@ public class PlanFragment extends Fragment {
                     else
                         if (strUserGoal.contains(items[2]))
                     {
-                        if (strUserGoal.contains(items[2]))
-                        {
+
                             textPreviewForUserGoal.setText(strUserGoal);
-                        }
-                        else
-                        {
-                            textPreviewForUserGoal.setText(strUserGoal + items[2]+".");
-                        }
                     }
                     else
                     if (strUserGoal.contains(items[3]))
@@ -695,11 +623,20 @@ public class PlanFragment extends Fragment {
                         strUserGoal=strUserGoal.replace(items[4],items[2]);
                         textPreviewForUserGoal.setText(strUserGoal);
                     }
-
+                    else
+                    {
+                        textPreviewForUserGoal.setText(strUserGoal + items[2]+".");
+                    }
                 }
                 else if (i == 3)
                 {
                     strUserGoal = textPreviewForUserGoal.getText().toString();
+                    if(strUserGoal.contains("?"))
+                    {
+                        strUserGoal=strUserGoal.replace("?"," "+items[3]);
+                        textPreviewForUserGoal.setText(strUserGoal);
+                    }
+                    else
                     if (strUserGoal.contains(items[0]))
                     {
                         strUserGoal=strUserGoal.replace(items[0],items[3]);
@@ -720,14 +657,7 @@ public class PlanFragment extends Fragment {
                     else
                         if (strUserGoal.contains(items[3]))
                     {
-                        if (strUserGoal.contains(items[3]))
-                        {
                             textPreviewForUserGoal.setText(strUserGoal);
-                        }
-                        else
-                        {
-                            textPreviewForUserGoal.setText(strUserGoal + items[3]+".");
-                        }
                     }
                     else
                     if (strUserGoal.contains(items[4]))
@@ -735,90 +665,13 @@ public class PlanFragment extends Fragment {
                         strUserGoal=strUserGoal.replace(items[4],items[3]);
                         textPreviewForUserGoal.setText(strUserGoal);
                     }
+                    else
+                    {
+                        textPreviewForUserGoal.setText(strUserGoal + items[3]+".");
+                    }
 
                 }
-                else if (i == 5)
-                {
-                    strUserGoal = textPreviewForUserGoal.getText().toString();
-                    if (strUserGoal.contains(items[0]))
-                    {
-                        strUserGoal=strUserGoal.replace(items[0],items[4]);
-                        textPreviewForUserGoal.setText(strUserGoal);
-                    }
-                    else
-                    if (strUserGoal.contains(items[1]))
-                    {
-                        strUserGoal=strUserGoal.replace(items[1],items[4]);
-                        textPreviewForUserGoal.setText(strUserGoal);
-                    }
-                    else
-                    if (strUserGoal.contains(items[2]))
-                    {
-                        strUserGoal=strUserGoal.replace(items[2],items[4]);
-                        textPreviewForUserGoal.setText(strUserGoal);
-                    }
-                    else
-                    if (strUserGoal.contains(items[3]))
-                    {
-                        strUserGoal=strUserGoal.replace(items[3],items[4]);
-                        textPreviewForUserGoal.setText(strUserGoal);
-                    }
-                    else
-                    {
-                        if (strUserGoal.contains(items[4]))
-                        {
-                            textPreviewForUserGoal.setText(strUserGoal);
-                        }
-                        else
-                        {
-                            textPreviewForUserGoal.setText(strUserGoal + items[4]+".");
-                        }
-                    }
-                }
-                else if (i == 6)
-                {
-                    strUserGoal = textPreviewForUserGoal.getText().toString();
-                    if (strUserGoal.contains(items[0]))
-                    {
-                        strUserGoal=strUserGoal.replace(items[0],items[5]);
-                        textPreviewForUserGoal.setText(strUserGoal);
-                    }
-                    else
-                    if (strUserGoal.contains(items[1]))
-                    {
-                        strUserGoal=strUserGoal.replace(items[1],items[5]);
-                        textPreviewForUserGoal.setText(strUserGoal);
-                    }
-                    else
-                    if (strUserGoal.contains(items[2]))
-                    {
-                        strUserGoal=strUserGoal.replace(items[2],items[5]);
-                        textPreviewForUserGoal.setText(strUserGoal);
-                    }
-                    else
-                    if (strUserGoal.contains(items[3]))
-                    {
-                        strUserGoal=strUserGoal.replace(items[3],items[5]);
-                        textPreviewForUserGoal.setText(strUserGoal);
-                    }
-                    else
-                    if (strUserGoal.contains(items[4]))
-                    {
-                        strUserGoal=strUserGoal.replace(items[4],items[5]);
-                        textPreviewForUserGoal.setText(strUserGoal);
-                    }
-                    else
-                    {
-                        if (textGoal.contains(items[5]))
-                        {
-                            textPreviewForUserGoal.setText(strUserGoal);
-                        }
-                        else
-                        {
-                            textPreviewForUserGoal.setText(strUserGoal + items[5]+".");
-                        }
-                    }
-                }
+
             }
 
             @Override
@@ -828,5 +681,23 @@ public class PlanFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private void customActionBar() {
+        android.support.v7.app.ActionBar mActionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        mActionBar.setDisplayShowHomeEnabled(false);
+        mActionBar.setDisplayShowTitleEnabled(false);
+        mActionBar.setDisplayHomeAsUpEnabled(true);
+        LayoutInflater mInflater = LayoutInflater.from(getActivity());
+        View mCustomView = mInflater.inflate(R.layout.custom_actionabar_plan, null);
+        Button  btnPlan=(Button)mCustomView.findViewById(R.id.btnSummary);
+        btnPlan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        mActionBar.setCustomView(mCustomView);
+        mActionBar.setDisplayShowCustomEnabled(true);
     }
 }
