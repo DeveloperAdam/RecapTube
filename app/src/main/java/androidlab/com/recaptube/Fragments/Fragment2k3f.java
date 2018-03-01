@@ -61,13 +61,13 @@ public class Fragment2k3f extends Fragment {
             editor.putString("bbb",finalResponse).commit();
         }
 
-        tvFinalResponse.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.mainContainer, new Behavior2k()).commit();
-            }
-        });
+//        tvFinalResponse.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+//                ft.replace(R.id.mainContainer, new Behavior2k()).commit();
+//            }
+//        });
 
 
         return view;

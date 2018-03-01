@@ -41,7 +41,7 @@ public class PlanFragment extends Fragment {
     Spinner sessionTypeSpinner,goalSpinner,userGoalSPinner;
     String type1="an individual rehabilitation session.";
     String type2="an All Staff CFT.";
-    String type3="an CFS meeting.";
+    String type3="a CFT meeting.";
     String type4="an ITC meeting.";
     ArrayList<String> list = new ArrayList<String>();
     ArrayList<String> list2 = new ArrayList<String>();
@@ -49,6 +49,7 @@ public class PlanFragment extends Fragment {
     ArrayAdapter<String> adapter2;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor ;
+    Button  btnPlan;
     CharSequence[] items;
     String defaultTextForUserGoal="The CFS will assist the client with the goal to ";
     @Override
@@ -153,9 +154,9 @@ public class PlanFragment extends Fragment {
                     goalSpinner.setVisibility(View.VISIBLE);
                     tvPreviewGoals.setVisibility(View.VISIBLE);
                     text=textPreviewDate.getText().toString();
-                    if (text.contains("?"))
+                    if (text.contains("what type of meeting?"))
                     {
-                        text=text.replace("?"," "+type1);
+                        text=text.replace("what type of meeting?",type1);
                         textPreviewDate.setText(text);
                     }
                     else
@@ -188,9 +189,9 @@ public class PlanFragment extends Fragment {
                         goalSpinner.setVisibility(View.VISIBLE);
                         tvPreviewGoals.setVisibility(View.VISIBLE);
                         text=textPreviewDate.getText().toString();
-                        if (text.contains("?"))
+                        if (text.contains("what type of meeting?"))
                         {
-                            text=text.replace("?"," "+type2);
+                            text=text.replace("what type of meeting?",type2);
                             textPreviewDate.setText(text);
                         }
                         else
@@ -223,9 +224,9 @@ public class PlanFragment extends Fragment {
                         goalSpinner.setVisibility(View.VISIBLE);
                         tvPreviewGoals.setVisibility(View.VISIBLE);
                         text=textPreviewDate.getText().toString();
-                        if (text.contains("?"))
+                        if (text.contains("what type of meeting?"))
                         {
-                            text=text.replace("?"," "+type3);
+                            text=text.replace("what type of meeting?",type3);
                             textPreviewDate.setText(text);
                         }
                         else
@@ -258,9 +259,9 @@ public class PlanFragment extends Fragment {
                         goalSpinner.setVisibility(View.VISIBLE);
                         tvPreviewGoals.setVisibility(View.VISIBLE);
                         text=textPreviewDate.getText().toString();
-                        if (text.contains("?"))
+                        if (text.contains("what type of meeting?"))
                         {
-                            text=text.replace("?"," "+type4);
+                            text=text.replace("what type of meeting?",type4);
                             textPreviewDate.setText(text);
                         }
                         else
@@ -317,7 +318,12 @@ public class PlanFragment extends Fragment {
                     if(textGoal.contains("?"))
                     {
                         textGoal=textGoal.replace("?"," "+items[0]+".");
-                        tvPreviewGoals.setText(textGoal);
+                        if (textGoal.contains("focus on which"))
+                        {
+                            textGoal=textGoal.replace("focus on which","focus on the");
+                            tvPreviewGoals.setText(textGoal);
+                        }
+
                     }
                     else
                     if (textGoal.contains(items[0]))
@@ -364,7 +370,11 @@ public class PlanFragment extends Fragment {
                     if(textGoal.contains("?"))
                     {
                         textGoal=textGoal.replace("?"," "+items[1]+".");
-                        tvPreviewGoals.setText(textGoal);
+                        if (textGoal.contains("focus on which"))
+                        {
+                            textGoal=textGoal.replace("focus on which","focus on the");
+                            tvPreviewGoals.setText(textGoal);
+                        }
                     }
                     else
                     if (textGoal.contains(items[0]))
@@ -405,7 +415,11 @@ public class PlanFragment extends Fragment {
                     if(textGoal.contains("?"))
                     {
                         textGoal=textGoal.replace("?"," "+items[2]+".");
-                        tvPreviewGoals.setText(textGoal);
+                        if (textGoal.contains("focus on which"))
+                        {
+                            textGoal=textGoal.replace("focus on which","focus on the");
+                            tvPreviewGoals.setText(textGoal);
+                        }
                     }
                     else
                     if (textGoal.contains(items[0]))
@@ -446,7 +460,11 @@ public class PlanFragment extends Fragment {
                     if(textGoal.contains("?"))
                     {
                         textGoal=textGoal.replace("?"," "+items[3]+".");
-                        tvPreviewGoals.setText(textGoal);
+                        if (textGoal.contains("focus on which"))
+                        {
+                            textGoal=textGoal.replace("focus on which","focus on the");
+                            tvPreviewGoals.setText(textGoal);
+                        }
                     }
                     else
                     if (textGoal.contains(items[0]))
@@ -501,11 +519,23 @@ public class PlanFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if (i == 1) {
+                    btnPlan.setVisibility(View.VISIBLE);
                     strUserGoal = textPreviewForUserGoal.getText().toString();
                     if(strUserGoal.contains("?"))
                     {
                         strUserGoal=strUserGoal.replace("?"," "+items[0]+".");
-                        textPreviewForUserGoal.setText(strUserGoal);
+                        if (strUserGoal.contains("will assist"))
+                        {
+                            strUserGoal=strUserGoal.replace("will assist","will focus on assisting");
+                            if (strUserGoal.contains("which"))
+                            {
+                                strUserGoal=strUserGoal.replace("which","the");
+                                textPreviewForUserGoal.setText(strUserGoal);
+                            }
+
+                        }
+
+
                     }
                     else
                       if (strUserGoal.contains(items[0]))
@@ -545,11 +575,21 @@ public class PlanFragment extends Fragment {
                 }
                 else if (i == 2)
                 {
+                    btnPlan.setVisibility(View.VISIBLE);
                     strUserGoal = textPreviewForUserGoal.getText().toString();
                     if(strUserGoal.contains("?"))
                     {
                         strUserGoal=strUserGoal.replace("?"," "+items[1]+".");
-                        textPreviewForUserGoal.setText(strUserGoal);
+                        if (strUserGoal.contains("will assist"))
+                        {
+                            strUserGoal=strUserGoal.replace("will assist","will focus on assisting");
+                            if (strUserGoal.contains("which"))
+                            {
+                                strUserGoal=strUserGoal.replace("which","the");
+                                textPreviewForUserGoal.setText(strUserGoal);
+                            }
+                        }
+
                     }
                     else
                     if (strUserGoal.contains(items[0]))
@@ -588,11 +628,21 @@ public class PlanFragment extends Fragment {
                 }
                 else if (i == 3)
                 {
+                    btnPlan.setVisibility(View.VISIBLE);
                     strUserGoal = textPreviewForUserGoal.getText().toString();
                     if(strUserGoal.contains("?"))
                     {
                         strUserGoal=strUserGoal.replace("?"," "+items[2]+".");
-                        textPreviewForUserGoal.setText(strUserGoal);
+                        if (strUserGoal.contains("will assist"))
+                        {
+                            strUserGoal=strUserGoal.replace("will assist","will focus on assisting");
+                            if (strUserGoal.contains("which"))
+                            {
+                                strUserGoal=strUserGoal.replace("which","the");
+                                textPreviewForUserGoal.setText(strUserGoal);
+                            }
+                        }
+
                     }
                     else
                     if (strUserGoal.contains(items[0]))
@@ -629,13 +679,23 @@ public class PlanFragment extends Fragment {
                         textPreviewForUserGoal.setText(strUserGoal + items[2]+".");
                     }
                 }
-                else if (i == 3)
+                else if (i == 4)
                 {
+                    btnPlan.setVisibility(View.VISIBLE);
                     strUserGoal = textPreviewForUserGoal.getText().toString();
                     if(strUserGoal.contains("?"))
                     {
                         strUserGoal=strUserGoal.replace("?"," "+items[3]+".");
-                        textPreviewForUserGoal.setText(strUserGoal);
+                        if (strUserGoal.contains("will assist"))
+                        {
+                            strUserGoal=strUserGoal.replace("will assist","will focus on assisting");
+                            if (strUserGoal.contains("which"))
+                            {
+                                strUserGoal=strUserGoal.replace("which","the");
+                                textPreviewForUserGoal.setText(strUserGoal);
+                            }
+                        }
+
                     }
                     else
                     if (strUserGoal.contains(items[0]))
@@ -691,7 +751,7 @@ public class PlanFragment extends Fragment {
         mActionBar.setDisplayHomeAsUpEnabled(true);
         LayoutInflater mInflater = LayoutInflater.from(getActivity());
         View mCustomView = mInflater.inflate(R.layout.custom_actionabar_plan, null);
-        Button  btnPlan=(Button)mCustomView.findViewById(R.id.btnSummary);
+          btnPlan=(Button)mCustomView.findViewById(R.id.btnSummary);
         btnPlan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

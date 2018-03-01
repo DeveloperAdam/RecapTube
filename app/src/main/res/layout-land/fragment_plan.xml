@@ -50,7 +50,7 @@
         android:layout_marginTop="20sp"
         android:layout_marginLeft="10sp"
         android:visibility="gone"
-        android:text="The client will focus on which goal?"
+        android:text="The client will focus on which the goal?"
         android:id="@+id/textPreviewForGoals"/>
 <LinearLayout
     android:layout_width="match_parent"
