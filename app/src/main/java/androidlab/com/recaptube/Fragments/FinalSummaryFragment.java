@@ -17,7 +17,7 @@ public class FinalSummaryFragment extends Fragment {
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor ;
     EditText finalTextPreview;
-    String getIntroduction2k1;
+    String getIntroduction2k1,getBehviorText1,getBehviorText2,getIntervention,getResponse,getPtext1,getPtext2,getPtext3;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -28,7 +28,19 @@ public class FinalSummaryFragment extends Fragment {
         sharedPreferences = getActivity().getSharedPreferences("recap", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         getIntroduction2k1=sharedPreferences.getString("back","");
-        finalTextPreview.setText(getIntroduction2k1);
+        getBehviorText1=sharedPreferences.getString("bText1","");
+        getBehviorText2=sharedPreferences.getString("bText2","");
+        getIntervention=sharedPreferences.getString("intervention","");
+        getResponse=sharedPreferences.getString("response","");
+        getPtext1=sharedPreferences.getString("pText1","");
+        getPtext2=sharedPreferences.getString("pText2","");
+        getPtext3=sharedPreferences.getString("pText3","");
+        finalTextPreview.setText("********** INTRODUCTION **********\n"+getIntroduction2k1+
+                        "\n\n*************** GOAL **************\n"+
+        "We will change this later\n\n********** BEHAVIOR **********\n"+getBehviorText1+getBehviorText2+
+                        "\n\n********** INTERVENTION **********\n"+
+        getIntervention+"\n\n********** RESPONSE **********\n"+getResponse
+                        +"\n\n************** PLAN **************\n"+getPtext1+" "+getPtext2+ " " +getPtext3);
 
 
         return view;

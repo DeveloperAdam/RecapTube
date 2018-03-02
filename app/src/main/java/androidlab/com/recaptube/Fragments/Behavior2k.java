@@ -1051,6 +1051,8 @@ public class Behavior2k extends Fragment {
         btnPlan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                editor.putString("bText1",tvTopBehavior.getText().toString()).commit();
+                editor.putString("bText2",tv2ndRow.getText().toString()).commit();
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.mainContainer, new PlanFragment()).commit();
             }

@@ -755,6 +755,9 @@ public class PlanFragment extends Fragment {
         btnPlan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                editor.putString("pText1",textPreviewDate.getText().toString()).commit();
+                editor.putString("pText2",tvPreviewGoals.getText().toString()).commit();
+                editor.putString("pText3",textPreviewForUserGoal.getText().toString()).commit();
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.mainContainer, new FinalSummaryFragment()).commit();
             }

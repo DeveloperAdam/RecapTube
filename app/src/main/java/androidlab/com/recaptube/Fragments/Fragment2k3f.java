@@ -85,6 +85,8 @@ public class Fragment2k3f extends Fragment {
         btnBehavior.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                editor.putString("intervention",tvFinalString.getText().toString()).commit();
+                editor.putString("response",tvFinalResponse.getText().toString()).commit();
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.mainContainer, new Behavior2k()).commit();
             }
@@ -92,6 +94,7 @@ public class Fragment2k3f extends Fragment {
         btnIntervention.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.mainContainer, new InterventionFragment1()).commit();
 
