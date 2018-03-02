@@ -67,6 +67,7 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
     int otherProfessional=0;
     int familyMembers=0;
     int friends=0;
+    Double lat1,lng1,lat2,lng2;
     String getLatLngofAddress1,getLatLngofAddress2,latlngaddress1,latlngaddress2;
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
@@ -4211,11 +4212,9 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 getLatLngofAddress1=entryAddress1City.getText().toString();
                 getLatLngofAddress2=entryAddress2City.getText().toString();
-                getLatLng(getLatLngofAddress1);
-                getLatLng2(getLatLngofAddress2);
+                getLatLng(getLatLngofAddress1,getLatLngofAddress2);
                     if(test==1)
                     {
                         texteffectbutton=textPreviewIntroduction.getText().toString();
@@ -4281,53 +4280,48 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
         mActionBar.setCustomView(mCustomView);
         mActionBar.setDisplayShowCustomEnabled(true);
     }
-        public void getLatLng(String address)
+        public void getLatLng(String address, String address2)
         {
             GeocodingLocation locationAddress = new GeocodingLocation();
-            locationAddress.getAddressFromLocation(address,
+            locationAddress.getAddressFromLocation(address,address2,
                     getActivity(), new GeocoderHandler());
         }
-    public void getLatLng2(String address)
-    {
-        GeocodingLocation locationAddress = new GeocodingLocation();
-        locationAddress.getAddressFromLocation(address,
-                getActivity(), new GeocoderHandler2());
-    }
+
 
     private class GeocoderHandler extends Handler {
         @Override
         public void handleMessage(Message message) {
             String locationAddress;
+            String locationAddress2;
+            String lat,lng,lat2,lng2;
+            Double latD,lngD,lat2D,lng2D;
             switch (message.what) {
                 case 1:
                     Bundle bundle = message.getData();
                     locationAddress = bundle.getString("address");
+                    locationAddress2=bundle.getString("address2");
                     break;
                 default:
                     locationAddress = null;
+                    locationAddress2= null;
             }
             latlngaddress1=locationAddress;
             Log.d("zmaAddress",locationAddress);
-            Toast.makeText(getActivity(), locationAddress, Toast.LENGTH_SHORT).show();
+            Log.d("zmaAddress2",locationAddress2);
+            lat=sharedPreferences.getString("lat","");
+            lng=sharedPreferences.getString("lng","");
+            lat2=sharedPreferences.getString("lat2","");
+            lng2=sharedPreferences.getString("lng2","");
+            latD=Double.parseDouble(lat);
+            lngD=Double.parseDouble(lng);
+            lat2D=Double.parseDouble(lat2);
+            lng2D=Double.parseDouble(lng2);
+            Toast.makeText(getActivity(), String.valueOf(latD+lng2D), Toast.LENGTH_SHORT).show();
+
+
         }
     }
-    private class GeocoderHandler2 extends Handler {
-        @Override
-        public void handleMessage(Message message) {
-            String locationAddress;
-            switch (message.what) {
-                case 1:
-                    Bundle bundle = message.getData();
-                    locationAddress = bundle.getString("address");
-                    break;
-                default:
-                    locationAddress = null;
-            }
-            latlngaddress2=locationAddress;
-            Log.d("zmaAddress2",locationAddress);
-            Toast.makeText(getActivity(), locationAddress, Toast.LENGTH_SHORT).show();
-        }
-    }
+
 
     @Override
     public void onClick(View v) {
