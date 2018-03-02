@@ -4,11 +4,14 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
+import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,7 +67,7 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
     int otherProfessional=0;
     int familyMembers=0;
     int friends=0;
-    String sessionType;
+    String getLatLngofAddress1,getLatLngofAddress2,latlngaddress1,latlngaddress2;
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -4209,7 +4212,10 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
             @Override
             public void onClick(View v) {
 
-
+                getLatLngofAddress1=entryAddress1City.getText().toString();
+                getLatLngofAddress2=entryAddress2City.getText().toString();
+                getLatLng(getLatLngofAddress1);
+                getLatLng2(getLatLngofAddress2);
                     if(test==1)
                     {
                         texteffectbutton=textPreviewIntroduction.getText().toString();
@@ -4275,7 +4281,53 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
         mActionBar.setCustomView(mCustomView);
         mActionBar.setDisplayShowCustomEnabled(true);
     }
+        public void getLatLng(String address)
+        {
+            GeocodingLocation locationAddress = new GeocodingLocation();
+            locationAddress.getAddressFromLocation(address,
+                    getActivity(), new GeocoderHandler());
+        }
+    public void getLatLng2(String address)
+    {
+        GeocodingLocation locationAddress = new GeocodingLocation();
+        locationAddress.getAddressFromLocation(address,
+                getActivity(), new GeocoderHandler2());
+    }
 
+    private class GeocoderHandler extends Handler {
+        @Override
+        public void handleMessage(Message message) {
+            String locationAddress;
+            switch (message.what) {
+                case 1:
+                    Bundle bundle = message.getData();
+                    locationAddress = bundle.getString("address");
+                    break;
+                default:
+                    locationAddress = null;
+            }
+            latlngaddress1=locationAddress;
+            Log.d("zmaAddress",locationAddress);
+            Toast.makeText(getActivity(), locationAddress, Toast.LENGTH_SHORT).show();
+        }
+    }
+    private class GeocoderHandler2 extends Handler {
+        @Override
+        public void handleMessage(Message message) {
+            String locationAddress;
+            switch (message.what) {
+                case 1:
+                    Bundle bundle = message.getData();
+                    locationAddress = bundle.getString("address");
+                    break;
+                default:
+                    locationAddress = null;
+            }
+            latlngaddress2=locationAddress;
+            Log.d("zmaAddress2",locationAddress);
+            Toast.makeText(getActivity(), locationAddress, Toast.LENGTH_SHORT).show();
+        }
+    }
 
     @Override
     public void onClick(View v) {
