@@ -317,6 +317,7 @@ public class PlanFragment extends Fragment {
                     textGoal = tvPreviewGoals.getText().toString();
                     if(textGoal.contains("?"))
                     {
+                        editor.putString("selectedgoal",String.valueOf(items[0]));
                         textGoal=textGoal.replace("?"," "+items[0]+".");
                         if (textGoal.contains("focus on which"))
                         {
@@ -328,35 +329,41 @@ public class PlanFragment extends Fragment {
                     else
                     if (textGoal.contains(items[0]))
                     {
+                        editor.putString("selectedgoal",String.valueOf(items[0]));
                             tvPreviewGoals.setText(textGoal);
                     }
                     else
                     if (textGoal.contains(items[1]))
                     {
+                        editor.putString("selectedgoal",String.valueOf(items[0]));
                        textGoal=textGoal.replace(items[1],items[0]);
                        tvPreviewGoals.setText(textGoal);
                     }
                   else
                     if (textGoal.contains(items[2]))
                     {
+                        editor.putString("selectedgoal",String.valueOf(items[0]));
                         textGoal=textGoal.replace(items[2],items[1]);
                         tvPreviewGoals.setText(textGoal);
                     }
                     else
                     if (textGoal.contains(items[3]))
                     {
+                        editor.putString("selectedgoal",String.valueOf(items[0]));
                         textGoal=textGoal.replace(items[3],items[1]);
                         tvPreviewGoals.setText(textGoal);
                     }
                     else
                     if (textGoal.contains(items[4]))
                     {
+                        editor.putString("selectedgoal",String.valueOf(items[0]));
                         textGoal=textGoal.replace(items[4],items[1]);
                         tvPreviewGoals.setText(textGoal);
                     }
                     else
                     if (textGoal.contains(items[5]))
                     {
+                        editor.putString("selectedgoal",String.valueOf(items[0]));
                         textGoal=textGoal.replace(items[5],items[1]);
                         tvPreviewGoals.setText(textGoal);
                     }
@@ -369,6 +376,7 @@ public class PlanFragment extends Fragment {
                     textGoal = tvPreviewGoals.getText().toString();
                     if(textGoal.contains("?"))
                     {
+                        editor.putString("selectedgoal",String.valueOf(items[1]));
                         textGoal=textGoal.replace("?"," "+items[1]+".");
                         if (textGoal.contains("focus on which"))
                         {
@@ -379,6 +387,7 @@ public class PlanFragment extends Fragment {
                     else
                     if (textGoal.contains(items[0]))
                     {
+                        editor.putString("selectedgoal",String.valueOf(items[1]));
                         textGoal=textGoal.replace(items[0],items[1]);
                         tvPreviewGoals.setText(textGoal);
                     }
@@ -386,24 +395,28 @@ public class PlanFragment extends Fragment {
                     if (textGoal.contains(items[1]))
                     {
                             tvPreviewGoals.setText(textGoal);
+                        editor.putString("selectedgoal",String.valueOf(items[1]));
                     }
                     else
                     if (textGoal.contains(items[2]))
                     {
                         textGoal=textGoal.replace(items[2],items[1]);
                         tvPreviewGoals.setText(textGoal);
+                        editor.putString("selectedgoal",String.valueOf(items[1]));
                     }
                     else
                     if (textGoal.contains(items[3]))
                     {
                         textGoal=textGoal.replace(items[3],items[1]);
                         tvPreviewGoals.setText(textGoal);
+                        editor.putString("selectedgoal",String.valueOf(items[1]));
                     }
                     else
                     if (textGoal.contains(items[4]))
                     {
                         textGoal=textGoal.replace(items[4],items[1]);
                         tvPreviewGoals.setText(textGoal);
+                        editor.putString("selectedgoal",String.valueOf(items[1]));
                     }
 
                 }
@@ -414,6 +427,7 @@ public class PlanFragment extends Fragment {
                     textGoal = tvPreviewGoals.getText().toString();
                     if(textGoal.contains("?"))
                     {
+                        editor.putString("selectedgoal",String.valueOf(items[2]));
                         textGoal=textGoal.replace("?"," "+items[2]+".");
                         if (textGoal.contains("focus on which"))
                         {
@@ -424,29 +438,34 @@ public class PlanFragment extends Fragment {
                     else
                     if (textGoal.contains(items[0]))
                     {
+                        editor.putString("selectedgoal",String.valueOf(items[2]));
                         textGoal=textGoal.replace(items[0],items[2]);
                         tvPreviewGoals.setText(textGoal);
                     }
                     else
                     if (textGoal.contains(items[1]))
                     {
+                        editor.putString("selectedgoal",String.valueOf(items[2]));
                         textGoal=textGoal.replace(items[1],items[2]);
                         tvPreviewGoals.setText(textGoal);
                     }
                     else
                     if (textGoal.contains(items[2]))
                     {
+                        editor.putString("selectedgoal",String.valueOf(items[2]));
                             tvPreviewGoals.setText(textGoal);
                     }
                     else
                     if (textGoal.contains(items[3]))
                     {
+                        editor.putString("selectedgoal",String.valueOf(items[2]));
                         textGoal=textGoal.replace(items[3],items[2]);
                         tvPreviewGoals.setText(textGoal);
                     }
                     else
                     if (textGoal.contains(items[4]))
                     {
+                        editor.putString("selectedgoal",String.valueOf(items[2]));
                         textGoal=textGoal.replace(items[4],items[2]);
                         tvPreviewGoals.setText(textGoal);
                     }
@@ -459,6 +478,7 @@ public class PlanFragment extends Fragment {
                     textGoal = tvPreviewGoals.getText().toString();
                     if(textGoal.contains("?"))
                     {
+                        editor.putString("selectedgoal",String.valueOf(items[3]));
                         textGoal=textGoal.replace("?"," "+items[3]+".");
                         if (textGoal.contains("focus on which"))
                         {
@@ -469,30 +489,34 @@ public class PlanFragment extends Fragment {
                     else
                     if (textGoal.contains(items[0]))
                     {
+                        editor.putString("selectedgoal",String.valueOf(items[3]));
                         textGoal=textGoal.replace(items[0],items[3]);
                         tvPreviewGoals.setText(textGoal);
                     }
                     else
                     if (textGoal.contains(items[1]))
                     {
+                        editor.putString("selectedgoal",String.valueOf(items[3]));
                         textGoal=textGoal.replace(items[1],items[3]);
                         tvPreviewGoals.setText(textGoal);
                     }
                     else
                     if (textGoal.contains(items[2]))
                     {
+                        editor.putString("selectedgoal",String.valueOf(items[3]));
                         textGoal=textGoal.replace(items[2],items[3]);
                         tvPreviewGoals.setText(textGoal);
                     }
                       else
                     if (textGoal.contains(items[3]))
                     {
-
+                        editor.putString("selectedgoal",String.valueOf(items[3]));
                             tvPreviewGoals.setText(textGoal);
                     }
                     else
                     if (textGoal.contains(items[4]))
                     {
+                        editor.putString("selectedgoal",String.valueOf(items[3]));
                         textGoal=textGoal.replace(items[4],items[3]);
                         tvPreviewGoals.setText(textGoal);
                     }

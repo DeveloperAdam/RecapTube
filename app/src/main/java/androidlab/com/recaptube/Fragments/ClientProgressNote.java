@@ -4283,8 +4283,11 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
         public void getLatLng(String address, String address2)
         {
             GeocodingLocation locationAddress = new GeocodingLocation();
-            locationAddress.getAddressFromLocation(address,address2,
+            locationAddress.getAddressFromLocation(address,
                     getActivity(), new GeocoderHandler());
+
+            GeocodingLocation geocodingLocation=new GeocodingLocation();
+            geocodingLocation.getAddressFromLocation2(address2,getActivity(),new GeocoderHandler2());
         }
 
 
@@ -4292,31 +4295,48 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
         @Override
         public void handleMessage(Message message) {
             String locationAddress;
-            String locationAddress2;
-            String lat,lng,lat2,lng2;
-            Double latD,lngD,lat2D,lng2D;
+            String lat,lng;
+            Double latD,lngD;
             switch (message.what) {
                 case 1:
                     Bundle bundle = message.getData();
                     locationAddress = bundle.getString("address");
-                    locationAddress2=bundle.getString("address2");
                     break;
                 default:
                     locationAddress = null;
-                    locationAddress2= null;
             }
             latlngaddress1=locationAddress;
             Log.d("zmaAddress",locationAddress);
-            Log.d("zmaAddress2",locationAddress2);
             lat=sharedPreferences.getString("lat","");
             lng=sharedPreferences.getString("lng","");
-            lat2=sharedPreferences.getString("lat2","");
-            lng2=sharedPreferences.getString("lng2","");
             latD=Double.parseDouble(lat);
             lngD=Double.parseDouble(lng);
+
+            Toast.makeText(getActivity(), String.valueOf(latD+lngD), Toast.LENGTH_SHORT).show();
+
+
+        }
+    }
+    private class GeocoderHandler2 extends Handler {
+        @Override
+        public void handleMessage(Message message) {
+            String locationAddress2;
+            String lat2,lng2;
+            Double lat2D,lng2D;
+            switch (message.what) {
+                case 1:
+                    Bundle bundle = message.getData();
+                    locationAddress2=bundle.getString("address2");
+                    break;
+                default:
+                    locationAddress2= null;
+            }
+            Log.d("zmaAddress2",locationAddress2);
+            lat2=sharedPreferences.getString("lat2","");
+            lng2=sharedPreferences.getString("lng2","");
             lat2D=Double.parseDouble(lat2);
             lng2D=Double.parseDouble(lng2);
-            Toast.makeText(getActivity(), String.valueOf(latD+lng2D), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), String.valueOf(lat2D+lng2D), Toast.LENGTH_SHORT).show();
 
 
         }

@@ -4,12 +4,29 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="androidlab.com.recaptube.Fragments.FinalSummaryFragment">
-
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
         android:layout_margin="10sp"
+        android:layout_gravity="top"
+        android:layout_marginBottom="70sp"
         android:id="@+id/finalTextPreview"/>
 
+    <Button
+        android:layout_width="250sp"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnSubmit"
+        android:text="Submit"
+        android:layout_marginTop="20sp"
+        android:layout_gravity="bottom|center"/>
+    </LinearLayout>
+</ScrollView>
 </LinearLayout>
