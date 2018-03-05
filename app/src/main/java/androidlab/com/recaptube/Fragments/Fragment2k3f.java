@@ -66,6 +66,9 @@ public class Fragment2k3f extends Fragment {
             public void onClick(View view) {
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.mainContainer, new Behavior2k()).commit();
+
+                editor.putString("intervention",tvFinalString.getText().toString()).commit();
+                editor.putString("response",tvFinalResponse.getText().toString()).commit();
             }
         });
 

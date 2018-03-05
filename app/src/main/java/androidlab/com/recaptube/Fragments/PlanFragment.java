@@ -114,6 +114,7 @@ public class PlanFragment extends Fragment {
                                         .append(min ).append(" ").append(timeSet).toString();
                                 text=textPreviewDate.getText().toString();
                                 textPreviewDate.setText(text+" at "+aTime+" for what type of meeting?");
+                                editor.putString("time",aTime).commit();
                                 sessionTypeSpinner.setVisibility(View.VISIBLE);
                               //  text=textPreviewDate.getText().toString();
                                // tvDate.setText(text);
@@ -126,7 +127,7 @@ public class PlanFragment extends Fragment {
                 final Calendar c1 = Calendar.getInstance();
                 int mYear = c1.get(Calendar.YEAR); // current year
                 int mMonth = c1.get(Calendar.MONTH); // current month
-                int mDay = c1.get(Calendar.DAY_OF_MONTH);
+                final int mDay = c1.get(Calendar.DAY_OF_MONTH);
                 // date picker dialog
                 datePickerDialog = new DatePickerDialog(getActivity(),
                         new DatePickerDialog.OnDateSetListener() {
@@ -137,6 +138,9 @@ public class PlanFragment extends Fragment {
                                 // set day of month , month and year value in the edit text
                                 strDate= (monthOfYear + 1) + "/" + dayOfMonth + "/" + year;
                                 textPreviewDate.setText(CFS+strDate);
+                                editor.putInt("Month",monthOfYear+1).commit();
+                                editor.putInt("Day",mDay).commit();
+                                editor.putInt("Year",year).commit();
                                 sessionTypeSpinner.setVisibility(View.VISIBLE);
                             }
                         }, mYear, mMonth, mDay);
