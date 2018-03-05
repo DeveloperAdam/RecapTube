@@ -200,10 +200,12 @@ public class FinalSummaryFragment extends Fragment {
 
                 ContentResolver cr=getActivity().getContentResolver();
                 ContentValues cv=new ContentValues();
-                cv.put(CalendarContract.Events.TITLE,first+"."+Lname+","+type);
+                cv.put(CalendarContract.Events.TITLE,first+" ."+Lname+", "+type);
                 cv.put(CalendarContract.Events.EVENT_LOCATION,"LosAngeles");
-                cv.put(CalendarContract.Events.DTSTART, java.util.Calendar.getInstance().getTimeInMillis());
-                cv.put(CalendarContract.Events.DTEND, java.util.Calendar.getInstance().getTimeInMillis()+1);
+//                cv.put(CalendarContract.Events.DTSTART, java.util.Calendar.getInstance().getTimeInMillis());
+//                cv.put(CalendarContract.Events.DTEND, java.util.Calendar.getInstance().getTimeInMillis()+1);
+                cv.put(CalendarContract.Events.DTSTART,year+"-"+month+"-"+day+" "+time);
+                cv.put(CalendarContract.Events.DTEND, year+"-"+month+"-"+day+" "+time+60000);
                 cv.put(CalendarContract.Events.CALENDAR_ID, 1);
                 cv.put(CalendarContract.Events.EVENT_TIMEZONE, java.util.Calendar.getInstance().getTimeZone().getID());
 

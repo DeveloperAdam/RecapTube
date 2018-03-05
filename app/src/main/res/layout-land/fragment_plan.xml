@@ -8,79 +8,87 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10sp"
-        android:text="When is the next meeting?"
-        android:id="@+id/tvForDate"/>
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal">
-    <TextView
-        android:id="@+id/tvDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10sp"
-        android:text="Date and Time"
-        android:textSize="15sp"
-        android:textColor="#000"
-        android:layout_marginTop="20sp"></TextView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10sp"
+                android:layout_marginLeft="10sp"
+                android:text="When is the next meeting?"
+                android:id="@+id/tvForDate"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20sp"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/tvDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10sp"
+                    android:layout_marginRight="100sp"
+                    android:text="Date and Time"
+                    android:textSize="15sp"
+                    android:textColor="#000">
+                </TextView>
 
 
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20sp"
-        android:visibility="gone"
-        android:layout_marginLeft="150sp"
-        android:entries="@array/sessionType"
-        android:id="@+id/spinnerSessionType">
-    </Spinner>
+                <Spinner
+                    android:layout_width="220sp"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:layout_marginLeft="10sp"
+                    android:entries="@array/sessionType"
+                    android:id="@+id/spinnerSessionType">
+                </Spinner>
 
-</LinearLayout>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20sp"
-        android:layout_marginLeft="10sp"
-        android:visibility="gone"
-        android:text="The client will focus on which the goal?"
-        android:id="@+id/textPreviewForGoals"/>
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal">
+            </LinearLayout>
 
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/spinnerGoals"
-        android:visibility="gone"
-        android:layout_marginTop="20sp"
-        android:layout_marginLeft="10sp"
-        ></Spinner>
-</LinearLayout>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvUserGoal"
-        android:visibility="gone"
-        android:layout_marginTop="20sp"
-        android:layout_marginLeft="10sp"
-        android:text="The CFS will assist the client with which goal?"/>
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/spinnerUserGoal"
-        android:visibility="gone"
-        android:layout_marginTop="20sp"
-        android:layout_marginLeft="10sp"></Spinner>
-</LinearLayout>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="80sp"
+                android:layout_marginLeft="10sp"
+                android:visibility="gone"
+                android:text="The client will focus on which goal?"
+                android:id="@+id/textPreviewForGoals"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20sp"
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:layout_width="220sp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/spinnerGoals"
+                    android:visibility="gone"
+                    android:layout_marginLeft="10sp"
+                    ></Spinner>
+            </LinearLayout>
+
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvUserGoal"
+                android:visibility="gone"
+                android:layout_marginTop="80sp"
+                android:layout_marginLeft="10sp"
+                android:text="The CFS will assist the client with which goal?"/>
+            <Spinner
+                android:layout_width="220sp"
+                android:layout_height="wrap_content"
+                android:id="@+id/spinnerUserGoal"
+                android:visibility="gone"
+                android:layout_marginTop="20sp"
+                android:layout_marginLeft="10sp"></Spinner>
+        </LinearLayout>
     </ScrollView>
 </LinearLayout>

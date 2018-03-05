@@ -345,7 +345,7 @@ public class PlanFragment extends Fragment {
                         textGoal=textGoal.replace("?"," "+items[0]+".");
                         if (textGoal.contains("focus on which"))
                         {
-                            textGoal=textGoal.replace("focus on which","focus on the");
+                            textGoal=textGoal.replace("focus on which goal","focus on the goal to");
                             tvPreviewGoals.setText(textGoal);
                         }
 
@@ -404,7 +404,7 @@ public class PlanFragment extends Fragment {
                         textGoal=textGoal.replace("?"," "+items[1]+".");
                         if (textGoal.contains("focus on which"))
                         {
-                            textGoal=textGoal.replace("focus on which","focus on the");
+                            textGoal=textGoal.replace("focus on which goal","focus on the goal to");
                             tvPreviewGoals.setText(textGoal);
                         }
                     }
@@ -455,7 +455,7 @@ public class PlanFragment extends Fragment {
                         textGoal=textGoal.replace("?"," "+items[2]+".");
                         if (textGoal.contains("focus on which"))
                         {
-                            textGoal=textGoal.replace("focus on which","focus on the");
+                            textGoal=textGoal.replace("focus on which goal","focus on the goal to");
                             tvPreviewGoals.setText(textGoal);
                         }
                     }
@@ -506,7 +506,7 @@ public class PlanFragment extends Fragment {
                         textGoal=textGoal.replace("?"," "+items[3]+".");
                         if (textGoal.contains("focus on which"))
                         {
-                            textGoal=textGoal.replace("focus on which","focus on the");
+                            textGoal=textGoal.replace("focus on which goal","focus on the goal to");
                             tvPreviewGoals.setText(textGoal);
                         }
                     }
@@ -577,7 +577,7 @@ public class PlanFragment extends Fragment {
                             strUserGoal=strUserGoal.replace("will assist","will focus on assisting");
                             if (strUserGoal.contains("which"))
                             {
-                                strUserGoal=strUserGoal.replace("which","the");
+                                strUserGoal=strUserGoal.replace("which goal","the goal to");
                                 textPreviewForUserGoal.setText(strUserGoal);
                             }
 
@@ -633,7 +633,7 @@ public class PlanFragment extends Fragment {
                             strUserGoal=strUserGoal.replace("will assist","will focus on assisting");
                             if (strUserGoal.contains("which"))
                             {
-                                strUserGoal=strUserGoal.replace("which","the");
+                                strUserGoal=strUserGoal.replace("which goal","the goal to");
                                 textPreviewForUserGoal.setText(strUserGoal);
                             }
                         }
@@ -686,7 +686,7 @@ public class PlanFragment extends Fragment {
                             strUserGoal=strUserGoal.replace("will assist","will focus on assisting");
                             if (strUserGoal.contains("which"))
                             {
-                                strUserGoal=strUserGoal.replace("which","the");
+                                strUserGoal=strUserGoal.replace("which goal","the goal to");
                                 textPreviewForUserGoal.setText(strUserGoal);
                             }
                         }
@@ -739,7 +739,7 @@ public class PlanFragment extends Fragment {
                             strUserGoal=strUserGoal.replace("will assist","will focus on assisting");
                             if (strUserGoal.contains("which"))
                             {
-                                strUserGoal=strUserGoal.replace("which","the");
+                                strUserGoal=strUserGoal.replace("which goal","the goal to");
                                 textPreviewForUserGoal.setText(strUserGoal);
                             }
                         }
