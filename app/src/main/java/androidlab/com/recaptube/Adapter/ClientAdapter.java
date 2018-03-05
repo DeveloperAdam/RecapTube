@@ -107,6 +107,8 @@ public class ClientAdapter extends BaseAdapter {
                 Bundle bundle=new Bundle();
                 viewHolder. editor.putString("clientId",model.getClientId());
                 viewHolder. editor.putString("goals",model.getClientGoals()).commit();
+                viewHolder.editor.putString("fname",model.getClinetFname()).commit();
+                viewHolder.editor.putString("lname",model.getClientLname()).commit();
                 bundle.putString("clientName",model.getClinetFname()+" , "+model.getClientLname());
                 Fragment fragment=new TaskGridFragment();
                 fragment.setArguments(bundle);

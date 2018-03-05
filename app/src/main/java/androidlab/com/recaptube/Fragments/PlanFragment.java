@@ -155,6 +155,7 @@ public class PlanFragment extends Fragment {
                 Object item=adapterView.getItemAtPosition(i);
                 if (i==1)
                 {
+                    editor.putString("type",type1).commit();
                     goalSpinner.setVisibility(View.VISIBLE);
                     tvPreviewGoals.setVisibility(View.VISIBLE);
                     text=textPreviewDate.getText().toString();
@@ -166,30 +167,35 @@ public class PlanFragment extends Fragment {
                     else
                         if (text.contains(type2))
                         {
+                            editor.putString("type",type1).commit();
                             text=text.replace(type2,type1);
                             textPreviewDate.setText(text);
                         }
                         else
                         if (text.contains(type3))
                         {
+                            editor.putString("type",type1).commit();
                             text=text.replace(type3,type1);
                             textPreviewDate.setText(text);
                         }
                         else
                         if (text.contains(type4))
                         {
+                            editor.putString("type",type1).commit();
                             text=text.replace(type4,type1);
                             textPreviewDate.setText(text);
                         }
                         else
                         if (text.contains(type1))
                         {
+                            editor.putString("type",type1).commit();
                             textPreviewDate.setText(text);
                         }
                 }
                 else
                     if (i==2)
                     {
+                        editor.putString("type",type2).commit();
                         goalSpinner.setVisibility(View.VISIBLE);
                         tvPreviewGoals.setVisibility(View.VISIBLE);
                         text=textPreviewDate.getText().toString();
@@ -201,30 +207,35 @@ public class PlanFragment extends Fragment {
                         else
                         if (text.contains(type1))
                         {
+                            editor.putString("type",type2).commit();
                             text=text.replace(type1,type2);
                             textPreviewDate.setText(text);
                         }
                         else
                         if (text.contains(type3))
                         {
+                            editor.putString("type",type2).commit();
                             text=text.replace(type3,type2);
                             textPreviewDate.setText(text);
                         }
                         else
                         if (text.contains(type4))
                         {
+                            editor.putString("type",type2).commit();
                             text=text.replace(type4,type2);
                             textPreviewDate.setText(text);
                         }
                         else
                         if (text.contains(type2))
                         {
+                            editor.putString("type",type2).commit();
                             textPreviewDate.setText(text);
                         }
                     }
                     else
                     if (i==3)
                     {
+                        editor.putString("type",type3).commit();
                         goalSpinner.setVisibility(View.VISIBLE);
                         tvPreviewGoals.setVisibility(View.VISIBLE);
                         text=textPreviewDate.getText().toString();
@@ -236,30 +247,35 @@ public class PlanFragment extends Fragment {
                         else
                         if (text.contains(type2))
                         {
+                            editor.putString("type",type3).commit();
                             text=text.replace(type2,type3);
                             textPreviewDate.setText(text);
                         }
                         else
                         if (text.contains(type1))
                         {
+                            editor.putString("type",type3).commit();
                             text=text.replace(type1,type3);
                             textPreviewDate.setText(text);
                         }
                         else
                         if (text.contains(type4))
                         {
+                            editor.putString("type",type3).commit();
                             text=text.replace(type4,type3);
                             textPreviewDate.setText(text);
                         }
                         else
                             if (text.contains(type3))
                             {
+                                editor.putString("type",type3).commit();
                                 textPreviewDate.setText(text);
                             }
                     }
                     else
                     if (i==4)
                     {
+                        editor.putString("type",type4).commit();
                         goalSpinner.setVisibility(View.VISIBLE);
                         tvPreviewGoals.setVisibility(View.VISIBLE);
                         text=textPreviewDate.getText().toString();
@@ -271,24 +287,28 @@ public class PlanFragment extends Fragment {
                         else
                         if (text.contains(type1))
                         {
+                            editor.putString("type",type4).commit();
                             text=text.replace(type1,type4);
                             textPreviewDate.setText(text);
                         }
                         else
                         if (text.contains(type3))
                         {
+                            editor.putString("type",type4).commit();
                             text=text.replace(type3,type4);
                             textPreviewDate.setText(text);
                         }
                         else
                         if (text.contains(type2))
                         {
+                            editor.putString("type",type4).commit();
                             text=text.replace(type2,type4);
                             textPreviewDate.setText(text);
                         }
                         else
                             if (text.contains(type4))
                             {
+                                editor.putString("type",type4).commit();
                                 textPreviewDate.setText(text);
                             }
                     }

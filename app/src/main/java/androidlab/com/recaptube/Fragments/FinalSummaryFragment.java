@@ -76,15 +76,13 @@ public class FinalSummaryFragment extends Fragment {
     SharedPreferences.Editor editor;
     EditText finalTextPreview;
     Button btnSubmit;
-    int[] calendarId;
     Session session = null;
     ProgressDialog pdialog = null;
     Context context = null;
     String getIntroduction2k1, getBehviorText1, getBehviorText2, getIntervention, getResponse, getPtext1, getPtext2, getPtext3, getSelectedGoal;
     int day, year, month;
-    String time;
-    Calendar service;
-    GoogleSignInAccount googleSignInAccount;
+    String time,Fname,type,Lname;
+    char first;
     GoogleAccountCredential mCredential;
     Cursor cursor;
 
@@ -100,7 +98,10 @@ public class FinalSummaryFragment extends Fragment {
         day = sharedPreferences.getInt("Day", 0);
         month = sharedPreferences.getInt("Month", 0);
         year = sharedPreferences.getInt("Year", 0);
-
+        Fname=sharedPreferences.getString("fname","");
+        Lname=sharedPreferences.getString("lname","");
+        first = Fname.charAt(0);
+        type=sharedPreferences.getString("type","");
         mCredential = new GoogleAccountCredential(getActivity(), "Adamnooriit@gmail.com");
 
         time = sharedPreferences.getString("time", "");
@@ -135,23 +136,23 @@ public class FinalSummaryFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-//                Properties props = new Properties();
-//                props.put("mail.smtp.host", "smtp.gmail.com");
-//                props.put("mail.smtp.socketFactory.port", "465");
-//                props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-//                props.put("mail.smtp.auth", "true");
-//                props.put("mail.smtp.port", "465");
-//
-//                session = Session.getDefaultInstance(props, new Authenticator() {
-//                    protected PasswordAuthentication getPasswordAuthentication() {
-//                        return new PasswordAuthentication("SBHGApp@gmail.com", "Fiverr2018");
-//                    }
-//                });
-//
-//                pdialog = ProgressDialog.show(getActivity(), "", "Sending Mail...", true);
-//
-//                RetreiveFeedTask task = new RetreiveFeedTask();
-//                task.execute();
+                Properties props = new Properties();
+                props.put("mail.smtp.host", "smtp.gmail.com");
+                props.put("mail.smtp.socketFactory.port", "465");
+                props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+                props.put("mail.smtp.auth", "true");
+                props.put("mail.smtp.port", "465");
+
+                session = Session.getDefaultInstance(props, new Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication("SBHGApp@gmail.com", "Fiverr2018");
+                    }
+                });
+
+                pdialog = ProgressDialog.show(getActivity(), "", "Sending Mail...", true);
+
+                RetreiveFeedTask task = new RetreiveFeedTask();
+                task.execute();
 
 
 //                java.util.Calendar beginTime = java.util.Calendar.getInstance();
@@ -169,7 +170,7 @@ public class FinalSummaryFragment extends Fragment {
 //                        .putExtra(Intent.EXTRA_EMAIL, "ericramos1990@gmail.com,SBHGApp@gmail.com");
 
                 //    startActivity(intent);
-                if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
+                if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
                     // TODO: Consider calling
                     cursor = getActivity().getContentResolver().query(CalendarContract.Events.CONTENT_URI, null, null, null, null);
                     while (cursor.moveToNext())
@@ -199,11 +200,10 @@ public class FinalSummaryFragment extends Fragment {
 
                 ContentResolver cr=getActivity().getContentResolver();
                 ContentValues cv=new ContentValues();
-                cv.put(CalendarContract.Events.TITLE,"This is event title");
-                cv.put(CalendarContract.Events.DESCRIPTION,"This is description");
-                cv.put(CalendarContract.Events.EVENT_LOCATION,"This is LosAngeles loc");
-                cv.put(CalendarContract.Events.DTSTART,"2018-03-05 10:00 AM");
-                cv.put(CalendarContract.Events.DTEND, "2018-03-05 11:00 AM");
+                cv.put(CalendarContract.Events.TITLE,first+"."+Lname+","+type);
+                cv.put(CalendarContract.Events.EVENT_LOCATION,"LosAngeles");
+                cv.put(CalendarContract.Events.DTSTART, java.util.Calendar.getInstance().getTimeInMillis());
+                cv.put(CalendarContract.Events.DTEND, java.util.Calendar.getInstance().getTimeInMillis()+1);
                 cv.put(CalendarContract.Events.CALENDAR_ID, 1);
                 cv.put(CalendarContract.Events.EVENT_TIMEZONE, java.util.Calendar.getInstance().getTimeZone().getID());
 
@@ -211,6 +211,9 @@ public class FinalSummaryFragment extends Fragment {
 
 
                 Toast.makeText(getActivity(), "Event is added", Toast.LENGTH_SHORT).show();
+
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.mainContainer, new ClientsFragment()).commit();
 
 
             }
