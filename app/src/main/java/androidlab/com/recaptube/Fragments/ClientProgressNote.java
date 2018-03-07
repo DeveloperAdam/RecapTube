@@ -1,5 +1,7 @@
 package androidlab.com.recaptube.Fragments;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -20,14 +22,19 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import androidlab.com.recaptube.R;
 
@@ -37,7 +44,7 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
     String homeCity,homeZip,homeState,homeStreet,schoolStreet,schoolCity,schoolZip,schoolState;
      Button button;
     SharedPreferences sharedPreferences;
-    SharedPreferences.Editor editor ;
+    static SharedPreferences.Editor editor ;
     String Code;
     final CharSequence[] items = {"brother", "caregiver", "father","friend","grandfather","grandmother",
             "mother","neighbor","sister","social worker","teacher","cancel"};
@@ -67,7 +74,9 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
     int otherProfessional=0;
     int familyMembers=0;
     int friends=0;
+    String  strDate;
     Double lat1,lng1,lat2,lng2;
+    DatePickerDialog datePickerDialog;
     String getLatLngofAddress1,getLatLngofAddress2,latlngaddress1,latlngaddress2;
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
@@ -95,6 +104,7 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
         list.add("Company Name's Office 1: Long Beach");
         list.add("Company Name's Office 2: Los Angeles");
         list.add("Company Name's Office 3: Downey");
+
         adapter.notifyDataSetChanged();
         spinnerAddress2.setAdapter(adapter);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -135,6 +145,17 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
         getBtn5=sharedPreferences.getString(clientId+" btn5","");
         getBtn6=sharedPreferences.getString(clientId+" btn6","");
         getBtn7=sharedPreferences.getString(clientId+" btn7","");
+
+        getCurrentTimeStamp();
+
+//        Long tsLong = System.currentTimeMillis()/1000;
+//        String ts = tsLong.toString();
+//        Date c=Calendar.getInstance().getTime();
+//        SimpleDateFormat df = new SimpleDateFormat("yyyy-MMM-dd");
+//        String formattedDate = df.format(c);
+//        Toast.makeText(getActivity(), formattedDate+ " at " +ts, Toast.LENGTH_SHORT).show();
+//        editor.putString("2k1Date",formattedDate+ " at " +ts).commit();
+
 
 
         if(!getBtn1.equals(""))
@@ -4193,6 +4214,30 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
         return  view;
     }
 
+    public static String getCurrentTimeStamp(){
+        try {
+
+            Calendar c = Calendar.getInstance();
+            System.out.println("Current time => "+c.getTime());
+
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String formattedDate = df.format(c.getTime());
+
+            editor.putString("2k1DateAndTime",formattedDate).commit();
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
+            String currentDateTime = dateFormat.format(new Date());
+            Log.d("zmaDate",currentDateTime);
+
+            editor.putString("2k1Date",currentDateTime).commit();
+
+            return currentDateTime;
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            return null;
+        }
+    }
     private void customActionBar() {
         android.support.v7.app.ActionBar mActionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         mActionBar.setDisplayShowHomeEnabled(false);

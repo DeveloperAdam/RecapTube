@@ -50,7 +50,9 @@ import com.google.api.services.calendar.model.EventReminder;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
+import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -58,14 +60,20 @@ import java.util.List;
 import java.util.Properties;
 import java.util.TimeZone;
 
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
 import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
 import androidlab.com.recaptube.R;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -77,15 +85,17 @@ public class FinalSummaryFragment extends Fragment {
     EditText finalTextPreview;
     Button btnSubmit;
     Session session = null;
+    TextView startDate,endDate,time2k1,time2k6;
     ProgressDialog pdialog = null;
     Context context = null;
     String getIntroduction2k1, getBehviorText1, getBehviorText2, getIntervention, getResponse, getPtext1, getPtext2, getPtext3, getSelectedGoal;
     int day, year, month;
     String time,Fname,type,Lname;
+    String tarikh=null;
     char first;
     GoogleAccountCredential mCredential;
     Cursor cursor;
-
+    String date2k1,dateAndTime2k1;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -95,14 +105,42 @@ public class FinalSummaryFragment extends Fragment {
         finalTextPreview = (EditText) view.findViewById(R.id.finalTextPreview);
         sharedPreferences = getActivity().getSharedPreferences("recap", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
+        startDate=(TextView)view.findViewById(R.id.tvStartDate);
+        endDate=(TextView)view.findViewById(R.id.tvEndDate);
+        time2k1=(TextView)view.findViewById(R.id.tv2k1Time);
+        time2k6=(TextView)view.findViewById(R.id.tv2k6Time);
         day = sharedPreferences.getInt("Day", 0);
         month = sharedPreferences.getInt("Month", 0);
         year = sharedPreferences.getInt("Year", 0);
         Fname=sharedPreferences.getString("fname","");
         Lname=sharedPreferences.getString("lname","");
+        tarikh=sharedPreferences.getString("date","");
+        date2k1=sharedPreferences.getString("2k1Date","");
         first = Fname.charAt(0);
+        dateAndTime2k1=sharedPreferences.getString("2k1DateAndTime","");
         type=sharedPreferences.getString("type","");
         mCredential = new GoogleAccountCredential(getActivity(), "Adamnooriit@gmail.com");
+
+        java.util.Calendar c = java.util.Calendar.getInstance();
+        System.out.println("Current time => "+c.getTime());
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String formattedDate = df.format(c.getTime());
+
+        if(dateAndTime2k1.contains(" "))
+        {
+            dateAndTime2k1=dateAndTime2k1.replace(" "," at ");
+            startDate.setText(dateAndTime2k1);
+        }
+        if (formattedDate.contains(" "))
+        {
+            formattedDate=formattedDate.replace(" "," at ");
+            endDate.setText(formattedDate);
+        }
+
+        time2k1.setText(date2k1);
+        time2k6.setText(getCurrentTimeStamp());
+        timeDifference(time2k1.getText().toString(),time2k6.getText().toString());
+
 
         time = sharedPreferences.getString("time", "");
         btnSubmit = (Button) view.findViewById(R.id.btnSubmit);
@@ -130,6 +168,19 @@ public class FinalSummaryFragment extends Fragment {
                     + getPtext1 + " " + getPtext2 + " " + getPtext3);
         }
 
+        startDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        endDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("WrongConstant")
@@ -155,63 +206,6 @@ public class FinalSummaryFragment extends Fragment {
                 task.execute();
 
 
-//                java.util.Calendar beginTime = java.util.Calendar.getInstance();
-//                beginTime.set(year, month, day, 7, 30);
-//                java.util.Calendar endTime =  java.util.Calendar.getInstance();
-//                endTime.set(year, month, day, 8, 30);
-//                Intent intent = new Intent(Intent.ACTION_INSERT)
-//                        .setData(CalendarContract.Events.CONTENT_URI)
-//                        .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.getTimeInMillis())
-//                        .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime.getTimeInMillis())
-//                        .putExtra(CalendarContract.Events.TITLE, "Test")
-//                        .putExtra(CalendarContract.Events.DESCRIPTION, "I am creating this event for test.")
-//                        .putExtra(CalendarContract.Events.EVENT_LOCATION, "Los Angeles")
-//                        .putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY)
-//                        .putExtra(Intent.EXTRA_EMAIL, "ericramos1990@gmail.com,SBHGApp@gmail.com");
-
-                //    startActivity(intent);
-                if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    cursor = getActivity().getContentResolver().query(CalendarContract.Events.CONTENT_URI, null, null, null, null);
-                    while (cursor.moveToNext())
-                    {
-                        if (cursor!=null)
-                        {
-                            int id_1=cursor.getColumnIndex(CalendarContract.Events._ID);
-                            int id_2=cursor.getColumnIndex(CalendarContract.Events.TITLE);
-                            int id_3=cursor.getColumnIndex(CalendarContract.Events.DESCRIPTION);
-                            int id_4=cursor.getColumnIndex(CalendarContract.Events.EVENT_LOCATION);
-
-                            String idValue=cursor.getString(id_1);
-                            String titleValue=cursor.getString(id_2);
-                            String descriptionValue=cursor.getString(id_3);
-                            String eventValue =cursor.getString(id_4);
-
-                            Toast.makeText(getActivity(), eventValue, Toast.LENGTH_SHORT).show();
-
-                        }
-                        else
-                        {
-                            Toast.makeText(getActivity(), "There is no event", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                    return;
-                }
-
-                ContentResolver cr=getActivity().getContentResolver();
-                ContentValues cv=new ContentValues();
-                cv.put(CalendarContract.Events.TITLE,first+" ."+Lname+", "+type);
-                cv.put(CalendarContract.Events.EVENT_LOCATION,"LosAngeles");
-//                cv.put(CalendarContract.Events.DTSTART, java.util.Calendar.getInstance().getTimeInMillis());
-//                cv.put(CalendarContract.Events.DTEND, java.util.Calendar.getInstance().getTimeInMillis()+1);
-                cv.put(CalendarContract.Events.DTSTART,year+"-"+month+"-"+day+" "+time);
-                cv.put(CalendarContract.Events.DTEND, year+"-"+month+"-"+day+" "+time+60000);
-                cv.put(CalendarContract.Events.CALENDAR_ID, 1);
-                cv.put(CalendarContract.Events.EVENT_TIMEZONE, java.util.Calendar.getInstance().getTimeZone().getID());
-
-                Uri uri=cr.insert(CalendarContract.Events.CONTENT_URI,cv);
-
-
                 Toast.makeText(getActivity(), "Event is added", Toast.LENGTH_SHORT).show();
 
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
@@ -224,7 +218,39 @@ public class FinalSummaryFragment extends Fragment {
         return view;
     }
 
+    public static MimeMessage createEmailWithAttachment(String to,
+                                                        String from,
+                                                        String subject,
+                                                        String bodyText,
+                                                        File file)
+            throws MessagingException, IOException {
+        Properties props = new Properties();
+        Session session = Session.getDefaultInstance(props, null);
 
+        MimeMessage email = new MimeMessage(session);
+
+        email.setFrom(new InternetAddress(from));
+        email.addRecipient(javax.mail.Message.RecipientType.TO,
+                new InternetAddress(to));
+        email.setSubject(subject);
+
+        MimeBodyPart mimeBodyPart = new MimeBodyPart();
+        mimeBodyPart.setContent(bodyText, "text/plain");
+
+        Multipart multipart = new MimeMultipart();
+        multipart.addBodyPart(mimeBodyPart);
+
+        mimeBodyPart = new MimeBodyPart();
+        DataSource source = new FileDataSource(file);
+
+        mimeBodyPart.setDataHandler(new DataHandler(source));
+        mimeBodyPart.setFileName(file.getName());
+
+        multipart.addBodyPart(mimeBodyPart);
+        email.setContent(multipart);
+
+        return email;
+    }
 
     class RetreiveFeedTask extends AsyncTask<String, Void, String> {
 
@@ -262,7 +288,40 @@ public class FinalSummaryFragment extends Fragment {
         @Override
         protected void onPostExecute(String result) {
             pdialog.dismiss();
-//            Toast.makeText(getActivity(), "Message sent", Toast.LENGTH_LONG).show();
+
         }
+    }
+    public static String getCurrentTimeStamp(){
+        try {
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
+            String currentDateTime = dateFormat.format(new Date()); // Find todays date
+
+            return currentDateTime;
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            return null;
+        }
+    }
+    public  void timeDifference(String date2k1,String date2k6)
+    {
+        try{
+            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+            Date d1 = sdf.parse(date2k1);
+            Date d2 = sdf.parse(date2k6);
+
+            long difference = d2.getTime() - d1.getTime();
+           int days = (int) (difference / (1000*60*60*24));
+           int  hours = (int) ((difference - (1000*60*60*24*days)) / (1000*60*60));
+           int  min = (int) (difference - (1000*60*60*24*days) - (1000*60*60*hours)) / (1000*60);
+            hours = (hours < 0 ? -hours : hours);
+            Toast.makeText(getActivity(), String.valueOf(min+" min"), Toast.LENGTH_SHORT).show();
+            Log.i("======= Hours"," :: "+hours);
+
+        }catch(ParseException ex){
+            // handle parsing exception if date string was different from the pattern applying into the SimpleDateFormat contructor
+        }
+
     }
 }

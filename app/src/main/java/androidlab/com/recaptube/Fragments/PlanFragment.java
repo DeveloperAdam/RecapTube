@@ -1,11 +1,18 @@
 package androidlab.com.recaptube.Fragments;
 
+import android.Manifest;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.CalendarContract;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -31,46 +38,55 @@ import androidlab.com.recaptube.R;
 
 public class PlanFragment extends Fragment {
 
-    TextView textPreviewDate,tvPreviewGoals,textPreviewForUserGoal;
+    TextView textPreviewDate, tvPreviewGoals, textPreviewForUserGoal;
     String strDate;
-    String text,goals,textGoal,strUserGoal;
+    String text, goals, textGoal, strUserGoal;
     TextView tvDate;
     DatePickerDialog datePickerDialog;
-    String CFS="The CFS will meet ";
-    String which="for which type of meeting?";
-    Spinner sessionTypeSpinner,goalSpinner,userGoalSPinner;
-    String type1="an individual rehabilitation session.";
-    String type2="an All Staff CFT.";
-    String type3="a CFT meeting.";
-    String type4="an ITC meeting.";
+    String CFS = "The CFS will meet ";
+    String which = "for which type of meeting?";
+    Spinner sessionTypeSpinner, goalSpinner, userGoalSPinner;
+    String type1 = "an individual rehabilitation session.";
+    String type2 = "an All Staff CFT.";
+    String type3 = "a CFT meeting.";
+    String type4 = "an ITC meeting.";
     ArrayList<String> list = new ArrayList<String>();
     ArrayList<String> list2 = new ArrayList<String>();
     ArrayAdapter<String> adapter;
     ArrayAdapter<String> adapter2;
     SharedPreferences sharedPreferences;
-    SharedPreferences.Editor editor ;
-    Button  btnPlan;
+    SharedPreferences.Editor editor;
+    Button btnPlan;
     CharSequence[] items;
-    String defaultTextForUserGoal="The CFS will assist the client with the goal to ";
+    String time, Fname, type, Lname;
+    String tarikh = null;
+    char first;
+    String defaultTextForUserGoal = "The CFS will assist the client with the goal to ";
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        final View view= inflater.inflate(R.layout.fragment_plan, container, false);
+        final View view = inflater.inflate(R.layout.fragment_plan, container, false);
 
         customActionBar();
         sharedPreferences = getActivity().getSharedPreferences("recap", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
-        goals=sharedPreferences.getString("goals","");
-        textPreviewDate=(TextView)view.findViewById(R.id.tvForDate);
-        tvPreviewGoals=(TextView)view.findViewById(R.id.textPreviewForGoals);
-        tvDate=(TextView) view.findViewById(R.id.tvDate);
-        sessionTypeSpinner=(Spinner)view.findViewById(R.id.spinnerSessionType);
-        goalSpinner=(Spinner)view.findViewById(R.id.spinnerGoals);
-        userGoalSPinner=(Spinner)view.findViewById(R.id.spinnerUserGoal);
+        Fname = sharedPreferences.getString("fname", "");
+        Lname = sharedPreferences.getString("lname", "");
+        tarikh = sharedPreferences.getString("date", "");
+        first = Fname.charAt(0);
+        type = sharedPreferences.getString("type", "");
+        goals = sharedPreferences.getString("goals", "");
+        textPreviewDate = (TextView) view.findViewById(R.id.tvForDate);
+        tvPreviewGoals = (TextView) view.findViewById(R.id.textPreviewForGoals);
+        tvDate = (TextView) view.findViewById(R.id.tvDate);
+        sessionTypeSpinner = (Spinner) view.findViewById(R.id.spinnerSessionType);
+        goalSpinner = (Spinner) view.findViewById(R.id.spinnerGoals);
+        userGoalSPinner = (Spinner) view.findViewById(R.id.spinnerUserGoal);
         adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, list);
         adapter2 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, list2);
-        textPreviewForUserGoal=(TextView)view.findViewById(R.id.tvUserGoal);
+        textPreviewForUserGoal = (TextView) view.findViewById(R.id.tvUserGoal);
 
 
         tvDate.setOnClickListener(new View.OnClickListener() {
@@ -88,8 +104,8 @@ public class PlanFragment extends Fragment {
                             @Override
                             public void onTimeSet(TimePicker view, int hourOfDay,
                                                   int minute) {
-                                int   hour = hourOfDay;
-                                int   minutes = minute;
+                                int hour = hourOfDay;
+                                int minutes = minute;
                                 String timeSet = "";
                                 if (hour > 12) {
                                     hour -= 12;
@@ -97,27 +113,27 @@ public class PlanFragment extends Fragment {
                                 } else if (hour == 0) {
                                     hour += 12;
                                     timeSet = "AM";
-                                } else if (hour == 12){
+                                } else if (hour == 12) {
                                     timeSet = "PM";
-                                }else{
+                                } else {
                                     timeSet = "AM";
                                 }
 
                                 String min = "";
                                 if (minutes < 10)
-                                    min = "0" + minutes ;
+                                    min = "0" + minutes;
                                 else
                                     min = String.valueOf(minutes);
 
                                 // Append in a StringBuilder
                                 String aTime = new StringBuilder().append(hour).append(':')
-                                        .append(min ).append(" ").append(timeSet).toString();
-                                text=textPreviewDate.getText().toString();
-                                textPreviewDate.setText(text+" at "+aTime+" for what type of meeting?");
-                                editor.putString("time",aTime).commit();
+                                        .append(min).append(" ").append(timeSet).toString();
+                                text = textPreviewDate.getText().toString();
+                                textPreviewDate.setText(text + " at " + aTime + " for what type of meeting?");
+                                editor.putString("time", aTime).commit();
                                 sessionTypeSpinner.setVisibility(View.VISIBLE);
-                              //  text=textPreviewDate.getText().toString();
-                               // tvDate.setText(text);
+                                //  text=textPreviewDate.getText().toString();
+                                // tvDate.setText(text);
 
                             }
                         }, hour, minute, false);
@@ -136,15 +152,78 @@ public class PlanFragment extends Fragment {
                             public void onDateSet(DatePicker view, int year,
                                                   int monthOfYear, int dayOfMonth) {
                                 // set day of month , month and year value in the edit text
-                                strDate= (monthOfYear + 1) + "/" + dayOfMonth + "/" + year;
-                                textPreviewDate.setText(CFS+strDate);
-                                editor.putInt("Month",monthOfYear+1).commit();
-                                editor.putInt("Day",mDay).commit();
-                                editor.putInt("Year",year).commit();
+                                strDate = (monthOfYear + 1) + "/" + dayOfMonth + "/" + year;
+                                textPreviewDate.setText(CFS + strDate);
+                                editor.putInt("Month", monthOfYear + 1).commit();
+                                editor.putInt("Day", mDay).commit();
+                                editor.putInt("Year", year).commit();
+                                editor.putString("Date", strDate).commit();
                                 sessionTypeSpinner.setVisibility(View.VISIBLE);
                             }
                         }, mYear, mMonth, mDay);
                 datePickerDialog.show();
+
+                if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
+
+                 Cursor cursor = getActivity().getContentResolver().query(CalendarContract.Events.CONTENT_URI, null, null, null, null);
+                    while (cursor.moveToNext())
+                    {
+                        if (cursor!=null)
+                        {
+                            int id_1=cursor.getColumnIndex(CalendarContract.Events._ID);
+                            int id_2=cursor.getColumnIndex(CalendarContract.Events.TITLE);
+                            int id_3=cursor.getColumnIndex(CalendarContract.Events.DESCRIPTION);
+                            int id_4=cursor.getColumnIndex(CalendarContract.Events.EVENT_LOCATION);
+
+                            String idValue=cursor.getString(id_1);
+                            String titleValue=cursor.getString(id_2);
+                            String descriptionValue=cursor.getString(id_3);
+                            String eventValue =cursor.getString(id_4);
+
+                            Toast.makeText(getActivity(), eventValue, Toast.LENGTH_SHORT).show();
+
+                        }
+                        else
+                        {
+                            Toast.makeText(getActivity(), "There is no event", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    return;
+                }
+
+                ContentResolver cr=getActivity().getContentResolver();
+                ContentValues cv=new ContentValues();
+                cv.put(CalendarContract.Events.TITLE,first+" ."+Lname+", "+type);
+                cv.put(CalendarContract.Events.EVENT_LOCATION,"LosAngeles");
+                cv.put(CalendarContract.Events.DTSTART, java.util.Calendar.getInstance().getTimeInMillis());
+                cv.put(CalendarContract.Events.DTEND, java.util.Calendar.getInstance().getTimeInMillis());
+                cv.put(CalendarContract.Events.CALENDAR_ID, 1);
+                cv.put(CalendarContract.Events.EVENT_TIMEZONE, java.util.Calendar.getInstance().getTimeZone().getID());
+
+                Uri uri=cr.insert(CalendarContract.Events.CONTENT_URI,cv);
+
+//                ContentResolver cr = getActivity().getContentResolver();
+//                ContentValues cv = new ContentValues();
+//                cv.put(CalendarContract.Events.TITLE, first + " ." + Lname + ", " + type);
+//                cv.put(CalendarContract.Events.EVENT_LOCATION, "LosAngeles");
+//                cv.put(CalendarContract.Events.DTSTART, java.util.Calendar.getInstance().getTimeInMillis());
+//                cv.put(CalendarContract.Events.DTEND, java.util.Calendar.getInstance().getTimeInMillis());
+//                cv.put(CalendarContract.Events.CALENDAR_ID, 1);
+//                cv.put(CalendarContract.Events.EVENT_TIMEZONE, java.util.Calendar.getInstance().getTimeZone().getID());
+//
+//                if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
+//                    // TODO: Consider calling
+//                    //    ActivityCompat#requestPermissions
+//                    // here to request the missing permissions, and then overriding
+//                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+//                    //                                          int[] grantResults)
+//                    // to handle the case where the user grants the permission. See the documentation
+//                    // for ActivityCompat#requestPermissions for more details.
+//
+//                    Uri uri = cr.insert(CalendarContract.Events.CONTENT_URI, cv);
+//
+//                    return;
+            //    }
 
             }
         });
