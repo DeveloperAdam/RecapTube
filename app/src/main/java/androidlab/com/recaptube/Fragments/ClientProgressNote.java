@@ -222,6 +222,8 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                 if(isChecked){
                     test++;
                     familyMembers++;
+                    editor.putString("client","yes").commit();
+                    editor.putInt("fm",familyMembers).commit();
                     button.setVisibility(View.VISIBLE);
                     texteffectbutton=textPreviewIntroduction.getText().toString();
                         if (teamMember==4 && otherProfessional+friends+familyMembers>0)
@@ -4220,7 +4222,7 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
             Calendar c = Calendar.getInstance();
             System.out.println("Current time => "+c.getTime());
 
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             String formattedDate = df.format(c.getTime());
 
             editor.putString("2k1DateAndTime",formattedDate).commit();
@@ -4249,6 +4251,7 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
         final String barTitle=clientName+" - "+"Progress Note";
         textView.setText(barTitle);
 
+
         button=(Button)mCustomView.findViewById(R.id.btnGoal);
         if (test>0)
         {
@@ -4257,6 +4260,12 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                editor.putString("a2street",entryAddress2Street.getText().toString()).commit();
+                editor.putString("a2city",entryAddress2City.getText().toString()).commit();
+                editor.putString("a2zip",entryAddress2Zip.getText().toString()).commit();
+                editor.putInt("other",otherProfessional).commit();
+                editor.putInt("friends",friends).commit();
                 getLatLngofAddress1=entryAddress1City.getText().toString();
                 getLatLngofAddress2=entryAddress2City.getText().toString();
                 getLatLng(getLatLngofAddress1,getLatLngofAddress2);

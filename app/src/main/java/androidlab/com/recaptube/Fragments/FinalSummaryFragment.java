@@ -3,7 +3,9 @@ package androidlab.com.recaptube.Fragments;
 import android.Manifest;
 import android.accounts.Account;
 import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.app.TimePickerDialog;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
@@ -26,8 +28,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -85,17 +89,24 @@ public class FinalSummaryFragment extends Fragment {
     EditText finalTextPreview;
     Button btnSubmit;
     Session session = null;
-    TextView startDate,endDate,time2k1,time2k6;
+    TextView startDate,endDate,tvTotalTime
+            ,tvFaceToFace,tvOtherTime,tvEncounterWith,tvClientInvolved,tvSessoinType,
+    tvAddress2Title,tvAddress2Street,tvAdress2City,tvAddress2Zip,tvFamilyMember,tvOtherAndFriends;
     ProgressDialog pdialog = null;
     Context context = null;
     String getIntroduction2k1, getBehviorText1, getBehviorText2, getIntervention, getResponse, getPtext1, getPtext2, getPtext3, getSelectedGoal;
     int day, year, month;
-    String time,Fname,type,Lname;
+    String time,Fname,type,Lname,sessionType,address2Street,address2City,address2Zip;
+    int familyMembers,other,friends,interventionTime,otherInterventionTime;
+    int commute=00;
+    int travel=14;
+    int documentation=10;
     String tarikh=null;
+    int zero=00;
     char first;
+    DatePickerDialog datePickerDialog;
     GoogleAccountCredential mCredential;
-    Cursor cursor;
-    String date2k1,dateAndTime2k1;
+    String date2k1,dateAndTime2k1,abc,clientPresence;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -105,26 +116,56 @@ public class FinalSummaryFragment extends Fragment {
         finalTextPreview = (EditText) view.findViewById(R.id.finalTextPreview);
         sharedPreferences = getActivity().getSharedPreferences("recap", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
+        tvAdress2City=(TextView)view.findViewById(R.id.tvAddress2City);
+        tvAddress2Zip=(TextView)view.findViewById(R.id.tvAddressZip);
+        tvSessoinType=(TextView)view.findViewById(R.id.tvSessionType);
+        tvTotalTime=(TextView)view.findViewById(R.id.tvTotalTimeValue);
+        tvAddress2Street=(TextView)view.findViewById(R.id.tvAddress2Street);
+        tvEncounterWith=(TextView)view.findViewById(R.id.tvEncounterWith);
+        tvFaceToFace=(TextView)view.findViewById(R.id.tvFacetoFaceValue);
+        tvOtherAndFriends=(TextView)view.findViewById(R.id.tvOtherAndFriends);
+        tvFamilyMember=(TextView)view.findViewById(R.id.tvFamilyMembers);
+        tvOtherTime=(TextView)view.findViewById(R.id.tvOtherTime);
+        tvAddress2Title=(TextView)view.findViewById(R.id.tvAddress2Title);
         startDate=(TextView)view.findViewById(R.id.tvStartDate);
         endDate=(TextView)view.findViewById(R.id.tvEndDate);
-        time2k1=(TextView)view.findViewById(R.id.tv2k1Time);
-        time2k6=(TextView)view.findViewById(R.id.tv2k6Time);
+        tvClientInvolved=(TextView)view.findViewById(R.id.tvClientInvolved);
+
+
+
         day = sharedPreferences.getInt("Day", 0);
+        other=sharedPreferences.getInt("other",0);
+        friends=sharedPreferences.getInt("friends",0);
         month = sharedPreferences.getInt("Month", 0);
+        address2Street=sharedPreferences.getString("a2street","");
+        address2City=sharedPreferences.getString("a2city","");
+        address2Zip=sharedPreferences.getString("a2zip","");
         year = sharedPreferences.getInt("Year", 0);
         Fname=sharedPreferences.getString("fname","");
         Lname=sharedPreferences.getString("lname","");
+        sessionType=sharedPreferences.getString("type","");
         tarikh=sharedPreferences.getString("date","");
         date2k1=sharedPreferences.getString("2k1Date","");
-        first = Fname.charAt(0);
+        familyMembers=sharedPreferences.getInt("fm",0);
         dateAndTime2k1=sharedPreferences.getString("2k1DateAndTime","");
         type=sharedPreferences.getString("type","");
+        clientPresence=sharedPreferences.getString("client","");
+        first = Fname.charAt(0);
+
         mCredential = new GoogleAccountCredential(getActivity(), "Adamnooriit@gmail.com");
 
         java.util.Calendar c = java.util.Calendar.getInstance();
         System.out.println("Current time => "+c.getTime());
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         String formattedDate = df.format(c.getTime());
+
+        tvSessoinType.setText(sessionType);
+        tvAddress2Street.setText(address2Street);
+        tvAdress2City.setText(address2City);
+        tvAddress2Zip.setText(address2Zip);
+        tvFamilyMember.setText(String.valueOf(familyMembers));
+        tvOtherAndFriends.setText(String.valueOf(other+friends));
+        //tvTotalTime.setText(zero);
 
         if(dateAndTime2k1.contains(" "))
         {
@@ -137,9 +178,31 @@ public class FinalSummaryFragment extends Fragment {
             endDate.setText(formattedDate);
         }
 
-        time2k1.setText(date2k1);
-        time2k6.setText(getCurrentTimeStamp());
-        timeDifference(time2k1.getText().toString(),time2k6.getText().toString());
+        timeDifference(date2k1,getCurrentTimeStamp());
+
+        if(clientPresence.equals("yes"))
+        {
+            tvClientInvolved.setText("Yes");
+            tvFaceToFace.setText(String.valueOf(interventionTime));
+            otherInterventionTime=zero;
+            tvEncounterWith.setText("05 - Client or Client With Others");
+            tvOtherTime.setText(String.valueOf(otherInterventionTime+documentation+travel-commute));
+        }
+        else
+        {
+            tvClientInvolved.setText("No");
+            tvFaceToFace.setText(String.valueOf(zero));
+            otherInterventionTime=interventionTime;
+            if (familyMembers>0)
+            {
+                tvEncounterWith.setText("01 - Client's Family or Significant Other");
+            }
+            else
+            {
+                tvEncounterWith.setText("02 - Other Professional");
+            }
+            tvOtherTime.setText(String.valueOf(otherInterventionTime+documentation+travel-commute));
+        }
 
 
         time = sharedPreferences.getString("time", "");
@@ -172,12 +235,134 @@ public class FinalSummaryFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
+                final java.util.Calendar c = java.util.Calendar.getInstance();
+                int hour = c.get(java.util.Calendar.HOUR_OF_DAY);
+                int minute = c.get(java.util.Calendar.MINUTE);
+
+
+                TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(),
+                        new TimePickerDialog.OnTimeSetListener() {
+
+                            @Override
+                            public void onTimeSet(TimePicker view, int hourOfDay,
+                                                  int minute) {
+                                int hour = hourOfDay;
+                                int minutes = minute;
+                                String timeSet = "";
+                                if (hour > 12) {
+                                    hour -= 12;
+                                    timeSet = "PM";
+                                } else if (hour == 0) {
+                                    hour += 12;
+                                    timeSet = "AM";
+                                } else if (hour == 12) {
+                                    timeSet = "PM";
+                                } else {
+                                    timeSet = "AM";
+                                }
+
+                                String min = "";
+                                if (minutes < 10)
+                                    min = "0" + minutes;
+                                else
+                                    min = String.valueOf(minutes);
+
+                                // Append in a StringBuilder
+                                String aTime = new StringBuilder().append(hour).append(':')
+                                        .append(min).append(" ").append(timeSet).toString();
+                                abc=startDate.getText().toString();
+                                startDate.setText(abc+ " at " +aTime);
+
+                            }
+                        }, hour, minute, false);
+                timePickerDialog.show();
+
+
+                final java.util.Calendar c1 = java.util.Calendar.getInstance();
+                int mYear = c1.get(java.util.Calendar.YEAR); // current year
+                int mMonth = c1.get(java.util.Calendar.MONTH); // current month
+                final int mDay = c1.get(java.util.Calendar.DAY_OF_MONTH);
+                // date picker dialog
+                datePickerDialog = new DatePickerDialog(getActivity(),
+                        new DatePickerDialog.OnDateSetListener() {
+
+                            @Override
+                            public void onDateSet(DatePicker view, int year,
+                                                  int monthOfYear, int dayOfMonth) {
+                                // set day of month , month and year value in the edit text
+                                abc = (monthOfYear + 1) + "/" + dayOfMonth + "/" + year;
+                                startDate.setText(abc);
+                            }
+                        }, mYear, mMonth, mDay);
+                datePickerDialog.show();
+
             }
         });
 
         endDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                final java.util.Calendar c = java.util.Calendar.getInstance();
+                int hour = c.get(java.util.Calendar.HOUR_OF_DAY);
+                int minute = c.get(java.util.Calendar.MINUTE);
+
+
+                TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(),
+                        new TimePickerDialog.OnTimeSetListener() {
+
+                            @Override
+                            public void onTimeSet(TimePicker view, int hourOfDay,
+                                                  int minute) {
+                                int hour = hourOfDay;
+                                int minutes = minute;
+                                String timeSet = "";
+                                if (hour > 12) {
+                                    hour -= 12;
+                                    timeSet = "PM";
+                                } else if (hour == 0) {
+                                    hour += 12;
+                                    timeSet = "AM";
+                                } else if (hour == 12) {
+                                    timeSet = "PM";
+                                } else {
+                                    timeSet = "AM";
+                                }
+
+                                String min = "";
+                                if (minutes < 10)
+                                    min = "0" + minutes;
+                                else
+                                    min = String.valueOf(minutes);
+
+                                // Append in a StringBuilder
+                                String aTime = new StringBuilder().append(hour).append(':')
+                                        .append(min).append(" ").append(timeSet).toString();
+                                abc=endDate.getText().toString();
+                                endDate.setText(abc+ " at " +aTime);
+
+                            }
+                        }, hour, minute, false);
+                timePickerDialog.show();
+
+
+                final java.util.Calendar c1 = java.util.Calendar.getInstance();
+                int mYear = c1.get(java.util.Calendar.YEAR); // current year
+                int mMonth = c1.get(java.util.Calendar.MONTH); // current month
+                final int mDay = c1.get(java.util.Calendar.DAY_OF_MONTH);
+                // date picker dialog
+                datePickerDialog = new DatePickerDialog(getActivity(),
+                        new DatePickerDialog.OnDateSetListener() {
+
+                            @Override
+                            public void onDateSet(DatePicker view, int year,
+                                                  int monthOfYear, int dayOfMonth) {
+                                // set day of month , month and year value in the edit text
+                                abc = (monthOfYear + 1) + "/" + dayOfMonth + "/" + year;
+                                endDate.setText(abc);
+                            }
+                        }, mYear, mMonth, mDay);
+                datePickerDialog.show();
 
             }
         });
@@ -316,7 +501,7 @@ public class FinalSummaryFragment extends Fragment {
            int  hours = (int) ((difference - (1000*60*60*24*days)) / (1000*60*60));
            int  min = (int) (difference - (1000*60*60*24*days) - (1000*60*60*hours)) / (1000*60);
             hours = (hours < 0 ? -hours : hours);
-            Toast.makeText(getActivity(), String.valueOf(min+" min"), Toast.LENGTH_SHORT).show();
+            interventionTime=min;
             Log.i("======= Hours"," :: "+hours);
 
         }catch(ParseException ex){
