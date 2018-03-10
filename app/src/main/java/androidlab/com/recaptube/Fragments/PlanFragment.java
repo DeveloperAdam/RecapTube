@@ -6,6 +6,7 @@ import android.app.TimePickerDialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -30,8 +31,12 @@ import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
 
 import androidlab.com.recaptube.R;
 
@@ -61,6 +66,7 @@ public class PlanFragment extends Fragment {
     String time, Fname, type, Lname;
     String tarikh = null;
     char first;
+    String aTime;
     String defaultTextForUserGoal = "The CFS will assist the client with the goal to ";
 
     @Override
@@ -126,7 +132,7 @@ public class PlanFragment extends Fragment {
                                     min = String.valueOf(minutes);
 
                                 // Append in a StringBuilder
-                                String aTime = new StringBuilder().append(hour).append(':')
+                                 aTime = new StringBuilder().append(hour).append(':')
                                         .append(min).append(" ").append(timeSet).toString();
                                 text = textPreviewDate.getText().toString();
                                 textPreviewDate.setText(text + " at " + aTime + " for what type of meeting?");
@@ -153,6 +159,7 @@ public class PlanFragment extends Fragment {
                                                   int monthOfYear, int dayOfMonth) {
                                 // set day of month , month and year value in the edit text
                                 strDate = (monthOfYear + 1) + "/" + dayOfMonth + "/" + year;
+                                Toast.makeText(getActivity(), strDate, Toast.LENGTH_SHORT).show();
                                 textPreviewDate.setText(CFS + strDate);
                                 editor.putInt("Month", monthOfYear + 1).commit();
                                 editor.putInt("Day", mDay).commit();
@@ -190,40 +197,55 @@ public class PlanFragment extends Fragment {
                     }
                     return;
                 }
+                SimpleDateFormat yyyyMMdd = new SimpleDateFormat("MM/dd/yyyy");
+                Calendar dt = Calendar.getInstance();
+                Date date = null;
+                try {
+                     date = yyyyMMdd.parse(strDate);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+// Where untilDate is a date instance of your choice, for example 30/01/2012
+                dt.setTime(date);
 
-                ContentResolver cr=getActivity().getContentResolver();
-                ContentValues cv=new ContentValues();
-                cv.put(CalendarContract.Events.TITLE,first+" ."+Lname+", "+type);
-                cv.put(CalendarContract.Events.EVENT_LOCATION,"LosAngeles");
-                cv.put(CalendarContract.Events.DTSTART, java.util.Calendar.getInstance().getTimeInMillis());
-                cv.put(CalendarContract.Events.DTEND, java.util.Calendar.getInstance().getTimeInMillis());
-                cv.put(CalendarContract.Events.CALENDAR_ID, 1);
-                cv.put(CalendarContract.Events.EVENT_TIMEZONE, java.util.Calendar.getInstance().getTimeZone().getID());
+// If you want the event until 30/01/2012, you must add one day from our day because UNTIL in RRule sets events before the last day
+                dt.add(Calendar.DATE, 1);
+                String dtUntill = yyyyMMdd.format(dt.getTime());
 
-                Uri uri=cr.insert(CalendarContract.Events.CONTENT_URI,cv);
+                ContentResolver cr = getActivity().getContentResolver();
+                ContentValues values = new ContentValues();
 
-//                ContentResolver cr = getActivity().getContentResolver();
-//                ContentValues cv = new ContentValues();
-//                cv.put(CalendarContract.Events.TITLE, first + " ." + Lname + ", " + type);
-//                cv.put(CalendarContract.Events.EVENT_LOCATION, "LosAngeles");
+                values.put(CalendarContract.Events.DTSTART, dtUntill);
+                values.put(CalendarContract.Events.TITLE, first+" ."+Lname+", "+type);
+
+                TimeZone timeZone = TimeZone.getDefault();
+                values.put(CalendarContract.Events.EVENT_TIMEZONE, timeZone.getID());
+
+// Default calendar
+                values.put(CalendarContract.Events.CALENDAR_ID, 1);
+
+                values.put(CalendarContract.Events.RRULE, "FREQ=DAILY;UNTIL="
+                        + dtUntill);
+// Set Period for 1 Hour
+                values.put(CalendarContract.Events.DURATION, "+P1H");
+
+                values.put(CalendarContract.Events.HAS_ALARM, 1);
+
+// Insert event to calendar
+                Uri uri = cr.insert(CalendarContract.Events.CONTENT_URI, values);
+
+
+//                ContentResolver cr=getActivity().getContentResolver();
+//                ContentValues cv=new ContentValues();
+//                cv.put(CalendarContract.Events.TITLE,first+" ."+Lname+", "+type);
+//                cv.put(CalendarContract.Events.EVENT_LOCATION,"LosAngeles");
 //                cv.put(CalendarContract.Events.DTSTART, java.util.Calendar.getInstance().getTimeInMillis());
 //                cv.put(CalendarContract.Events.DTEND, java.util.Calendar.getInstance().getTimeInMillis());
 //                cv.put(CalendarContract.Events.CALENDAR_ID, 1);
 //                cv.put(CalendarContract.Events.EVENT_TIMEZONE, java.util.Calendar.getInstance().getTimeZone().getID());
 //
-//                if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
-//                    // TODO: Consider calling
-//                    //    ActivityCompat#requestPermissions
-//                    // here to request the missing permissions, and then overriding
-//                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-//                    //                                          int[] grantResults)
-//                    // to handle the case where the user grants the permission. See the documentation
-//                    // for ActivityCompat#requestPermissions for more details.
-//
-//                    Uri uri = cr.insert(CalendarContract.Events.CONTENT_URI, cv);
-//
-//                    return;
-            //    }
+//                Uri uri=cr.insert(CalendarContract.Events.CONTENT_URI,cv);
+
 
             }
         });

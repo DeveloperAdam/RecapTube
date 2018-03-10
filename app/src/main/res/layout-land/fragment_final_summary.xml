@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#eee"
     tools:context="androidlab.com.recaptube.Fragments.FinalSummaryFragment">
 <ScrollView
     android:layout_width="match_parent"
@@ -30,6 +31,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:text="Start and End"
+    android:fontFamily="monospace"
     android:id="@+id/tvStartandEnd"/>
 
             <TextView
@@ -37,13 +39,15 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/tvStartDate"
                 android:text="Start date"
+                android:fontFamily="monospace"
                 android:textColor="#000"
-                android:layout_marginLeft="100sp"/>
+                android:layout_marginLeft="140sp"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/tvEndDate"
                 android:text="End date"
+                android:fontFamily="monospace"
                 android:textColor="#000"
                 android:layout_marginLeft="70sp"/>
         </LinearLayout>
@@ -57,12 +61,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Total Time"
+            android:fontFamily="monospace"
            />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="118sp"
+                android:layout_marginLeft="165sp"
+                android:fontFamily="monospace"
                 android:text="Face to face + OtherTime"
                 android:id="@+id/tvTotalTimeValue"/>
         </LinearLayout>
@@ -71,18 +77,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10sp"
+            android:fontFamily="monospace"
             android:layout_marginLeft="20sp"
             android:orientation="horizontal">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Face-to-Face Time"
+                android:fontFamily="monospace"
                 />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="65sp"
+                android:layout_marginLeft="140sp"
+                android:fontFamily="monospace"
                 android:text="Face to face "
                 android:id="@+id/tvFacetoFaceValue"/>
         </LinearLayout>
@@ -96,20 +105,89 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Other time"
+                android:fontFamily="monospace"
                 />
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="120sp"
+                android:layout_marginLeft="197sp"
                 android:orientation="vertical">
-            <TextView
-                android:id="@+id/tvOtherTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Other time" />
+
+                <TextView
+                    android:id="@+id/tvOtherTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:fontFamily="monospace"
+                    android:text="Other time" />
             </LinearLayout>
 
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20sp"
+            android:layout_marginTop="10sp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvInterventionTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="+00 (Intervention)"
+                android:fontFamily="monospace"
+                android:layout_marginLeft="300sp"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20sp"
+            android:layout_marginTop="10sp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvDocumentation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="+10 (Documentation)"
+                android:fontFamily="monospace"
+                android:layout_marginLeft="300sp"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20sp"
+            android:layout_marginTop="10sp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvTravel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="+14 (Travel)"
+                android:layout_marginLeft="300sp"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20sp"
+            android:layout_marginTop="10sp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvCommute"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="+00 (Commute)"
+                android:fontFamily="monospace"
+                android:layout_marginLeft="300sp"
+                />
+        </LinearLayout>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -119,12 +197,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="monospace"
                 android:text="Mileage Route" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="monospace"
                 android:text="https://www.google.com/maps"
-                android:layout_marginLeft="97sp"
+                android:layout_marginLeft="142sp"
             />
         </LinearLayout>
         <LinearLayout
@@ -136,12 +216,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="monospace"
             android:text="Service Site" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="$Service site"
-            android:layout_marginLeft="114sp"
+            android:fontFamily="monospace"
+            android:layout_marginLeft="148sp"
             />
     </LinearLayout>
         <LinearLayout
@@ -153,13 +235,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="monospace"
                 android:text="Service Facilitate Name" />
             <TextView
                 android:id="@+id/tvAddress2Title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="monospace"
                 android:text="Address 2 title"
-                android:layout_marginLeft="38sp"
+                android:layout_marginLeft="58sp"
                 />
         </LinearLayout>
         <LinearLayout
@@ -172,13 +256,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="monospace"
                 android:text="Service Facilitate Address" />
             <TextView
                 android:id="@+id/tvAddress2Street"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="monospace"
                 android:text="Address 2 street"
-                android:layout_marginLeft="23sp"
+                android:layout_marginLeft="32sp"
                 />
         </LinearLayout>
         <LinearLayout
@@ -190,12 +276,192 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="monospace"
                 android:text="Service Facilitate City" />
             <TextView
                 android:id="@+id/tvAddress2City"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Address 2 city"
+                android:fontFamily="monospace"
+                android:layout_marginLeft="56sp"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10sp"
+            android:layout_marginLeft="20sp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:fontFamily="monospace"
+                android:layout_height="wrap_content"
+                android:text="Service Facilitate State" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CA"
+                android:fontFamily="monospace"
+                android:layout_marginLeft="48sp"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10sp"
+            android:layout_marginLeft="20sp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="Service Facilitate Zip Cde" />
+            <TextView
+                android:id="@+id/tvAddressZip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="Address2 Zip code"
+                android:layout_marginLeft="30sp"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30sp"
+            android:layout_marginLeft="20sp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:fontFamily="monospace"
+                android:layout_height="wrap_content"
+                android:text="Client Involved" />
+            <TextView
+                android:id="@+id/tvClientInvolved"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="$Client Involved"
+                android:fontFamily="monospace"
+                android:layout_marginLeft="120sp"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10sp"
+            android:layout_marginLeft="20sp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="Family Coleterals" />
+            <TextView
+                android:id="@+id/tvFamilyMembers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="$Family Members"
+                android:layout_marginLeft="102sp"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10sp"
+            android:layout_marginLeft="20sp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="Non Family Coleterals"/>
+            <TextView
+                android:id="@+id/tvOtherAndFriends"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="$Other Professionals + Friends"
+                android:layout_marginLeft="70sp"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10sp"
+            android:layout_marginLeft="20sp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:fontFamily="monospace"
+                android:layout_height="wrap_content"
+                android:text="Session Type" />
+            <TextView
+                android:id="@+id/tvSessionType"
+                android:layout_width="wrap_content"
+                android:fontFamily="monospace"
+                android:layout_height="wrap_content"
+                android:text="$SessionTypeCode"
+                android:layout_marginLeft="144sp"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10sp"
+            android:layout_marginLeft="20sp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="Activity Type" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="02 - Face to Face with Client - IHBS"
+                android:layout_marginLeft="136sp"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10sp"
+            android:layout_marginLeft="20sp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="Encounter With" />
+            <TextView
+                android:id="@+id/tvEncounterWith"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="$EncounterWith"
+                android:layout_marginLeft="127sp"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10sp"
+            android:layout_marginLeft="20sp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="Evidence Based Practice" />
+            <TextView
+                android:id="@+id/tvEvdence"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="00 - No Evidence-Based Practice"
                 android:layout_marginLeft="52sp"
                 />
         </LinearLayout>
@@ -208,12 +474,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Service Facilitate State" />
+                android:fontFamily="monospace"
+                android:text="Completed By" />
             <TextView
+                android:id="@+id/tvCompletedBy"
                 android:layout_width="wrap_content"
+                android:fontFamily="monospace"
                 android:layout_height="wrap_content"
-                android:text="CA"
-                android:layout_marginLeft="43sp"
+                android:text="Eric Ramos (Child and Family Specialist III Bilingual"
+                android:layout_marginLeft="143sp"
                 />
         </LinearLayout>
         <LinearLayout
@@ -225,120 +494,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Service Facilitate Zip Cde" />
+                android:fontFamily="monospace"
+                android:text="Submit To" />
             <TextView
-                android:id="@+id/tvAddressZip"
+                android:id="@+id/tvSubmitedTo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Address2 Zip code"
-                android:layout_marginLeft="27sp"
-                />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20sp"
-            android:layout_marginLeft="20sp"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Client Involved" />
-            <TextView
-                android:id="@+id/tvClientInvolved"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="$Client Involved"
-                android:layout_marginLeft="96sp"
-                />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10sp"
-            android:layout_marginLeft="20sp"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Family Coleterals" />
-            <TextView
-                android:id="@+id/tvFamilyMembers"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="$Family Members"
-                android:layout_marginLeft="77sp"
-                />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10sp"
-            android:layout_marginLeft="20sp"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Non Family Coleterals"/>
-            <TextView
-                android:id="@+id/tvOtherAndFriends"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="$Other Professionals + Friends"
-                android:layout_marginLeft="47sp"
-                />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10sp"
-            android:layout_marginLeft="20sp"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Session Type" />
-            <TextView
-                android:id="@+id/tvSessionType"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="$SessionTypeCode"
-                android:layout_marginLeft="101sp"
-                />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10sp"
-            android:layout_marginLeft="20sp"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Activity Type" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="02 - Face to Face with Client - IHBS"
-                android:layout_marginLeft="105sp"
-                />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10sp"
-            android:layout_marginLeft="20sp"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Encounter With" />
-            <TextView
-                android:id="@+id/tvEncounterWith"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="$EncounterWith"
-                android:layout_marginLeft="88sp"
+                android:fontFamily="monospace"
+                android:text="Boss Lady (CFS Coordinator)"
+                android:layout_marginLeft="167sp"
                 />
         </LinearLayout>
     <Button

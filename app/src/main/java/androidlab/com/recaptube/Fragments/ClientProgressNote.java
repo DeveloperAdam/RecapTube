@@ -4084,7 +4084,7 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                 if (item.equals(clientName+": Home"))
                 {
                    // apicallHomeAddress();
-
+                    editor.putString("add2title","Home").commit();
                     homeStreet=sharedPreferences.getString("Hstreet","");
                     homeCity=sharedPreferences.getString("Hcity","");
                     homeZip=sharedPreferences.getString("Hzip","");
@@ -4110,6 +4110,7 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                     if (item.equals(clientName+": School"))
                     {
                         //apiSchoolAddressCall();
+                        editor.putString("add2title","School").commit();
                         schoolStreet=sharedPreferences.getString("Sstreet","");
                         schoolCity=sharedPreferences.getString("Scity","");
                         schoolState=sharedPreferences.getString("Sstate","");
@@ -4134,6 +4135,7 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                 else
                     if (item.equals("Custom"))
                     {
+
                         entryAddress2City.setText("");
                         entryAddress2State.setText("");
                         entryAddress2Street.setText("");
@@ -4146,11 +4148,12 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                         entryAddress2Street.setVisibility(View.VISIBLE);
                         entryAddress2Zip.setVisibility(View.VISIBLE);
                         entryAddress2State.setVisibility(View.VISIBLE);
-
+                        editor.putString("add2title",entryAddress2City.getText().toString()).commit();
                     }
                 else
                     if (item.equals("Company Name's Office 1: Long Beach"))
                     {
+                        editor.putString("add2title","Company Name's Office 1: Long Beach").commit();
                         entryAddress2Street.setText("3705 E South St");
                         entryAddress2City.setText("Long Beach");
                         entryAddress2State.setText("CA");
@@ -4169,7 +4172,7 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                 else
                     if (item.equals("Company Name's Office 2: Los Angeles"))
                     {
-
+                        editor.putString("add2title","Company Name's Office 2: Los Angeles").commit();
                         entryAddress2Street.setText("5637 N Figueroa St");
                         entryAddress2City.setText("Los Angeles");
                         entryAddress2State.setText("CA");
@@ -4189,6 +4192,7 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                 else
                     if (item.equals("Company Name's Office 3: Downey"))
                     {
+                        editor.putString("add2title","Company Name's Office 3: Downey").commit();
                         entryAddress2Street.setText("9001 Apollo Way");
                         entryAddress2City.setText("Downey");
                         entryAddress2State.setText("CA");
@@ -4222,12 +4226,12 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
             Calendar c = Calendar.getInstance();
             System.out.println("Current time => "+c.getTime());
 
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm");
             String formattedDate = df.format(c.getTime());
 
             editor.putString("2k1DateAndTime",formattedDate).commit();
 
-            SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm");
             String currentDateTime = dateFormat.format(new Date());
             Log.d("zmaDate",currentDateTime);
 
@@ -4261,6 +4265,30 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
             @Override
             public void onClick(View v) {
 
+                if (teamMember==4 && otherProfessional+friends+familyMembers>0)
+                {
+                    Code="ICC PN";
+                    editor.putString("code",Code).commit();
+                }
+                else
+                    if (teamMember>1 || otherProfessional>1)
+                    {
+                        Code="ICC PN";
+                        editor.putString("code",Code).commit();
+                    }
+                    else
+                        if (teamMember>1 && otherProfessional+friends+familyMembers==0)
+                        {
+                            Code="ICC PN";
+                            editor.putString("code",Code).commit();
+                        }
+                        else
+                        {
+                            Code="IHBS PN";
+                            editor.putString("code",Code).commit();
+                        }
+
+                editor.putString("clientname",clientName).commit();
                 editor.putString("a2street",entryAddress2Street.getText().toString()).commit();
                 editor.putString("a2city",entryAddress2City.getText().toString()).commit();
                 editor.putString("a2zip",entryAddress2Zip.getText().toString()).commit();
@@ -4363,10 +4391,10 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
             Log.d("zmaAddress",locationAddress);
             lat=sharedPreferences.getString("lat","");
             lng=sharedPreferences.getString("lng","");
-            latD=Double.parseDouble(lat);
-            lngD=Double.parseDouble(lng);
+//            latD=Double.parseDouble(lat);
+//            lngD=Double.parseDouble(lng);
 
-            Toast.makeText(getActivity(), String.valueOf(latD+lngD), Toast.LENGTH_SHORT).show();
+ //           Toast.makeText(getActivity(), String.valueOf(latD+lngD), Toast.LENGTH_SHORT).show();
 
 
         }
@@ -4388,9 +4416,9 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
             Log.d("zmaAddress2",locationAddress2);
             lat2=sharedPreferences.getString("lat2","");
             lng2=sharedPreferences.getString("lng2","");
-            lat2D=Double.parseDouble(lat2);
-            lng2D=Double.parseDouble(lng2);
-            Toast.makeText(getActivity(), String.valueOf(lat2D+lng2D), Toast.LENGTH_SHORT).show();
+//            lat2D=Double.parseDouble(lat2);
+//            lng2D=Double.parseDouble(lng2);
+//            Toast.makeText(getActivity(), String.valueOf(lat2D+lng2D), Toast.LENGTH_SHORT).show();
 
 
         }

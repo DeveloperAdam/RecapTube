@@ -18,6 +18,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.CalendarContract;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
@@ -55,6 +56,7 @@ import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -91,18 +93,20 @@ public class FinalSummaryFragment extends Fragment {
     Session session = null;
     TextView startDate,endDate,tvTotalTime
             ,tvFaceToFace,tvOtherTime,tvEncounterWith,tvClientInvolved,tvSessoinType,
-    tvAddress2Title,tvAddress2Street,tvAdress2City,tvAddress2Zip,tvFamilyMember,tvOtherAndFriends;
+    tvAddress2Title,tvAddress2Street,tvAdress2City,tvAddress2Zip,tvFamilyMember,tvOtherAndFriends,tvIntervention;
     ProgressDialog pdialog = null;
     Context context = null;
     String getIntroduction2k1, getBehviorText1, getBehviorText2, getIntervention, getResponse, getPtext1, getPtext2, getPtext3, getSelectedGoal;
     int day, year, month;
-    String time,Fname,type,Lname,sessionType,address2Street,address2City,address2Zip;
+    String time,Fname,type,Lname,sessionType,address2Street,address2City,address2Zip,startAtime,endAtime,clientName,add2Title,sessionCode;
     int familyMembers,other,friends,interventionTime,otherInterventionTime;
     int commute=00;
     int travel=14;
     int documentation=10;
     String tarikh=null;
     int zero=00;
+    String currentDateTime;
+    int startimeMinutes,endTimeMinutes;
     char first;
     DatePickerDialog datePickerDialog;
     GoogleAccountCredential mCredential;
@@ -116,6 +120,7 @@ public class FinalSummaryFragment extends Fragment {
         finalTextPreview = (EditText) view.findViewById(R.id.finalTextPreview);
         sharedPreferences = getActivity().getSharedPreferences("recap", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
+        tvIntervention=(TextView)view.findViewById(R.id.tvInterventionTime);
         tvAdress2City=(TextView)view.findViewById(R.id.tvAddress2City);
         tvAddress2Zip=(TextView)view.findViewById(R.id.tvAddressZip);
         tvSessoinType=(TextView)view.findViewById(R.id.tvSessionType);
@@ -131,8 +136,9 @@ public class FinalSummaryFragment extends Fragment {
         endDate=(TextView)view.findViewById(R.id.tvEndDate);
         tvClientInvolved=(TextView)view.findViewById(R.id.tvClientInvolved);
 
-
-
+        sessionCode=sharedPreferences.getString("code","");
+        add2Title=sharedPreferences.getString("add2title","");
+        clientName=sharedPreferences.getString("clientname","");
         day = sharedPreferences.getInt("Day", 0);
         other=sharedPreferences.getInt("other",0);
         friends=sharedPreferences.getInt("friends",0);
@@ -156,16 +162,17 @@ public class FinalSummaryFragment extends Fragment {
 
         java.util.Calendar c = java.util.Calendar.getInstance();
         System.out.println("Current time => "+c.getTime());
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm");
         String formattedDate = df.format(c.getTime());
 
-        tvSessoinType.setText(sessionType);
+        tvSessoinType.setText(sessionCode);
         tvAddress2Street.setText(address2Street);
         tvAdress2City.setText(address2City);
         tvAddress2Zip.setText(address2Zip);
         tvFamilyMember.setText(String.valueOf(familyMembers));
         tvOtherAndFriends.setText(String.valueOf(other+friends));
-        //tvTotalTime.setText(zero);
+        tvAddress2Title.setText(clientName+": "+add2Title);
+
 
         if(dateAndTime2k1.contains(" "))
         {
@@ -187,11 +194,15 @@ public class FinalSummaryFragment extends Fragment {
             otherInterventionTime=zero;
             tvEncounterWith.setText("05 - Client or Client With Others");
             tvOtherTime.setText(String.valueOf(otherInterventionTime+documentation+travel-commute));
+            int face=Integer.parseInt(tvFaceToFace.getText().toString());
+            int other=Integer.parseInt(tvOtherTime.getText().toString());
+            tvTotalTime.setText(String.valueOf(face+other+1));
         }
         else
         {
             tvClientInvolved.setText("No");
             tvFaceToFace.setText(String.valueOf(zero));
+            tvIntervention.setText("+"+String.valueOf(interventionTime)+" (Intervention)");
             otherInterventionTime=interventionTime;
             if (familyMembers>0)
             {
@@ -202,6 +213,9 @@ public class FinalSummaryFragment extends Fragment {
                 tvEncounterWith.setText("02 - Other Professional");
             }
             tvOtherTime.setText(String.valueOf(otherInterventionTime+documentation+travel-commute));
+            int face=Integer.parseInt(tvFaceToFace.getText().toString());
+            int other=Integer.parseInt(tvOtherTime.getText().toString());
+            tvTotalTime.setText(String.valueOf(face+other+1));
         }
 
 
@@ -250,8 +264,9 @@ public class FinalSummaryFragment extends Fragment {
                                 int minutes = minute;
                                 String timeSet = "";
                                 if (hour > 12) {
+                                   timeSet = "PM";
                                     hour -= 12;
-                                    timeSet = "PM";
+
                                 } else if (hour == 0) {
                                     hour += 12;
                                     timeSet = "AM";
@@ -268,11 +283,14 @@ public class FinalSummaryFragment extends Fragment {
                                     min = String.valueOf(minutes);
 
                                 // Append in a StringBuilder
-                                String aTime = new StringBuilder().append(hour).append(':')
-                                        .append(min).append(" ").append(timeSet).toString();
+                                startimeMinutes=hour*60+minutes;
+                                difference(startimeMinutes,endTimeMinutes);
+                                 startAtime = new StringBuilder().append(hour).append(':')
+                                        .append(min).toString();
                                 abc=startDate.getText().toString();
-                                startDate.setText(abc+ " at " +aTime);
+                                startDate.setText(abc+ " at " +startAtime);
 
+                              //  timeDifference(startAtime,currentDateTime);
                             }
                         }, hour, minute, false);
                 timePickerDialog.show();
@@ -290,11 +308,13 @@ public class FinalSummaryFragment extends Fragment {
                             public void onDateSet(DatePicker view, int year,
                                                   int monthOfYear, int dayOfMonth) {
                                 // set day of month , month and year value in the edit text
-                                abc = (monthOfYear + 1) + "/" + dayOfMonth + "/" + year;
+                                abc =  year+"-" +(monthOfYear + 1) + "-" + dayOfMonth;
                                 startDate.setText(abc);
+
                             }
                         }, mYear, mMonth, mDay);
                 datePickerDialog.show();
+
 
             }
         });
@@ -319,14 +339,14 @@ public class FinalSummaryFragment extends Fragment {
                                 String timeSet = "";
                                 if (hour > 12) {
                                     hour -= 12;
-                                    timeSet = "PM";
+                                  //  timeSet = "PM";
                                 } else if (hour == 0) {
                                     hour += 12;
-                                    timeSet = "AM";
+                                  //  timeSet = "AM";
                                 } else if (hour == 12) {
-                                    timeSet = "PM";
+                                   // timeSet = "PM";
                                 } else {
-                                    timeSet = "AM";
+                                   // timeSet = "AM";
                                 }
 
                                 String min = "";
@@ -334,12 +354,16 @@ public class FinalSummaryFragment extends Fragment {
                                     min = "0" + minutes;
                                 else
                                     min = String.valueOf(minutes);
-
+                                endTimeMinutes=hour*60+minutes;
+                                difference(startimeMinutes,endTimeMinutes);
                                 // Append in a StringBuilder
-                                String aTime = new StringBuilder().append(hour).append(':')
-                                        .append(min).append(" ").append(timeSet).toString();
+                                 endAtime = new StringBuilder().append(hour).append(':')
+                                        .append(min).toString();
                                 abc=endDate.getText().toString();
-                                endDate.setText(abc+ " at " +aTime);
+                                endDate.setText(abc+ " at " +endAtime);
+
+                               // timeDifference(startAtime.toString(),endAtime);
+
 
                             }
                         }, hour, minute, false);
@@ -358,7 +382,7 @@ public class FinalSummaryFragment extends Fragment {
                             public void onDateSet(DatePicker view, int year,
                                                   int monthOfYear, int dayOfMonth) {
                                 // set day of month , month and year value in the edit text
-                                abc = (monthOfYear + 1) + "/" + dayOfMonth + "/" + year;
+                                abc = year+"-" +(monthOfYear + 1) + "-" + dayOfMonth;
                                 endDate.setText(abc);
                             }
                         }, mYear, mMonth, mDay);
@@ -382,19 +406,46 @@ public class FinalSummaryFragment extends Fragment {
                 session = Session.getDefaultInstance(props, new Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
                         return new PasswordAuthentication("SBHGApp@gmail.com", "Fiverr2018");
+                        //return new PasswordAuthentication("Adamnooriit@gmail.com", "Adam_Noor321");
                     }
                 });
 
                 pdialog = ProgressDialog.show(getActivity(), "", "Sending Mail...", true);
 
-                RetreiveFeedTask task = new RetreiveFeedTask();
-                task.execute();
-
+              //  RetreiveFeedTask task = new RetreiveFeedTask();
+               // task.execute();
+                String mailContent="********** INTRODUCTION **********\n"
+                        + getIntroduction2k1 +
+                        "\n\n********** GOAL **********\n"
+                        + getSelectedGoal +
+                        "\n\n********** BEHAVIOR **********\n"
+                        + getBehviorText1 + getBehviorText2 +
+                        "\n\n********** INTERVENTION **********\n" +
+                        getIntervention +
+                        "\n\n********** RESPONSE **********\n"
+                        + getResponse
+                        + "\n\n********** PLAN **********\n"
+                        + getPtext1 + " " + getPtext2 + " " + getPtext3+"\n\n               Total Time    "
+                        +tvTotalTime.getText().toString()+"\n        Face-to-Face Time        "+tvFaceToFace.getText().toString()
+                        +"\n               Other Time        "+tvOtherTime.getText().toString()+"\n                             +"
+                        +tvIntervention.getText().toString()+" (Intervention)\n                             +10 (Documentation)\n"+
+                        "                             +14 (Travel)\n                             -00 (Commute)\n            Mileage Route"+
+                        "    https://www.google.com/maps\n             Service Site    12 - Home\n    Service Facility Name    "
+                        +tvAddress2Title.getText().toString()+"\n Service Facility Address    "+tvAddress2Street.getText().toString()
+                        +"\n    Service Facility City    "+tvAdress2City.getText().toString()+"\n   Service Facility State    CA\n"
+                        +"Service Facility Zip Code    "+tvAddress2Zip.getText().toString()+"\n          Client Involved    "
+                        +tvClientInvolved.getText().toString()+"\n       Family Collaterals    "+tvFamilyMember.getText().toString()
+                        +"\n   Non-Family Collaterals    "+tvOtherAndFriends.getText().toString()+"\n             Session Type    "
+                        +tvSessoinType.getText().toString()+"\n             Activity Type    02 - Face to Face with Client -\nIBHIS\n"
+                        +"           Encounter With    05 - Client or Client With Others\n\n  Evidence Based Practice    00 - No Evidence-Based Practice\n"
+                        +"             Completed By    Eric Ramos (Child and Family\nSpecialist III Bilingual\n                Submit To     Boss Lady (CFS Coordinator)"
+                        ;
+                generateNoteOnSD(mailContent);
+                sendMail();
 
                 Toast.makeText(getActivity(), "Event is added", Toast.LENGTH_SHORT).show();
 
-                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.mainContainer, new ClientsFragment()).commit();
+
 
 
             }
@@ -402,41 +453,43 @@ public class FinalSummaryFragment extends Fragment {
 
         return view;
     }
-
-    public static MimeMessage createEmailWithAttachment(String to,
-                                                        String from,
-                                                        String subject,
-                                                        String bodyText,
-                                                        File file)
-            throws MessagingException, IOException {
-        Properties props = new Properties();
-        Session session = Session.getDefaultInstance(props, null);
-
-        MimeMessage email = new MimeMessage(session);
-
-        email.setFrom(new InternetAddress(from));
-        email.addRecipient(javax.mail.Message.RecipientType.TO,
-                new InternetAddress(to));
-        email.setSubject(subject);
-
-        MimeBodyPart mimeBodyPart = new MimeBodyPart();
-        mimeBodyPart.setContent(bodyText, "text/plain");
-
-        Multipart multipart = new MimeMultipart();
-        multipart.addBodyPart(mimeBodyPart);
-
-        mimeBodyPart = new MimeBodyPart();
-        DataSource source = new FileDataSource(file);
-
-        mimeBodyPart.setDataHandler(new DataHandler(source));
-        mimeBodyPart.setFileName(file.getName());
-
-        multipart.addBodyPart(mimeBodyPart);
-        email.setContent(multipart);
-
-        return email;
-    }
-
+        public void difference(int start,int end)
+        {
+            int finalTime=end-start+1;
+           // Toast.makeText(getActivity(), String.valueOf(finalTime), Toast.LENGTH_SHORT).show();
+            interventionTime=finalTime;
+            tvIntervention.setText("+"+String.valueOf(interventionTime)+" (Intervention)");
+            Toast.makeText(getActivity(), String.valueOf(interventionTime), Toast.LENGTH_SHORT).show();
+            if(clientPresence.equals("yes"))
+            {
+                tvClientInvolved.setText("Yes");
+                tvFaceToFace.setText(String.valueOf(interventionTime));
+                otherInterventionTime=zero;
+                tvEncounterWith.setText("05 - Client or Client With Others");
+                tvOtherTime.setText(String.valueOf(otherInterventionTime+documentation+travel-commute));
+                int face=Integer.parseInt(tvFaceToFace.getText().toString());
+                int other=Integer.parseInt(tvOtherTime.getText().toString());
+                tvTotalTime.setText(String.valueOf(face+other+1));
+            }
+            else
+            {
+                tvClientInvolved.setText("No");
+                tvFaceToFace.setText(String.valueOf(zero));
+                otherInterventionTime=interventionTime;
+                if (familyMembers>0)
+                {
+                    tvEncounterWith.setText("01 - Client's Family or Significant Other");
+                }
+                else
+                {
+                    tvEncounterWith.setText("02 - Other Professional");
+                }
+                tvOtherTime.setText(String.valueOf(otherInterventionTime+documentation+travel-commute));
+                int face=Integer.parseInt(tvFaceToFace.getText().toString());
+                int other=Integer.parseInt(tvOtherTime.getText().toString());
+                tvTotalTime.setText(String.valueOf(face+other+1));
+            }
+        }
     class RetreiveFeedTask extends AsyncTask<String, Void, String> {
 
         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -446,7 +499,7 @@ public class FinalSummaryFragment extends Fragment {
             try{
                 Message message = new MimeMessage(session);
                 message.setFrom(new InternetAddress("SBHGApp@gmail.com"));
-                message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("ericramos1990@gmail.com"));
+                message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("Adamnooriit@gmail.com"));
                 message.setSubject("This will be uploaded directly to EMR");
                 String mailContent="********** INTRODUCTION **********\n"
                         + getIntroduction2k1 +
@@ -459,11 +512,24 @@ public class FinalSummaryFragment extends Fragment {
                         "\n\n********** RESPONSE **********\n"
                         + getResponse
                         + "\n\n********** PLAN **********\n"
-                        + getPtext1 + " " + getPtext2 + " " + getPtext3;
+                        + getPtext1 + " " + getPtext2 + " " + getPtext3+"\n\n               Total Time    "
+                        +tvTotalTime.getText().toString()+"\n        Face-to-Face Time        "+tvFaceToFace.getText().toString()
+                        +"\n               Other Time        "+tvOtherTime.getText().toString()+"\n                             +"
+                        +tvIntervention.getText().toString()+" (Intervention)\n                             +10 (Documentation)\n"+
+                        "                             +14 (Travel)\n                             -00 (Commute)\n            Mileage Route"+
+                        "    https://www.google.com/maps\n             Service Site    12 - Home\n    Service Facility Name    "
+                        +tvAddress2Title.getText().toString()+"\n Service Facility Address    "+tvAddress2Street.getText().toString()
+                        +"\n    Service Facility City    "+tvAdress2City.getText().toString()+"\n   Service Facility State    CA\n"
+                        +"Service Facility Zip Code    "+tvAddress2Zip.getText().toString()+"\n          Client Involved    "
+                        +tvClientInvolved.getText().toString()+"\n       Family Collaterals    "+tvFamilyMember.getText().toString()
+                        +"\n   Non-Family Collaterals    "+tvOtherAndFriends.getText().toString()+"\n             Session Type    "
+                        +tvSessoinType.getText().toString()+"\n             Activity Type    02 - Face to Face with Client -\nIBHIS\n"
+                        +"           Encounter With    05 - Client or Client With Others\n\n  Evidence Based Practice    00 - No Evidence-Based Practice\n"
+                        +"             Completed By    Eric Ramos (Child and Family\nSpecialist III Bilingual\n                Submit To    Boss Lady (CFS Coordinator)"
+                        ;
                 message.setContent(mailContent.replace("\n","<br/>"),"text/html; charset=utf-8");
-                Transport.send(message);
-            } catch(MessagingException e) {
-                e.printStackTrace();
+              //  Transport.send(message);
+                    generateNoteOnSD(mailContent);
             } catch(Exception e) {
                 e.printStackTrace();
             }
@@ -476,11 +542,56 @@ public class FinalSummaryFragment extends Fragment {
 
         }
     }
-    public static String getCurrentTimeStamp(){
+
+    public void generateNoteOnSD(String sBody) {
+
+        SimpleDateFormat formatter = new SimpleDateFormat("mm");
+        Date now = new Date();
+        String fileName = formatter.format(now) + ".txt";
+        //String fileName = "Summary.txt";
+        try
+        {
+            File root = new File(Environment.getExternalStorageDirectory()+File.separator+"Notes");
+            //File root = new File(Environment.getExternalStorageDirectory(), "Notes");
+            if (!root.exists())
+            {
+                root.mkdirs();
+            }
+            File gpxfile = new File(root, fileName);
+
+
+            FileWriter writer = new FileWriter(gpxfile,true);
+            writer.append(sBody+"\n\n");
+            writer.flush();
+            writer.close();
+            Toast.makeText(getActivity(), "Data has been written to Report File", Toast.LENGTH_SHORT).show();
+            sendMail();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void sendMail(){
+        Intent i = new Intent(Intent.ACTION_SEND);
+        i.setType("message/rfc822");
+        i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"SBHGApp@gmail.com"});
+        i.putExtra(Intent.EXTRA_SUBJECT, "subject of email");
+        i.putExtra(Intent.EXTRA_TEXT   , "body of email");
+        try {
+            startActivity(Intent.createChooser(i, "Send mail..."));
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(getActivity(), "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    public String getCurrentTimeStamp(){
         try {
 
             SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
-            String currentDateTime = dateFormat.format(new Date()); // Find todays date
+            currentDateTime = dateFormat.format(new Date()); // Find todays date
 
             return currentDateTime;
         } catch (Exception e) {
@@ -502,6 +613,39 @@ public class FinalSummaryFragment extends Fragment {
            int  min = (int) (difference - (1000*60*60*24*days) - (1000*60*60*hours)) / (1000*60);
             hours = (hours < 0 ? -hours : hours);
             interventionTime=min;
+            tvIntervention.setText("+"+String.valueOf(interventionTime)+" (Intervention)");
+            Toast.makeText(getActivity(), String.valueOf(interventionTime), Toast.LENGTH_SHORT).show();
+            if(clientPresence.equals("yes"))
+            {
+                tvClientInvolved.setText("Yes");
+                tvFaceToFace.setText(String.valueOf(interventionTime));
+                otherInterventionTime=zero;
+                tvEncounterWith.setText("05 - Client or Client With Others");
+                tvOtherTime.setText(String.valueOf(otherInterventionTime+documentation+travel-commute));
+                int face=Integer.parseInt(tvFaceToFace.getText().toString());
+                int other=Integer.parseInt(tvOtherTime.getText().toString());
+                tvTotalTime.setText(String.valueOf(face+other+1));
+            }
+            else
+            {
+                tvClientInvolved.setText("No");
+                tvFaceToFace.setText(String.valueOf(zero));
+                otherInterventionTime=interventionTime;
+                if (familyMembers>0)
+                {
+                    tvEncounterWith.setText("01 - Client's Family or Significant Other");
+                }
+                else
+                {
+                    tvEncounterWith.setText("02 - Other Professional");
+                }
+                tvOtherTime.setText(String.valueOf(otherInterventionTime+documentation+travel-commute));
+                int face=Integer.parseInt(tvFaceToFace.getText().toString());
+                int other=Integer.parseInt(tvOtherTime.getText().toString());
+                tvTotalTime.setText(String.valueOf(face+other+1));
+            }
+
+
             Log.i("======= Hours"," :: "+hours);
 
         }catch(ParseException ex){
