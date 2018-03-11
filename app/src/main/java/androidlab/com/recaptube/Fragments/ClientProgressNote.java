@@ -4304,7 +4304,6 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                         int lastindex = texteffectbutton.lastIndexOf(",");
                         builder.replace(lastindex, lastindex+1, "." );
                         button.setVisibility(View.VISIBLE);
-                        Toast.makeText(getActivity(),builder.toString(), Toast.LENGTH_LONG).show();
                         editor.putString("back",builder.toString()).commit();
                         Fragment fragment=new GoalsFragment();
                         Bundle bundle=new Bundle();
@@ -4323,7 +4322,6 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                         button.setVisibility(View.VISIBLE);
                         int last=texteffectbutton.lastIndexOf(", the");
                         builder2.replace(last, last+1," and");
-                        Toast.makeText(getActivity(), builder2.toString(), Toast.LENGTH_LONG).show();
                         editor.putString("back",builder2.toString()).commit();
                         Fragment fragment=new GoalsFragment();
                         Bundle bundle=new Bundle();
@@ -4342,7 +4340,6 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                     button.setVisibility(View.VISIBLE);
                     int last=texteffectbutton.lastIndexOf(", the");
                     builder2.replace(last, last+1,", and");
-                    Toast.makeText(getActivity(), builder2.toString(), Toast.LENGTH_LONG).show();
                     editor.putString("back",builder2.toString()).commit();
                     Fragment fragment=new GoalsFragment();
                     Bundle bundle=new Bundle();
@@ -4353,7 +4350,7 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
                 }
                 else
                     {
-                    Toast.makeText(getActivity(), "Please select on of the toggle button", Toast.LENGTH_SHORT).show();
+
                 }
             }
         });
@@ -4394,7 +4391,7 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
 //            latD=Double.parseDouble(lat);
 //            lngD=Double.parseDouble(lng);
 
- //           Toast.makeText(getActivity(), String.valueOf(latD+lngD), Toast.LENGTH_SHORT).show();
+ //
 
 
         }
@@ -4418,7 +4415,7 @@ public class ClientProgressNote extends Fragment implements View.OnClickListener
             lng2=sharedPreferences.getString("lng2","");
 //            lat2D=Double.parseDouble(lat2);
 //            lng2D=Double.parseDouble(lng2);
-//            Toast.makeText(getActivity(), String.valueOf(lat2D+lng2D), Toast.LENGTH_SHORT).show();
+//
 
 
         }

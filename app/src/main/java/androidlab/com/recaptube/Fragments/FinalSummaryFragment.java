@@ -202,7 +202,7 @@ public class FinalSummaryFragment extends Fragment {
         {
             tvClientInvolved.setText("No");
             tvFaceToFace.setText(String.valueOf(zero));
-            tvIntervention.setText("+"+String.valueOf(interventionTime)+" (Intervention)");
+            tvIntervention.setText("+"+String.valueOf(interventionTime+1)+" (Intervention)");
             otherInterventionTime=interventionTime;
             if (familyMembers>0)
             {
@@ -215,7 +215,7 @@ public class FinalSummaryFragment extends Fragment {
             tvOtherTime.setText(String.valueOf(otherInterventionTime+documentation+travel-commute));
             int face=Integer.parseInt(tvFaceToFace.getText().toString());
             int other=Integer.parseInt(tvOtherTime.getText().toString());
-            tvTotalTime.setText(String.valueOf(face+other+1));
+            tvTotalTime.setText(String.valueOf(face+other));
         }
 
 
@@ -396,21 +396,21 @@ public class FinalSummaryFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                Properties props = new Properties();
-                props.put("mail.smtp.host", "smtp.gmail.com");
-                props.put("mail.smtp.socketFactory.port", "465");
-                props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-                props.put("mail.smtp.auth", "true");
-                props.put("mail.smtp.port", "465");
-
-                session = Session.getDefaultInstance(props, new Authenticator() {
-                    protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication("SBHGApp@gmail.com", "Fiverr2018");
-                        //return new PasswordAuthentication("Adamnooriit@gmail.com", "Adam_Noor321");
-                    }
-                });
-
-                pdialog = ProgressDialog.show(getActivity(), "", "Sending Mail...", true);
+//                Properties props = new Properties();
+//                props.put("mail.smtp.host", "smtp.gmail.com");
+//                props.put("mail.smtp.socketFactory.port", "465");
+//                props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+//                props.put("mail.smtp.auth", "true");
+//                props.put("mail.smtp.port", "465");
+//
+//                session = Session.getDefaultInstance(props, new Authenticator() {
+//                    protected PasswordAuthentication getPasswordAuthentication() {
+//                        return new PasswordAuthentication("SBHGApp@gmail.com", "Fiverr2018");
+//                        //return new PasswordAuthentication("Adamnooriit@gmail.com", "Adam_Noor321");
+//                    }
+//                });
+//
+//                pdialog = ProgressDialog.show(getActivity(), "", "Sending Mail...", true);
 
               //  RetreiveFeedTask task = new RetreiveFeedTask();
                // task.execute();
@@ -427,26 +427,23 @@ public class FinalSummaryFragment extends Fragment {
                         + "\n\n********** PLAN **********\n"
                         + getPtext1 + " " + getPtext2 + " " + getPtext3+"\n\n               Total Time    "
                         +tvTotalTime.getText().toString()+"\n        Face-to-Face Time        "+tvFaceToFace.getText().toString()
-                        +"\n               Other Time        "+tvOtherTime.getText().toString()+"\n                             +"
-                        +tvIntervention.getText().toString()+" (Intervention)\n                             +10 (Documentation)\n"+
-                        "                             +14 (Travel)\n                             -00 (Commute)\n            Mileage Route"+
+                        +"\n               Other Time        "+tvOtherTime.getText().toString()+"\n                                     "
+                        +tvIntervention.getText().toString()+"\n                                     +10 (Documentation)\n"+
+                        "                                     +14 (Travel)\n                                     -00 (Commute)\n            Mileage Route"+
                         "    https://www.google.com/maps\n             Service Site    12 - Home\n    Service Facility Name    "
                         +tvAddress2Title.getText().toString()+"\n Service Facility Address    "+tvAddress2Street.getText().toString()
                         +"\n    Service Facility City    "+tvAdress2City.getText().toString()+"\n   Service Facility State    CA\n"
                         +"Service Facility Zip Code    "+tvAddress2Zip.getText().toString()+"\n          Client Involved    "
                         +tvClientInvolved.getText().toString()+"\n       Family Collaterals    "+tvFamilyMember.getText().toString()
                         +"\n   Non-Family Collaterals    "+tvOtherAndFriends.getText().toString()+"\n             Session Type    "
-                        +tvSessoinType.getText().toString()+"\n             Activity Type    02 - Face to Face with Client -\nIBHIS\n"
+                        +tvSessoinType.getText().toString()+"\n            Activity Type    02 - Face to Face with Client - IBHIS\n"
                         +"           Encounter With    05 - Client or Client With Others\n\n  Evidence Based Practice    00 - No Evidence-Based Practice\n"
-                        +"             Completed By    Eric Ramos (Child and Family\nSpecialist III Bilingual\n                Submit To     Boss Lady (CFS Coordinator)"
+                        +"             Completed By    Eric Ramos (Child and Family Specialist III Bilingual)\n                Submit To    Boss Lady (CFS Coordinator)"
                         ;
                 generateNoteOnSD(mailContent);
-                sendMail();
-
-                Toast.makeText(getActivity(), "Event is added", Toast.LENGTH_SHORT).show();
-
-
-
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.mainContainer, new ClientsFragment()).commit();
+               // sendMail();
 
             }
         });
@@ -456,10 +453,9 @@ public class FinalSummaryFragment extends Fragment {
         public void difference(int start,int end)
         {
             int finalTime=end-start+1;
-           // Toast.makeText(getActivity(), String.valueOf(finalTime), Toast.LENGTH_SHORT).show();
+
             interventionTime=finalTime;
             tvIntervention.setText("+"+String.valueOf(interventionTime)+" (Intervention)");
-            Toast.makeText(getActivity(), String.valueOf(interventionTime), Toast.LENGTH_SHORT).show();
             if(clientPresence.equals("yes"))
             {
                 tvClientInvolved.setText("Yes");
@@ -547,7 +543,8 @@ public class FinalSummaryFragment extends Fragment {
 
         SimpleDateFormat formatter = new SimpleDateFormat("mm");
         Date now = new Date();
-        String fileName = formatter.format(now) + ".txt";
+       // String fileName = formatter.format(now) + ".txt";
+        String fileName = clientName+ "_StartTime.txt";
         //String fileName = "Summary.txt";
         try
         {
@@ -555,7 +552,11 @@ public class FinalSummaryFragment extends Fragment {
             //File root = new File(Environment.getExternalStorageDirectory(), "Notes");
             if (!root.exists())
             {
-                root.mkdirs();
+               // root.mkdirs();
+            }
+            else
+            {
+                root.delete();
             }
             File gpxfile = new File(root, fileName);
 
@@ -564,8 +565,8 @@ public class FinalSummaryFragment extends Fragment {
             writer.append(sBody+"\n\n");
             writer.flush();
             writer.close();
-            Toast.makeText(getActivity(), "Data has been written to Report File", Toast.LENGTH_SHORT).show();
-            sendMail();
+
+            //sendMail();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -582,7 +583,7 @@ public class FinalSummaryFragment extends Fragment {
         try {
             startActivity(Intent.createChooser(i, "Send mail..."));
         } catch (android.content.ActivityNotFoundException ex) {
-            Toast.makeText(getActivity(), "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+
         }
     }
 
@@ -614,7 +615,6 @@ public class FinalSummaryFragment extends Fragment {
             hours = (hours < 0 ? -hours : hours);
             interventionTime=min;
             tvIntervention.setText("+"+String.valueOf(interventionTime)+" (Intervention)");
-            Toast.makeText(getActivity(), String.valueOf(interventionTime), Toast.LENGTH_SHORT).show();
             if(clientPresence.equals("yes"))
             {
                 tvClientInvolved.setText("Yes");

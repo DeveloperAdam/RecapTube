@@ -6,7 +6,6 @@ import android.app.TimePickerDialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -29,14 +28,9 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.TimeZone;
 
 import androidlab.com.recaptube.R;
 
@@ -66,6 +60,7 @@ public class PlanFragment extends Fragment {
     String time, Fname, type, Lname;
     String tarikh = null;
     char first;
+    long date;
     String aTime;
     String defaultTextForUserGoal = "The CFS will assist the client with the goal to ";
 
@@ -99,53 +94,6 @@ public class PlanFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                final Calendar c = Calendar.getInstance();
-                int hour = c.get(Calendar.HOUR_OF_DAY);
-                int minute = c.get(Calendar.MINUTE);
-
-
-                TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(),
-                        new TimePickerDialog.OnTimeSetListener() {
-
-                            @Override
-                            public void onTimeSet(TimePicker view, int hourOfDay,
-                                                  int minute) {
-                                int hour = hourOfDay;
-                                int minutes = minute;
-                                String timeSet = "";
-                                if (hour > 12) {
-                                    hour -= 12;
-                                    timeSet = "PM";
-                                } else if (hour == 0) {
-                                    hour += 12;
-                                    timeSet = "AM";
-                                } else if (hour == 12) {
-                                    timeSet = "PM";
-                                } else {
-                                    timeSet = "AM";
-                                }
-
-                                String min = "";
-                                if (minutes < 10)
-                                    min = "0" + minutes;
-                                else
-                                    min = String.valueOf(minutes);
-
-                                // Append in a StringBuilder
-                                 aTime = new StringBuilder().append(hour).append(':')
-                                        .append(min).append(" ").append(timeSet).toString();
-                                text = textPreviewDate.getText().toString();
-                                textPreviewDate.setText(text + " at " + aTime + " for what type of meeting?");
-                                editor.putString("time", aTime).commit();
-                                sessionTypeSpinner.setVisibility(View.VISIBLE);
-                                //  text=textPreviewDate.getText().toString();
-                                // tvDate.setText(text);
-
-                            }
-                        }, hour, minute, false);
-                timePickerDialog.show();
-
-
                 final Calendar c1 = Calendar.getInstance();
                 int mYear = c1.get(Calendar.YEAR); // current year
                 int mMonth = c1.get(Calendar.MONTH); // current month
@@ -159,92 +107,103 @@ public class PlanFragment extends Fragment {
                                                   int monthOfYear, int dayOfMonth) {
                                 // set day of month , month and year value in the edit text
                                 strDate = (monthOfYear + 1) + "/" + dayOfMonth + "/" + year;
-                                Toast.makeText(getActivity(), strDate, Toast.LENGTH_SHORT).show();
                                 textPreviewDate.setText(CFS + strDate);
                                 editor.putInt("Month", monthOfYear + 1).commit();
                                 editor.putInt("Day", mDay).commit();
                                 editor.putInt("Year", year).commit();
                                 editor.putString("Date", strDate).commit();
+
+                                final Calendar c = Calendar.getInstance();
+                                int hour = c.get(Calendar.HOUR_OF_DAY);
+                                int minute = c.get(Calendar.MINUTE);
+
+
+                                TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(),
+                                        new TimePickerDialog.OnTimeSetListener() {
+
+                                            @Override
+                                            public void onTimeSet(TimePicker view, int hourOfDay,
+                                                                  int minute) {
+                                                int hour = hourOfDay;
+                                                int minutes = minute;
+                                                String timeSet = "";
+                                                if (hour > 12) {
+                                                    hour -= 12;
+                                                    timeSet = "PM";
+                                                } else if (hour == 0) {
+                                                    hour += 12;
+                                                    timeSet = "AM";
+                                                } else if (hour == 12) {
+                                                    timeSet = "PM";
+                                                } else {
+                                                    timeSet = "AM";
+                                                }
+
+                                                String min = "";
+                                                if (minutes < 10)
+                                                    min = "0" + minutes;
+                                                else
+                                                    min = String.valueOf(minutes);
+
+                                                // Append in a StringBuilder
+                                                aTime = new StringBuilder().append(hour).append(':')
+                                                        .append(min).append(" ").append(timeSet).toString();
+                                                text = textPreviewDate.getText().toString();
+                                                textPreviewDate.setText(text + " at " + aTime + " for what type of meeting?");
+                                                editor.putString("time", aTime).commit();
+                                                sessionTypeSpinner.setVisibility(View.VISIBLE);
+
+                                                date=Date.parse(strDate+" "+aTime);
+
+                                                if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
+
+                                                    Cursor cursor = getActivity().getContentResolver().query(CalendarContract.Events.CONTENT_URI, null, null, null, null);
+                                                    while (cursor.moveToNext())
+                                                    {
+                                                        if (cursor!=null)
+                                                        {
+                                                            int id_1=cursor.getColumnIndex(CalendarContract.Events._ID);
+                                                            int id_2=cursor.getColumnIndex(CalendarContract.Events.TITLE);
+                                                            int id_3=cursor.getColumnIndex(CalendarContract.Events.DESCRIPTION);
+                                                            int id_4=cursor.getColumnIndex(CalendarContract.Events.EVENT_LOCATION);
+
+                                                            String idValue=cursor.getString(id_1);
+                                                            String titleValue=cursor.getString(id_2);
+                                                            String descriptionValue=cursor.getString(id_3);
+                                                            String eventValue =cursor.getString(id_4);
+
+                                                        }
+                                                        else
+                                                        {
+                                                        }
+                                                    }
+                                                    return;
+                                                }
+
+
+                                                ContentResolver cr=getActivity().getContentResolver();
+                                                ContentValues cv=new ContentValues();
+                                                cv.put(CalendarContract.Events.TITLE,first+" ."+Lname+", "+type);
+                                                cv.put(CalendarContract.Events.EVENT_LOCATION,"LosAngeles");
+                                                cv.put(CalendarContract.Events.DTSTART,date);
+                                                cv.put(CalendarContract.Events.DTEND, date+60*60*1000);
+                                                cv.put(CalendarContract.Events.CALENDAR_ID, 1);
+                                                cv.put(CalendarContract.Events.EVENT_TIMEZONE, java.util.Calendar.getInstance().getTimeZone().getID());
+
+                                                Uri uri=cr.insert(CalendarContract.Events.CONTENT_URI,cv);
+
+                                            }
+                                        }, hour, minute, false);
+                                timePickerDialog.show();
                                 sessionTypeSpinner.setVisibility(View.VISIBLE);
+
+
                             }
                         }, mYear, mMonth, mDay);
                 datePickerDialog.show();
 
-                if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
-
-                 Cursor cursor = getActivity().getContentResolver().query(CalendarContract.Events.CONTENT_URI, null, null, null, null);
-                    while (cursor.moveToNext())
-                    {
-                        if (cursor!=null)
-                        {
-                            int id_1=cursor.getColumnIndex(CalendarContract.Events._ID);
-                            int id_2=cursor.getColumnIndex(CalendarContract.Events.TITLE);
-                            int id_3=cursor.getColumnIndex(CalendarContract.Events.DESCRIPTION);
-                            int id_4=cursor.getColumnIndex(CalendarContract.Events.EVENT_LOCATION);
-
-                            String idValue=cursor.getString(id_1);
-                            String titleValue=cursor.getString(id_2);
-                            String descriptionValue=cursor.getString(id_3);
-                            String eventValue =cursor.getString(id_4);
-
-                            Toast.makeText(getActivity(), eventValue, Toast.LENGTH_SHORT).show();
-
-                        }
-                        else
-                        {
-                            Toast.makeText(getActivity(), "There is no event", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                    return;
-                }
-                SimpleDateFormat yyyyMMdd = new SimpleDateFormat("MM/dd/yyyy");
-                Calendar dt = Calendar.getInstance();
-                Date date = null;
-                try {
-                     date = yyyyMMdd.parse(strDate);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-// Where untilDate is a date instance of your choice, for example 30/01/2012
-                dt.setTime(date);
-
-// If you want the event until 30/01/2012, you must add one day from our day because UNTIL in RRule sets events before the last day
-                dt.add(Calendar.DATE, 1);
-                String dtUntill = yyyyMMdd.format(dt.getTime());
-
-                ContentResolver cr = getActivity().getContentResolver();
-                ContentValues values = new ContentValues();
-
-                values.put(CalendarContract.Events.DTSTART, dtUntill);
-                values.put(CalendarContract.Events.TITLE, first+" ."+Lname+", "+type);
-
-                TimeZone timeZone = TimeZone.getDefault();
-                values.put(CalendarContract.Events.EVENT_TIMEZONE, timeZone.getID());
-
-// Default calendar
-                values.put(CalendarContract.Events.CALENDAR_ID, 1);
-
-                values.put(CalendarContract.Events.RRULE, "FREQ=DAILY;UNTIL="
-                        + dtUntill);
-// Set Period for 1 Hour
-                values.put(CalendarContract.Events.DURATION, "+P1H");
-
-                values.put(CalendarContract.Events.HAS_ALARM, 1);
-
-// Insert event to calendar
-                Uri uri = cr.insert(CalendarContract.Events.CONTENT_URI, values);
 
 
-//                ContentResolver cr=getActivity().getContentResolver();
-//                ContentValues cv=new ContentValues();
-//                cv.put(CalendarContract.Events.TITLE,first+" ."+Lname+", "+type);
-//                cv.put(CalendarContract.Events.EVENT_LOCATION,"LosAngeles");
-//                cv.put(CalendarContract.Events.DTSTART, java.util.Calendar.getInstance().getTimeInMillis());
-//                cv.put(CalendarContract.Events.DTEND, java.util.Calendar.getInstance().getTimeInMillis());
-//                cv.put(CalendarContract.Events.CALENDAR_ID, 1);
-//                cv.put(CalendarContract.Events.EVENT_TIMEZONE, java.util.Calendar.getInstance().getTimeZone().getID());
-//
-//                Uri uri=cr.insert(CalendarContract.Events.CONTENT_URI,cv);
 
 
             }
