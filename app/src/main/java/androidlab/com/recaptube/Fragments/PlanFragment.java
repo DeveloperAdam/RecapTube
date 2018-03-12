@@ -154,43 +154,43 @@ public class PlanFragment extends Fragment {
                                                 sessionTypeSpinner.setVisibility(View.VISIBLE);
 
                                                 date=Date.parse(strDate+" "+aTime);
-
-                                                if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
-
-                                                    Cursor cursor = getActivity().getContentResolver().query(CalendarContract.Events.CONTENT_URI, null, null, null, null);
-                                                    while (cursor.moveToNext())
-                                                    {
-                                                        if (cursor!=null)
-                                                        {
-                                                            int id_1=cursor.getColumnIndex(CalendarContract.Events._ID);
-                                                            int id_2=cursor.getColumnIndex(CalendarContract.Events.TITLE);
-                                                            int id_3=cursor.getColumnIndex(CalendarContract.Events.DESCRIPTION);
-                                                            int id_4=cursor.getColumnIndex(CalendarContract.Events.EVENT_LOCATION);
-
-                                                            String idValue=cursor.getString(id_1);
-                                                            String titleValue=cursor.getString(id_2);
-                                                            String descriptionValue=cursor.getString(id_3);
-                                                            String eventValue =cursor.getString(id_4);
-
-                                                        }
-                                                        else
-                                                        {
-                                                        }
-                                                    }
-                                                    return;
-                                                }
-
-
-                                                ContentResolver cr=getActivity().getContentResolver();
-                                                ContentValues cv=new ContentValues();
-                                                cv.put(CalendarContract.Events.TITLE,first+" ."+Lname+", "+type);
-                                                cv.put(CalendarContract.Events.EVENT_LOCATION,"LosAngeles");
-                                                cv.put(CalendarContract.Events.DTSTART,date);
-                                                cv.put(CalendarContract.Events.DTEND, date+60*60*1000);
-                                                cv.put(CalendarContract.Events.CALENDAR_ID, 1);
-                                                cv.put(CalendarContract.Events.EVENT_TIMEZONE, java.util.Calendar.getInstance().getTimeZone().getID());
-
-                                                Uri uri=cr.insert(CalendarContract.Events.CONTENT_URI,cv);
+                                                editor.putLong("timetime",date).commit();
+//                                                if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
+//
+//                                                    Cursor cursor = getActivity().getContentResolver().query(CalendarContract.Events.CONTENT_URI, null, null, null, null);
+//                                                    while (cursor.moveToNext())
+//                                                    {
+//                                                        if (cursor!=null)
+//                                                        {
+//                                                            int id_1=cursor.getColumnIndex(CalendarContract.Events._ID);
+//                                                            int id_2=cursor.getColumnIndex(CalendarContract.Events.TITLE);
+//                                                            int id_3=cursor.getColumnIndex(CalendarContract.Events.DESCRIPTION);
+//                                                            int id_4=cursor.getColumnIndex(CalendarContract.Events.EVENT_LOCATION);
+//
+//                                                            String idValue=cursor.getString(id_1);
+//                                                            String titleValue=cursor.getString(id_2);
+//                                                            String descriptionValue=cursor.getString(id_3);
+//                                                            String eventValue =cursor.getString(id_4);
+//
+//                                                        }
+//                                                        else
+//                                                        {
+//                                                        }
+//                                                    }
+//                                                    return;
+//                                                }
+//
+//
+//                                                ContentResolver cr=getActivity().getContentResolver();
+//                                                ContentValues cv=new ContentValues();
+//                                                cv.put(CalendarContract.Events.TITLE,first+" ."+Lname+", "+type);
+//                                                cv.put(CalendarContract.Events.EVENT_LOCATION,"LosAngeles");
+//                                                cv.put(CalendarContract.Events.DTSTART,date);
+//                                                cv.put(CalendarContract.Events.DTEND, date+60*60*1000);
+//                                                cv.put(CalendarContract.Events.CALENDAR_ID, 1);
+//                                                cv.put(CalendarContract.Events.EVENT_TIMEZONE, java.util.Calendar.getInstance().getTimeZone().getID());
+//
+//                                                Uri uri=cr.insert(CalendarContract.Events.CONTENT_URI,cv);
 
                                             }
                                         }, hour, minute, false);

@@ -203,8 +203,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="monospace"
+                android:autoLink="web"
                 android:text="https://www.google.com/maps"
-                android:layout_marginLeft="142sp"
+                android:layout_marginLeft="145sp"
             />
         </LinearLayout>
         <LinearLayout
@@ -219,11 +220,12 @@
             android:fontFamily="monospace"
             android:text="Service Site" />
         <TextView
+            android:id="@+id/tvServiceSite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="$Service site"
             android:fontFamily="monospace"
-            android:layout_marginLeft="148sp"
+            android:layout_marginLeft="152sp"
             />
     </LinearLayout>
         <LinearLayout
@@ -243,7 +245,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="monospace"
                 android:text="Address 2 title"
-                android:layout_marginLeft="58sp"
+                android:layout_marginLeft="61sp"
                 />
         </LinearLayout>
         <LinearLayout
@@ -264,7 +266,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="monospace"
                 android:text="Address 2 street"
-                android:layout_marginLeft="32sp"
+                android:layout_marginLeft="36sp"
                 />
         </LinearLayout>
         <LinearLayout
@@ -284,7 +286,7 @@
                 android:layout_height="wrap_content"
                 android:text="Address 2 city"
                 android:fontFamily="monospace"
-                android:layout_marginLeft="56sp"
+                android:layout_marginLeft="61sp"
                 />
         </LinearLayout>
         <LinearLayout
@@ -303,7 +305,7 @@
                 android:layout_height="wrap_content"
                 android:text="CA"
                 android:fontFamily="monospace"
-                android:layout_marginLeft="48sp"
+                android:layout_marginLeft="54sp"
                 />
         </LinearLayout>
         <LinearLayout
@@ -323,7 +325,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="monospace"
                 android:text="Address2 Zip code"
-                android:layout_marginLeft="30sp"
+                android:layout_marginLeft="37sp"
                 />
         </LinearLayout>
         <LinearLayout
@@ -343,7 +345,7 @@
                 android:layout_height="wrap_content"
                 android:text="$Client Involved"
                 android:fontFamily="monospace"
-                android:layout_marginLeft="120sp"
+                android:layout_marginLeft="125sp"
                 />
         </LinearLayout>
         <LinearLayout
@@ -363,7 +365,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="monospace"
                 android:text="$Family Members"
-                android:layout_marginLeft="102sp"
+                android:layout_marginLeft="108sp"
                 />
         </LinearLayout>
         <LinearLayout
@@ -383,7 +385,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="monospace"
                 android:text="$Other Professionals + Friends"
-                android:layout_marginLeft="70sp"
+                android:layout_marginLeft="75sp"
                 />
         </LinearLayout>
         <LinearLayout
@@ -403,7 +405,7 @@
                 android:fontFamily="monospace"
                 android:layout_height="wrap_content"
                 android:text="$SessionTypeCode"
-                android:layout_marginLeft="144sp"
+                android:layout_marginLeft="150sp"
                 />
         </LinearLayout>
         <LinearLayout
@@ -422,7 +424,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="monospace"
                 android:text="02 - Face to Face with Client - IHBS"
-                android:layout_marginLeft="136sp"
+                android:layout_marginLeft="142sp"
                 />
         </LinearLayout>
         <LinearLayout
@@ -442,7 +444,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="monospace"
                 android:text="$EncounterWith"
-                android:layout_marginLeft="127sp"
+                android:layout_marginLeft="134sp"
                 />
         </LinearLayout>
         <LinearLayout
@@ -462,7 +464,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="monospace"
                 android:text="00 - No Evidence-Based Practice"
-                android:layout_marginLeft="52sp"
+                android:layout_marginLeft="59sp"
                 />
         </LinearLayout>
         <LinearLayout
@@ -482,7 +484,7 @@
                 android:fontFamily="monospace"
                 android:layout_height="wrap_content"
                 android:text="Eric Ramos (Child and Family Specialist III Bilingual"
-                android:layout_marginLeft="143sp"
+                android:layout_marginLeft="150sp"
                 />
         </LinearLayout>
         <LinearLayout
@@ -502,7 +504,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="monospace"
                 android:text="Boss Lady (CFS Coordinator)"
-                android:layout_marginLeft="167sp"
+                android:layout_marginLeft="174sp"
                 />
         </LinearLayout>
         <LinearLayout
@@ -599,7 +601,7 @@
         android:id="@+id/btnSubmit"
         android:text="Submit"
             android:textColor="#fff"
-            android:background="#ff7272"
+            android:background="#FF4081"
         android:layout_marginTop="20sp"
         android:layout_gravity="bottom|center"/>
     </LinearLayout>

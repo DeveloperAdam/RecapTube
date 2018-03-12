@@ -93,7 +93,7 @@ public class FinalSummaryFragment extends Fragment {
     Session session = null;
     TextView startDate,endDate,tvTotalTime
             ,tvFaceToFace,tvOtherTime,tvEncounterWith,tvClientInvolved,tvSessoinType,
-    tvAddress2Title,tvAddress2Street,tvAdress2City,tvAddress2Zip,tvFamilyMember,tvOtherAndFriends,tvIntervention;
+    tvAddress2Title,tvAddress2Street,tvAdress2City,tvAddress2Zip,tvFamilyMember,tvOtherAndFriends,tvIntervention,tvServiceSite;
     ProgressDialog pdialog = null;
     Context context = null;
     String getIntroduction2k1, getBehviorText1, getBehviorText2, getIntervention, getResponse, getPtext1, getPtext2, getPtext3, getSelectedGoal;
@@ -105,6 +105,7 @@ public class FinalSummaryFragment extends Fragment {
     int documentation=10;
     String tarikh=null;
     int zero=00;
+    long date;
     String currentDateTime;
     int startimeMinutes,endTimeMinutes;
     char first;
@@ -120,6 +121,7 @@ public class FinalSummaryFragment extends Fragment {
         finalTextPreview = (EditText) view.findViewById(R.id.finalTextPreview);
         sharedPreferences = getActivity().getSharedPreferences("recap", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
+        date=sharedPreferences.getLong("timetime",0);
         tvIntervention=(TextView)view.findViewById(R.id.tvInterventionTime);
         tvAdress2City=(TextView)view.findViewById(R.id.tvAddress2City);
         tvAddress2Zip=(TextView)view.findViewById(R.id.tvAddressZip);
@@ -131,6 +133,7 @@ public class FinalSummaryFragment extends Fragment {
         tvOtherAndFriends=(TextView)view.findViewById(R.id.tvOtherAndFriends);
         tvFamilyMember=(TextView)view.findViewById(R.id.tvFamilyMembers);
         tvOtherTime=(TextView)view.findViewById(R.id.tvOtherTime);
+        tvServiceSite=(TextView)view.findViewById(R.id.tvServiceSite);
         tvAddress2Title=(TextView)view.findViewById(R.id.tvAddress2Title);
         startDate=(TextView)view.findViewById(R.id.tvStartDate);
         endDate=(TextView)view.findViewById(R.id.tvEndDate);
@@ -172,7 +175,24 @@ public class FinalSummaryFragment extends Fragment {
         tvFamilyMember.setText(String.valueOf(familyMembers));
         tvOtherAndFriends.setText(String.valueOf(other+friends));
         tvAddress2Title.setText(clientName+": "+add2Title);
-
+        if(add2Title.contains("Home"))
+        {
+            tvServiceSite.setText("12 - Home");
+        }
+        else
+            if (add2Title.contains("School"))
+            {
+                tvServiceSite.setText("03 - School");
+            }
+            else
+                if (add2Title.contains("Office"))
+                {
+                    tvServiceSite.setText("11 - Office");
+                }
+                else
+                {
+                    tvServiceSite.setText("90 - Field");
+                }
 
         if(dateAndTime2k1.contains(" "))
         {
@@ -184,40 +204,7 @@ public class FinalSummaryFragment extends Fragment {
             formattedDate=formattedDate.replace(" "," at ");
             endDate.setText(formattedDate);
         }
-
         timeDifference(date2k1,getCurrentTimeStamp());
-
-        if(clientPresence.equals("yes"))
-        {
-            tvClientInvolved.setText("Yes");
-            tvFaceToFace.setText(String.valueOf(interventionTime));
-            otherInterventionTime=zero;
-            tvEncounterWith.setText("05 - Client or Client With Others");
-            tvOtherTime.setText(String.valueOf(otherInterventionTime+documentation+travel-commute));
-            int face=Integer.parseInt(tvFaceToFace.getText().toString());
-            int other=Integer.parseInt(tvOtherTime.getText().toString());
-            tvTotalTime.setText(String.valueOf(face+other+1));
-        }
-        else
-        {
-            tvClientInvolved.setText("No");
-            tvFaceToFace.setText(String.valueOf(zero));
-            tvIntervention.setText("+"+String.valueOf(interventionTime+1)+" (Intervention)");
-            otherInterventionTime=interventionTime;
-            if (familyMembers>0)
-            {
-                tvEncounterWith.setText("01 - Client's Family or Significant Other");
-            }
-            else
-            {
-                tvEncounterWith.setText("02 - Other Professional");
-            }
-            tvOtherTime.setText(String.valueOf(otherInterventionTime+documentation+travel-commute));
-            int face=Integer.parseInt(tvFaceToFace.getText().toString());
-            int other=Integer.parseInt(tvOtherTime.getText().toString());
-            tvTotalTime.setText(String.valueOf(face+other));
-        }
-
 
         time = sharedPreferences.getString("time", "");
         btnSubmit = (Button) view.findViewById(R.id.btnSubmit);
@@ -285,6 +272,7 @@ public class FinalSummaryFragment extends Fragment {
                                 // Append in a StringBuilder
                                 startimeMinutes=hour*60+minutes;
                                 difference(startimeMinutes,endTimeMinutes);
+                               // timeDifference(String.valueOf(startimeMinutes),String.valueOf(endTimeMinutes));
                                  startAtime = new StringBuilder().append(hour).append(':')
                                         .append(min).toString();
                                 abc=startDate.getText().toString();
@@ -356,6 +344,7 @@ public class FinalSummaryFragment extends Fragment {
                                     min = String.valueOf(minutes);
                                 endTimeMinutes=hour*60+minutes;
                                 difference(startimeMinutes,endTimeMinutes);
+                                //timeDifference(String.valueOf(startimeMinutes),String.valueOf(endTimeMinutes));
                                 // Append in a StringBuilder
                                  endAtime = new StringBuilder().append(hour).append(':')
                                         .append(min).toString();
@@ -440,7 +429,47 @@ public class FinalSummaryFragment extends Fragment {
                         +"           Encounter With    05 - Client or Client With Others\n\n  Evidence Based Practice    00 - No Evidence-Based Practice\n"
                         +"             Completed By    Eric Ramos (Child and Family Specialist III Bilingual)\n                Submit To    Boss Lady (CFS Coordinator)"
                         ;
+
+
                 generateNoteOnSD(mailContent);
+
+                if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
+
+                    Cursor cursor = getActivity().getContentResolver().query(CalendarContract.Events.CONTENT_URI, null, null, null, null);
+                    while (cursor.moveToNext())
+                    {
+                        if (cursor!=null)
+                        {
+                            int id_1=cursor.getColumnIndex(CalendarContract.Events._ID);
+                            int id_2=cursor.getColumnIndex(CalendarContract.Events.TITLE);
+                            int id_3=cursor.getColumnIndex(CalendarContract.Events.DESCRIPTION);
+                            int id_4=cursor.getColumnIndex(CalendarContract.Events.EVENT_LOCATION);
+
+                            String idValue=cursor.getString(id_1);
+                            String titleValue=cursor.getString(id_2);
+                            String descriptionValue=cursor.getString(id_3);
+                            String eventValue =cursor.getString(id_4);
+
+                        }
+                        else
+                        {
+                        }
+                    }
+                    return;
+                }
+
+
+                ContentResolver cr=getActivity().getContentResolver();
+                ContentValues cv=new ContentValues();
+                cv.put(CalendarContract.Events.TITLE,first+" ."+Lname+", "+type);
+                cv.put(CalendarContract.Events.EVENT_LOCATION,"LosAngeles");
+                cv.put(CalendarContract.Events.DTSTART,date);
+                cv.put(CalendarContract.Events.DTEND, date+60*60*1000);
+                cv.put(CalendarContract.Events.CALENDAR_ID, 1);
+                cv.put(CalendarContract.Events.EVENT_TIMEZONE, java.util.Calendar.getInstance().getTimeZone().getID());
+
+                Uri uri=cr.insert(CalendarContract.Events.CONTENT_URI,cv);
+
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.mainContainer, new ClientsFragment()).commit();
                // sendMail();
@@ -453,25 +482,37 @@ public class FinalSummaryFragment extends Fragment {
         public void difference(int start,int end)
         {
             int finalTime=end-start+1;
+            String abc=String.valueOf(finalTime);
+            if (abc.contains("-"))
+            {
+                abc=abc.replace("-","");
+                finalTime=Integer.parseInt(abc);
+                interventionTime=finalTime;
+                startimeMinutes=finalTime-1;
+            }
+            else
+            {
+                interventionTime=finalTime;
+                startimeMinutes=finalTime-1;
+            }
 
-            interventionTime=finalTime;
             tvIntervention.setText("+"+String.valueOf(interventionTime)+" (Intervention)");
             if(clientPresence.equals("yes"))
             {
                 tvClientInvolved.setText("Yes");
                 tvFaceToFace.setText(String.valueOf(interventionTime));
-                otherInterventionTime=zero;
+                tvIntervention.setText(String.valueOf(zero));
                 tvEncounterWith.setText("05 - Client or Client With Others");
                 tvOtherTime.setText(String.valueOf(otherInterventionTime+documentation+travel-commute));
                 int face=Integer.parseInt(tvFaceToFace.getText().toString());
                 int other=Integer.parseInt(tvOtherTime.getText().toString());
-                tvTotalTime.setText(String.valueOf(face+other+1));
+                tvTotalTime.setText(String.valueOf(face+other));
             }
             else
             {
                 tvClientInvolved.setText("No");
                 tvFaceToFace.setText(String.valueOf(zero));
-                otherInterventionTime=interventionTime;
+                tvIntervention.setText(String.valueOf(interventionTime+1));
                 if (familyMembers>0)
                 {
                     tvEncounterWith.setText("01 - Client's Family or Significant Other");
@@ -483,7 +524,7 @@ public class FinalSummaryFragment extends Fragment {
                 tvOtherTime.setText(String.valueOf(otherInterventionTime+documentation+travel-commute));
                 int face=Integer.parseInt(tvFaceToFace.getText().toString());
                 int other=Integer.parseInt(tvOtherTime.getText().toString());
-                tvTotalTime.setText(String.valueOf(face+other+1));
+                tvTotalTime.setText(String.valueOf(face+other));
             }
         }
     class RetreiveFeedTask extends AsyncTask<String, Void, String> {
@@ -544,7 +585,7 @@ public class FinalSummaryFragment extends Fragment {
         SimpleDateFormat formatter = new SimpleDateFormat("mm");
         Date now = new Date();
        // String fileName = formatter.format(now) + ".txt";
-        String fileName = clientName+ "_StartTime.txt";
+        String fileName = clientName+ "_" +startDate.getText().toString()+".txt";
         //String fileName = "Summary.txt";
         try
         {
@@ -552,12 +593,9 @@ public class FinalSummaryFragment extends Fragment {
             //File root = new File(Environment.getExternalStorageDirectory(), "Notes");
             if (!root.exists())
             {
-               // root.mkdirs();
+                root.mkdirs();
             }
-            else
-            {
-                root.delete();
-            }
+
             File gpxfile = new File(root, fileName);
 
 
@@ -613,23 +651,25 @@ public class FinalSummaryFragment extends Fragment {
            int  hours = (int) ((difference - (1000*60*60*24*days)) / (1000*60*60));
            int  min = (int) (difference - (1000*60*60*24*days) - (1000*60*60*hours)) / (1000*60);
             hours = (hours < 0 ? -hours : hours);
-            interventionTime=min;
-            tvIntervention.setText("+"+String.valueOf(interventionTime)+" (Intervention)");
+            endTimeMinutes=min;
+            interventionTime=min+1;
             if(clientPresence.equals("yes"))
             {
                 tvClientInvolved.setText("Yes");
                 tvFaceToFace.setText(String.valueOf(interventionTime));
+                tvIntervention.setText(String.valueOf(zero)+" (Intervention)");
                 otherInterventionTime=zero;
                 tvEncounterWith.setText("05 - Client or Client With Others");
                 tvOtherTime.setText(String.valueOf(otherInterventionTime+documentation+travel-commute));
                 int face=Integer.parseInt(tvFaceToFace.getText().toString());
                 int other=Integer.parseInt(tvOtherTime.getText().toString());
-                tvTotalTime.setText(String.valueOf(face+other+1));
+                tvTotalTime.setText(String.valueOf(face+other));
             }
             else
             {
                 tvClientInvolved.setText("No");
                 tvFaceToFace.setText(String.valueOf(zero));
+                tvIntervention.setText(String.valueOf(interventionTime)+" (Intervention)");
                 otherInterventionTime=interventionTime;
                 if (familyMembers>0)
                 {
@@ -642,7 +682,7 @@ public class FinalSummaryFragment extends Fragment {
                 tvOtherTime.setText(String.valueOf(otherInterventionTime+documentation+travel-commute));
                 int face=Integer.parseInt(tvFaceToFace.getText().toString());
                 int other=Integer.parseInt(tvOtherTime.getText().toString());
-                tvTotalTime.setText(String.valueOf(face+other+1));
+                tvTotalTime.setText(String.valueOf(face+other));
             }
 
 
