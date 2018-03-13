@@ -5,12 +5,21 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 import androidlab.com.recaptube.R;
 
@@ -40,7 +49,6 @@ public class TaskGridFragment extends Fragment implements View.OnClickListener {
        // clientId=getArguments().getString("clientId");
         clientName=getArguments().getString("clientName");
         bundle.putString("clientId",clientId);
-
         bundle.putString("clientName",clientName);
         customActionBar();
         ivProgressNote.setOnClickListener(this);
@@ -82,6 +90,52 @@ public class TaskGridFragment extends Fragment implements View.OnClickListener {
                     break;
         }
     }
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // TODO Add your menu entries here
+        inflater.inflate(R.menu.client_progressnote, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        super.onOptionsItemSelected(item);
+
+        switch(item.getItemId()){
+            case R.id.action_settings:
+
+                break;
+
+            case R.id.todolist:
+
+                break;
+
+            case R.id.scheduled:
+
+                break;
+
+            case R.id.mileage:
+
+                break;
+
+            case R.id.addClient:
+
+                break;
+
+            case R.id.searchClient:
+
+                break;
+
+        }
+        return true;
+
+    }
 
     public void customActionBar() {
         android.support.v7.app.ActionBar mActionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
@@ -90,7 +144,6 @@ public class TaskGridFragment extends Fragment implements View.OnClickListener {
         mActionBar.setDisplayHomeAsUpEnabled(true);
         LayoutInflater mInflater = LayoutInflater.from(getActivity());
         View mCustomView = mInflater.inflate(R.layout.custom_actionbar_taskgrid, null);
-        ImageView imageView=(ImageView)mCustomView.findViewById(R.id.ivPhoneIcon);
         TextView textView=(TextView)mCustomView.findViewById(R.id.textView2);
         String barTitle=clientName+" - "+"Task List";
         textView.setText(barTitle);
@@ -99,3 +152,4 @@ public class TaskGridFragment extends Fragment implements View.OnClickListener {
 
     }
 }
+

@@ -42,13 +42,13 @@ public class GoalsFragment extends Fragment {
             EditText textView = new EditText(getActivity());
             textView.setHeight(50);
             textView.setTextSize(20);
-
+            textView.setTextColor(Color.GRAY);
             int line = 2;
             textView.setLines(line);
             textView.setEnabled(false);
             textView.setTextColor(Color.BLACK);
             textView.setPadding(50,0,0,20);
-            textView.setText("The client "+GoalsArray[j]+".");
+            textView.setText("The client will "+GoalsArray[j]+".");
 
             linearLayout.addView(textView);
 

@@ -414,11 +414,12 @@ public class FinalSummaryFragment extends Fragment {
                         "\n\n********** RESPONSE **********\n"
                         + getResponse
                         + "\n\n********** PLAN **********\n"
-                        + getPtext1 + " " + getPtext2 + " " + getPtext3+"\n\n               Total Time    "
+                        + getPtext1 + " " + getPtext2 + " " + getPtext3+ "\n\n       Start and End Time    "+startDate.getText().toString()+"    "+endDate.getText().toString()
+                        +"\n               Total Time    "
                         +tvTotalTime.getText().toString()+"\n        Face-to-Face Time        "+tvFaceToFace.getText().toString()
-                        +"\n               Other Time        "+tvOtherTime.getText().toString()+"\n                                     "
+                        +"\n               Other Time        "+tvOtherTime.getText().toString()+"\n                                     +"
                         +tvIntervention.getText().toString()+"\n                                     +10 (Documentation)\n"+
-                        "                                     +14 (Travel)\n                                     -00 (Commute)\n            Mileage Route"+
+                        "                                     +14 (Travel)\n                                     -0 (Commute)\n            Mileage Route"+
                         "    https://www.google.com/maps\n             Service Site    12 - Home\n    Service Facility Name    "
                         +tvAddress2Title.getText().toString()+"\n Service Facility Address    "+tvAddress2Street.getText().toString()
                         +"\n    Service Facility City    "+tvAdress2City.getText().toString()+"\n   Service Facility State    CA\n"

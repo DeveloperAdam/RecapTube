@@ -97,16 +97,16 @@ public class FullscreenActivity extends AppCompatActivity {
         sharedPreferences = this.getSharedPreferences("com.wrap", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         String token=sharedPreferences.getString("token","");
-        if (token!=null)
-        {
-            Fragment fragment=new ClientsFragment();
-            getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer,fragment).commit();
-        }
-        else
-        {
+//        if (token!=null)
+//        {
+//            Fragment fragment=new ClientsFragment();
+//            getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer,fragment).commit();
+//        }
+//        else
+//        {
             Fragment fragment = new LoginFragment();
             getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, fragment).commit();
-        }
+      //  }
 //        Uncomment this two lines to open fragment for saving services in database
         // you can move that code to the service activity too
 

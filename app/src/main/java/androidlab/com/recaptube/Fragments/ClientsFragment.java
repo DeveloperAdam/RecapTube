@@ -1,5 +1,6 @@
 package androidlab.com.recaptube.Fragments;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -7,9 +8,12 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -59,8 +63,10 @@ public class ClientsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_clients, container, false);
 
-        customActionBar();
+        //customActionBar();
         deleteCache(getActivity());
+
+
        // clearCache();
         //  getActivity().setTitle("My Clients");
         gridView = (GridView) view.findViewById(R.id.gridViewAllContestent);
@@ -120,6 +126,59 @@ public class ClientsFragment extends Fragment {
         // http://trendingfashionable.ipage.com/Recaptube/client_info.php
         //http://squaresdevelopers.com/RecapTube/client_info.php
         return false;
+    }
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // TODO Add your menu entries here
+        inflater.inflate(R.menu.main, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        super.onOptionsItemSelected(item);
+
+        switch(item.getItemId()){
+            case R.id.profile:
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
+// ...Irrelevant code for customizing the buttons and title
+                LayoutInflater inflater = this.getLayoutInflater();
+                View dialogView = inflater.inflate(R.layout.custom_profile, null);
+                dialogBuilder.setView(dialogView);
+                AlertDialog alertDialog = dialogBuilder.create();
+                alertDialog.show();
+                break;
+
+            case R.id.todolist:
+
+                break;
+
+            case R.id.scheduled:
+
+                break;
+
+            case R.id.mileage:
+
+                break;
+
+            case R.id.addClient:
+                Fragment fragment = new AddClientFragment();
+                getFragmentManager().beginTransaction().replace(R.id.mainContainer, fragment).addToBackStack("abc").commit();
+                break;
+
+            case R.id.searchClient:
+
+                break;
+
+        }
+        return true;
+
     }
     private void apicall() {
         JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.GET, "http://trendingfashionable.ipage.com/Recaptube/client_info.php"
@@ -213,8 +272,7 @@ public class ClientsFragment extends Fragment {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragment = new AddClientFragment();
-                getFragmentManager().beginTransaction().replace(R.id.mainContainer, fragment).addToBackStack("abc").commit();
+
             }
         });
         mActionBar.setCustomView(mCustomView);
@@ -222,17 +280,17 @@ public class ClientsFragment extends Fragment {
 
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                Toast.makeText(getActivity(), "clicked", Toast.LENGTH_SHORT).show();
-
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case android.R.id.home:
+//                Toast.makeText(getActivity(), "clicked", Toast.LENGTH_SHORT).show();
+//
+//                return true;
+//
+//            default:
+//                return super.onOptionsItemSelected(item);
+//        }
+//
+//    }
 }

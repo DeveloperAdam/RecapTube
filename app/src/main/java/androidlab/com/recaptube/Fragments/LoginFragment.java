@@ -4,12 +4,14 @@ import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -42,6 +44,7 @@ public class LoginFragment extends Fragment {
         // Inflate the layout for this fragment
         View view =inflater.inflate(R.layout.fragment_login, container, false);
 
+       // customActionBar();
         etEmail=(EditText)view.findViewById(R.id.etEmail);
         etPassword=(EditText)view.findViewById(R.id.etPassword);
         btnSignIn=(Button)view.findViewById(R.id.btnSignIn);
@@ -71,12 +74,24 @@ public class LoginFragment extends Fragment {
             etPassword.setError("Please enter the password");
         }
         else {
-            if (alertDialog==null)
+
+            if (strEmail.equals("test@gmail.com") && strPassword.equals("hybrid"))
             {
-                alertDialog= Alert_Utils.createProgressDialog(getActivity());
-                alertDialog.show();
+                Fragment fragment=new ClientsFragment();
+                getFragmentManager().beginTransaction().replace(R.id.mainContainer,fragment).commit();
             }
-            apicall();
+            else
+            {
+                Toast.makeText(getActivity(), "Invalid Crediential", Toast.LENGTH_SHORT).show();
+            }
+//            if (alertDialog==null)
+//            {
+//                alertDialog= Alert_Utils.createProgressDialog(getActivity());
+//                alertDialog.show();
+//            }
+//
+
+            //apicall();
         }
 
 
@@ -137,5 +152,15 @@ public class LoginFragment extends Fragment {
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         mRequestQueue.add(stringRequest);
     }
+    public void customActionBar() {
 
+        android.support.v7.app.ActionBar mActionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        mActionBar.setDisplayHomeAsUpEnabled(true);
+        mActionBar.setDisplayShowHomeEnabled(true);
+        LayoutInflater mInflater = LayoutInflater.from(getActivity());
+        View mCustomView = mInflater.inflate(R.layout.custom_login_actionbar, null);
+        mActionBar.setCustomView(mCustomView);
+        mActionBar.setDisplayShowCustomEnabled(true);
+
+    }
 }
