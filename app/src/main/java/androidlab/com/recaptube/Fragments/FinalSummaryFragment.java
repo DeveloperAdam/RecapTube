@@ -24,6 +24,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -118,6 +119,7 @@ public class FinalSummaryFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_final_summary, container, false);
 
+        customActionBar();
         finalTextPreview = (EditText) view.findViewById(R.id.finalTextPreview);
         sharedPreferences = getActivity().getSharedPreferences("recap", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
@@ -220,9 +222,9 @@ public class FinalSummaryFragment extends Fragment {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             finalTextPreview.setText("********** INTRODUCTION **********\n"
                     + getIntroduction2k1 +
-                    "\n\n********** GOAL **********\n"
+                    "\n\n********** GOAL **********\nTo"
                     + getSelectedGoal +
-                    "\n\n********** BEHAVIOR **********\n"
+                    ".\n\n********** BEHAVIOR **********\n"
                     + getBehviorText1 + getBehviorText2 +
                     "\n\n********** INTERVENTION **********\n" +
                     getIntervention +
@@ -405,9 +407,9 @@ public class FinalSummaryFragment extends Fragment {
                // task.execute();
                 String mailContent="********** INTRODUCTION **********\n"
                         + getIntroduction2k1 +
-                        "\n\n********** GOAL **********\n"
+                        "\n\n********** GOAL **********\nTo"
                         + getSelectedGoal +
-                        "\n\n********** BEHAVIOR **********\n"
+                        ".\n\n********** BEHAVIOR **********\n"
                         + getBehviorText1 + getBehviorText2 +
                         "\n\n********** INTERVENTION **********\n" +
                         getIntervention +
@@ -693,5 +695,18 @@ public class FinalSummaryFragment extends Fragment {
             // handle parsing exception if date string was different from the pattern applying into the SimpleDateFormat contructor
         }
 
+    }
+
+    private void customActionBar() {
+        android.support.v7.app.ActionBar mActionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        mActionBar.setDisplayShowHomeEnabled(false);
+        mActionBar.setDisplayShowTitleEnabled(false);
+        mActionBar.setDisplayHomeAsUpEnabled(true);
+        LayoutInflater mInflater = LayoutInflater.from(getActivity());
+        View mCustomView = mInflater.inflate(R.layout.customaction, null);
+        TextView textView=(TextView)mCustomView.findViewById(R.id.tvTitle);
+        textView.setText("Summary");
+        mActionBar.setCustomView(mCustomView);
+        mActionBar.setDisplayShowCustomEnabled(true);
     }
 }

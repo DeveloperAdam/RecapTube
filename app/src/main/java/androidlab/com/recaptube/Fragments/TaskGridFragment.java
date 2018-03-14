@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -25,10 +26,10 @@ import androidlab.com.recaptube.R;
 
 public class TaskGridFragment extends Fragment implements View.OnClickListener {
 
-    ImageView ivProgressNote;
-    TextView tvProgressNote;
+    ImageView ivProgressNote,ivOma;
+    TextView tvProgressNote,tvOma;
     String clientId,clientName;
-    LinearLayout linearLayoutProgressNote;
+    LinearLayout linearLayoutProgressNote,LinearOma;
     Bundle bundle;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor ;
@@ -42,6 +43,9 @@ public class TaskGridFragment extends Fragment implements View.OnClickListener {
         ivProgressNote=(ImageView)view.findViewById(R.id.ivProgressNote);
         tvProgressNote=(TextView)view.findViewById(R.id.tvProgressNote);
         linearLayoutProgressNote=(LinearLayout)view.findViewById(R.id.linearLayoutProgressNote);
+        ivOma=(ImageView)view.findViewById(R.id.omaiv);
+        tvOma=(TextView)view.findViewById(R.id.tvoma);
+        LinearOma=(LinearLayout) view.findViewById(R.id.omalayout);
        sharedPreferences = getActivity().getSharedPreferences("recap", Context.MODE_PRIVATE);
        editor =sharedPreferences.edit();
        clientId=sharedPreferences.getString("clientId","");
@@ -54,6 +58,27 @@ public class TaskGridFragment extends Fragment implements View.OnClickListener {
         ivProgressNote.setOnClickListener(this);
         linearLayoutProgressNote.setOnClickListener(this);
 
+        tvOma.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.mainContainer, new OMA_3Month()).commit();
+            }
+        });
+        ivOma.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.mainContainer, new OMA_3Month()).commit();
+            }
+        });
+        LinearOma.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.mainContainer, new OMA_3Month()).commit();
+            }
+        });
         return view;
     }
 
@@ -145,7 +170,7 @@ public class TaskGridFragment extends Fragment implements View.OnClickListener {
         LayoutInflater mInflater = LayoutInflater.from(getActivity());
         View mCustomView = mInflater.inflate(R.layout.custom_actionbar_taskgrid, null);
         TextView textView=(TextView)mCustomView.findViewById(R.id.textView2);
-        String barTitle=clientName+" - "+"Task List";
+        String barTitle="Task List";
         textView.setText(barTitle);
         mActionBar.setCustomView(mCustomView);
         mActionBar.setDisplayShowCustomEnabled(true);

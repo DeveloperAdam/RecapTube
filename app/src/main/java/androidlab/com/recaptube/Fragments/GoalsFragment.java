@@ -46,7 +46,6 @@ public class GoalsFragment extends Fragment {
             int line = 2;
             textView.setLines(line);
             textView.setEnabled(false);
-            textView.setTextColor(Color.BLACK);
             textView.setPadding(50,0,0,20);
             textView.setText("The client will "+GoalsArray[j]+".");
 
@@ -65,7 +64,7 @@ public class GoalsFragment extends Fragment {
         LayoutInflater mInflater = LayoutInflater.from(getActivity());
         View mCustomView = mInflater.inflate(R.layout.custom_actionbar_goals, null);
         final TextView textView=(TextView)mCustomView.findViewById(R.id.tvGoals);
-        String barTitle=clientName+" - "+"Goals";
+        String barTitle="Goals";
         textView.setText(barTitle);
 
         final Button button=(Button)mCustomView.findViewById(R.id.btnIntervention);

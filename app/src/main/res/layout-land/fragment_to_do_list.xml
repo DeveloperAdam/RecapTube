@@ -1,0 +1,48 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#eee"
+    tools:context="androidlab.com.recaptube.Fragments.ToDoList">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Progress Note: J. Gutierrez"
+        android:layout_marginTop="20sp"
+        android:layout_marginLeft="10sp"
+        android:textSize="20sp"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3sp"
+        android:layout_marginTop="20sp"
+        android:background="#eee"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="3 Month OMA: R. Dakota"
+        android:layout_marginTop="20sp"
+        android:layout_marginLeft="10sp"
+        android:textSize="20sp"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3sp"
+        android:layout_marginTop="20sp"
+        android:background="#eee"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Progress Note: R. Dakota"
+        android:layout_marginTop="20sp"
+        android:layout_marginLeft="10sp"
+        android:textSize="20sp"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3sp"
+        android:layout_marginTop="20sp"
+        android:background="#eee"/>
+
+</LinearLayout>

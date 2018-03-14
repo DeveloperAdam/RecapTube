@@ -28,11 +28,13 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/child"
         android:text="Child and Family Specialist ||| "
         android:textColor="#000"
         android:layout_gravity="center"
         android:textSize="20sp"/>
     <TextView
+        android:id="@+id/italic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="You can see my passion in my numbers"
@@ -57,7 +59,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" mintues this week"
+            android:text=" minutes this week"
             android:textColor="#000"
             android:layout_gravity="center"
             android:textSize="20sp"/>
@@ -78,7 +80,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" mintues in March"
+            android:text=" minutes in March"
             android:textColor="#000"
             android:layout_gravity="center"
             android:textSize="20sp"/>
@@ -87,6 +89,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginBottom="30sp"
         android:orientation="horizontal">
         <TextView
             android:layout_width="wrap_content"

@@ -1,21 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-   <string-array name="genderSpinner">
-       <item>Gender (HINT)</item>
-       <item>Male</item>
-       <item>Female</item>
-   </string-array>
+    <string-array name="genderSpinner">
+        <item>Gender (HINT)</item>
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
     <string-array name="address1">
         <item>Starting Location</item>
         <item>Phone</item>
         <item>Custom</item>
         <item>My Home</item>
-        <item>Office 1: Long Beach</item>
-        <item>Office 2: Los Angeles</item>
-        <item>Office 3: Downey</item>
-        <item>Client 1: Home</item>
-        <item>Client 2: Home</item>
-        <item>Office 3: School</item>
+        <item>SPA 2: Reseda</item>
+        <item>SPA 3: El Monte</item>
+        <item>SPA 4: LA Metro</item>
+        <item>SPA 6: Carson</item>
+        <item>SPA 6: Compton</item>
+        <item>SPA 7: Bellflower</item>
+        <item>SPA 8: Long Beach</item>
+        <item>SPA 8: Torrance</item>
+        <item>Gutierrez, Joey: Home</item>
+        <item>Dakota, Cassie: Home</item>
+        <item>Burka, Robert: Home</item>
     </string-array>
     <string-array name="address2">
         <item>Starting Location</item>

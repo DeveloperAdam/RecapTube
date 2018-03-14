@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -150,17 +151,25 @@ public class ClientsFragment extends Fragment {
 // ...Irrelevant code for customizing the buttons and title
                 LayoutInflater inflater = this.getLayoutInflater();
                 View dialogView = inflater.inflate(R.layout.custom_profile, null);
+                TextView textView=(TextView)dialogView.findViewById(R.id.child);
+                String abc=textView.getText().toString();
+                textView.setText(" \" "+abc+"\"");
+                TextView textView1=(TextView)dialogView.findViewById(R.id.italic);
+                String xyZ=textView1.getText().toString();
+                textView1.setText("\""+xyZ+"\"");
                 dialogBuilder.setView(dialogView);
                 AlertDialog alertDialog = dialogBuilder.create();
                 alertDialog.show();
                 break;
 
             case R.id.todolist:
-
+                Fragment fragment2 = new ToDoList();
+                getFragmentManager().beginTransaction().replace(R.id.mainContainer, fragment2).addToBackStack("abc").commit();
                 break;
 
             case R.id.scheduled:
-
+                Fragment fragment3 = new Scheduled_Notifications();
+                getFragmentManager().beginTransaction().replace(R.id.mainContainer, fragment3).addToBackStack("abc").commit();
                 break;
 
             case R.id.mileage:

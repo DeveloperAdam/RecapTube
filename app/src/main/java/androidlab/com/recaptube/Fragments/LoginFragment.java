@@ -75,15 +75,9 @@ public class LoginFragment extends Fragment {
         }
         else {
 
-            if (strEmail.equals("test@gmail.com") && strPassword.equals("hybrid"))
-            {
                 Fragment fragment=new ClientsFragment();
                 getFragmentManager().beginTransaction().replace(R.id.mainContainer,fragment).commit();
-            }
-            else
-            {
-                Toast.makeText(getActivity(), "Invalid Crediential", Toast.LENGTH_SHORT).show();
-            }
+
 //            if (alertDialog==null)
 //            {
 //                alertDialog= Alert_Utils.createProgressDialog(getActivity());
